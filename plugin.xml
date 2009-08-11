@@ -1,0 +1,37 @@
+<plugin>
+	<nom>R&#233;visions (suivi des modifications)</nom>
+	<auteur>Collectif SPIP</auteur>
+	<version>1.0</version>
+	<version_base>1.0</version_base>
+	<etat>test</etat>
+	<description>Suivi des modifications des articles</description>
+	<prefix>revisions</prefix>
+
+	<pipeline>
+		<nom>pre_edition</nom>
+		<inclure>inc/revisions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>post_edition</nom>
+		<inclure>inc/revisions.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>autoriser</nom>
+		<inclure>inc/revisions_autoriser.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>boite_infos</nom>
+		<inclure>inc/revisions_pipeline.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>article_select</nom>
+		<inclure>inc/revisions_pipeline.php</inclure>
+	</pipeline>
+
+	<bouton id='suivi_revisions' parent='bando_publication'>
+		<icone>images/revision-16.png</icone>
+		<titre>info_historique_titre</titre>
+	</bouton>
+
+	<necessite id="SPIP" version="[2.1.0 dev;)" />
+</plugin>
