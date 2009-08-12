@@ -25,6 +25,9 @@ function revisions_boite_infos($flux){
 	return $flux;
 }
 
+/*
+
+TODO: restaurer une ancienne revision
 
 // si une ancienne revision est demandee, la charger
 // en lieu et place de l'actuelle ; attention les champs
@@ -38,6 +41,18 @@ function revisions_article_select($flux) {
 			foreach ($textes as $champ => $contenu)
 				$row[$champ] = $contenu;
 		}
+	}
+
+	return $flux;
+}
+
+*/
+
+// Afficher les dernieres revisions en bas de la page d'accueil de ecrire/
+function revisions_affiche_milieu($flux) {
+	if ($flux['args']['exec'] == 'accueil') {
+		include_spip('inc/suivi_versions');
+		$flux['data'] .= afficher_suivi_versions (0, 0, false, "", true);
 	}
 
 	return $flux;

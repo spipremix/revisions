@@ -24,7 +24,7 @@
 		<inclure>inc/revisions_pipeline.php</inclure>
 	</pipeline>
 	<pipeline>
-		<nom>article_select</nom>
+		<nom>affiche_milieu</nom>
 		<inclure>inc/revisions_pipeline.php</inclure>
 	</pipeline>
 

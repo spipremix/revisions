@@ -78,11 +78,12 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 //
 // recuperer les donnees versionnees
 //
-	$last_version = false;
-	if (!$id_version) {
-		$id_version = $row['id_version'];
-		$last_version = true;
-	}
+	$max_version = sql_getfetsel('MAX(id_version)', 'spip_versions', 'id_article='.intval($id_article));
+	if (!$id_version)
+		$id_version = $max_version;
+
+	$last_version = ($id_version == $max_version);
+
 	$textes = revision_comparee($id_article, $id_version, 'complet', $id_diff);
 
 	unset($id_rubrique); # on n'en n'aura besoin que si on affiche un diff
@@ -146,16 +147,29 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 	echo $debut;
 	echo "</td><td>";
 
-// Icone de modification
+	// restaurer
+	// Icone de modification
 	if (autoriser('modifier', 'article', $id_article))
-		echo icone_inline(
-		_T('icone_modifier_article').'<br />('._T('version')." $id_version)",
-		generer_url_ecrire("articles_edit",
-			"id_article=$id_article".((!$last_version)?"&id_version=$id_version":"")),
-		"article-24.png",
-		"edit",
-		$spip_lang_right
-		);
+		if ($last_version)
+			echo icone_inline(
+				_T('icone_modifier_article'),
+				generer_url_ecrire("articles_edit", "id_article=$id_article"),
+				"article-24.png",
+				"edit",
+				$spip_lang_right
+			);
+		else
+			echo "TODO: restaurer cette version";
+/*
+	TODO: restaurer
+			echo icone_inline(
+				_L('Restaurer cette version'),
+				generer_url_ecrire("articles_edit", "id_article=$id_article"),
+				"article-24.png",
+				"edit",
+				$spip_lang_right
+			);
+*/
 
 	echo "</td>";
 
