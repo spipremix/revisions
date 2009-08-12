@@ -10,6 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/* fonction pour le pipeline d'autorisation */
+function revisions_autoriser(){}
+
 // Voir les revisions ?
 // = voir l'objet
 function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
