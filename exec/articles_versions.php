@@ -159,17 +159,13 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 				$spip_lang_right
 			);
 		else
-			echo "TODO: restaurer cette version";
-/*
-	TODO: restaurer
 			echo icone_inline(
 				_L('Restaurer cette version'),
-				generer_url_ecrire("articles_edit", "id_article=$id_article"),
+				generer_url_ecrire("revisions_restaurer", "id_objet=$id_article&type=article&id_version=$id_version"),
 				"article-24.png",
 				"edit",
 				$spip_lang_right
 			);
-*/
 
 	echo "</td>";
 
