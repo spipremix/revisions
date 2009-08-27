@@ -95,7 +95,8 @@ function exec_revisions_restaurer_args($type, $id_objet, $id_version) {
 
 		echo propre_diff($t);
 
-		// pour bien faire il faudrait une série de cases à cocher en CVT
+		echo "<div class='formulaire_spip'><p>Copier l'ancienne version :</p>";
+		echo "<textarea>".entites_html($val)."</textarea></div>\n";
 	}
 
 
