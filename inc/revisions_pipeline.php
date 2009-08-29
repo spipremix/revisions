@@ -54,7 +54,10 @@ function revisions_affiche_milieu($flux) {
 		include_spip('inc/suivi_versions');
 		$flux['data'] .= afficher_suivi_versions (0, 0, false, "", true);
 	}
-
+	if ($flux['args']['exec'] == 'suivi_edito') {
+		include_spip('inc/suivi_versions');
+		$flux['data'] .= afficher_suivi_versions (0, 0, false, "", true);
+	}
 	return $flux;
 }
 
