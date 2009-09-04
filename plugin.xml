@@ -28,7 +28,11 @@
 		<nom>affiche_milieu</nom>
 		<inclure>inc/revisions_pipeline.php</inclure>
 	</pipeline>
-
+	<pipeline>
+		<nom>declarer_tables_auxiliaires</nom>
+		<inclure>base/revisions.php</inclure>
+	</pipeline>
+	
 	<bouton id='suivi_revisions' parent='bando_publication'>
 		<icone>images/revision-16.png</icone>
 		<titre>info_historique_titre</titre>
