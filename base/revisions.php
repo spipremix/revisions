@@ -11,8 +11,15 @@
 \***************************************************************************/
 
 
+function revisions_declarer_tables_interfaces($interface){
+
+	$interface['table_des_tables']['versions']='versions';
+
+	return $interface;
+}
+
 /**
- * Table principale spip_revisions
+ * Table principale spip_versions
  *
  * @param array $tables_principales
  * @return array
