@@ -606,7 +606,6 @@ function liste_champs_versionnes($table,$type) {
 	$champs = array();
 	if(array_key_exists($table,$infos_tables) && in_array($table_objet,$liste_objets_versionnees)){
 		$champs = $infos_tables[$table]['champs'];
-		spip_log($champs);
 	}
 	return $champs;
 }

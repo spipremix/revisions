@@ -64,7 +64,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 
 	echo debut_gauche('', true);
 
-	echo bloc_des_raccourcis(icone_horizontale(_T($infos_tables[$table]['texte_retour']), generer_url_ecrire($infos_tables[$table]['url_retour'],"$id_table_objet=$id_objet"), $infos_tables[$table]['icone_objet'],"", false) .
+	echo bloc_des_raccourcis(icone_horizontale(_T($infos_tables[$table]['texte_retour']), generer_url_ecrire($infos_tables[$table]['url_voir'],"$id_table_objet=$id_objet"), $infos_tables[$table]['icone_objet'],"", false) .
 				 icone_horizontale(_T('icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png","", false));
 
 
@@ -157,7 +157,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 		if ($last_version)
 			echo icone_inline(
 				_T($infos_tables[$table]['texte_modifier']),
-				generer_url_ecrire($infos_tables[$table]['url_edit'], "$id_table_objet=$id_objet"),
+				generer_url_ecrire($infos_tables[$table]['url_edit'], "$id_table_objet=$id_objet".$infos_tables[$table]['url_edit_param']),
 				$infos_tables[$table]['icone_objet'],
 				"edit",
 				$spip_lang_right

@@ -74,13 +74,13 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 			$id_objet = $row['id_objet'];
 			$objet = $row['objet'];
 			$table_objet = table_objet($objet);
-			spip_log($table_objet);
 			if (autoriser('voir',$objet,$id_objet) && in_array($table_objet,$liste_objets_versionnees)){
 				$table = table_objet_sql($objet);
 				$id_table_objet = id_table_objet($objet);
 
-				$row2 = sql_fetsel('statut,titre',$table,$id_table_objet.'='.$row['id_objet']);
-				$statut = $row2['statut'];
+				$row2 = sql_fetsel('*',$table,$id_table_objet.'='.$row['id_objet']);
+				$statut = $row2['statut'] ? $row2['statut'] : 'publie';
+
 				$id_version = $row['id_version'];
 				$id_auteur = $row['id_auteur'];
 				$date = $row['date'];

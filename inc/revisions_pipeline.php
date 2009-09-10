@@ -85,7 +85,10 @@ function revisions_configurer_liste_metas($metas){
  */
 function revisions_revisions_liste_objets($array){
 	$array['articles'] = 'revisions:articles';
+	$array['breves'] = 'revisions:breves';
 	$array['rubriques'] = 'revisions:rubriques';
+	$array['mots'] = 'revisions:mots';
+	$array['groupes_mots'] = 'revisions:groupes_mots';
 
 	return $array;
 }
@@ -101,6 +104,16 @@ function revisions_revisions_infos_tables_versions($array){
 								'texte_modifier' => 'icone_modifier_article',
 								'icone_objet' => 'article-24.png'
 							);
+	$array['spip_breves'] = array(
+								'table_objet' => 'breves',
+								'type' => 'breve',
+								'champs' => array('id_rubrique', 'titre', 'lien_titre', 'lien_url', 'texte'),
+								'url_voir' => 'breves_voir',
+								'texte_retour' => 'revisions:icone_retour_breve',
+								'url_edit' => 'breves_edit',
+								'texte_modifier' => 'icone_modifier_breve',
+								'icone_objet' => 'breve-24.png'
+							);
 	$array['spip_rubriques'] = array(
 								'table_objet' => 'rubriques',
 								'type' => 'rubrique',
@@ -110,6 +123,27 @@ function revisions_revisions_infos_tables_versions($array){
 								'url_edit' => 'rubriques_edit',
 								'texte_modifier' => 'icone_modifier_rubrique',
 								'icone_objet' => 'rubrique-24.png'
+							);
+	$array['spip_mots'] = array(
+								'table_objet' => 'mots',
+								'type' => 'mot',
+								'champs' => array('titre', 'descriptif', 'texte','id_groupe'),
+								'url_voir' => 'mots_edit',
+								'texte_retour' => 'revisions:icone_retour_mot',
+								'url_edit' => 'mots_edit',
+								'url_edit_param'=>'&edit=oui',
+								'texte_modifier' => 'icone_modifier_mot',
+								'icone_objet' => 'mot-24.png'
+							);
+	$array['spip_groupe_mots'] = array(
+								'table_objet' => 'groupes_mots',
+								'type' => 'groupe_mot',
+								'champs' => array('titre', 'descriptif', 'texte','un_seul','obligatoire','tables_liees','minirezo','forum','comite'),
+								'url_voir' => 'mots_tous',
+								'texte_retour' => 'revisions:icone_retour_groupe_mot',
+								'url_edit' => 'mots_type',
+								'texte_modifier' => 'icone_modifier_mot',
+								'icone_objet' => 'groupe-mot-edit-24.png'
 							);
 	return $array;
 }
