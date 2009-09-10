@@ -12,17 +12,15 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-// http://doc.spip.org/@exec_articles_versions_dist
-function exec_articles_versions_dist()
+function exec_objets_versions_dist()
 {
-	exec_articles_versions_args(intval(_request('id_objet')),
+	exec_objets_versions_args(intval(_request('id_objet')),
 		_request('objet'),
 		intval(_request('id_version')),
 		intval(_request('id_diff'))); // code mort ?
 }
 
-// http://doc.spip.org/@exec_articles_versions_args
-function exec_articles_versions_args($id_objet,$objet='article', $id_version, $id_diff)
+function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_diff)
 {
 	global $spip_lang_left, $spip_lang_right;
 

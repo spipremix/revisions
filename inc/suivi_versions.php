@@ -144,7 +144,7 @@ function revisions_bouton($id_objet,$objet, $id_auteur, $id_version, $titre, $st
 {
 	$titre_bouton = "<span class='arial2'>";
 	$titre_bouton .= puce_statut($statut);
-	$titre_bouton .= "\n&nbsp;<a class='$statut' style='font-weight: bold;' href='" . generer_url_ecrire("articles_versions","objet=$objet&id_objet=$id_objet") . "'>$titre</a>";
+	$titre_bouton .= "\n&nbsp;<a class='$statut' style='font-weight: bold;' href='" . generer_url_ecrire("objets_versions","objet=$objet&id_objet=$id_objet") . "'>$titre</a>";
 	$titre_bouton .= "<span class='arial1' dir='$lang_dir'>";
 	$titre_bouton .= "\n".date_relative($date)." "; # laisser un peu de privacy aux redacteurs
 	$titre_bouton .= "</span>";
@@ -195,7 +195,7 @@ function revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $re
 // le format =
 //    - diff => seulement les modifs (suivi_revisions)
 //    - apercu => idem, mais en plus tres cout s'il y en a bcp
-//    - complet => tout, avec surlignage des modifications (articles_versions)
+//    - complet => tout, avec surlignage des modifications (objets_versions)
 // http://doc.spip.org/@revision_comparee
 function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_diff=NULL) {
 	include_spip('inc/diff');
