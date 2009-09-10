@@ -48,7 +48,9 @@ function revisions_article_select($flux) {
 
 */
 
-// Afficher les dernieres revisions en bas de la page d'accueil de ecrire/
+/**
+ * Afficher les dernieres revisions en bas de la page d'accueil de ecrire/
+ */
 function revisions_affiche_milieu($flux) {
 	if ($flux['args']['exec'] == 'accueil') {
 		include_spip('inc/suivi_versions');
@@ -61,4 +63,54 @@ function revisions_affiche_milieu($flux) {
 	return $flux;
 }
 
+/**
+ * Definir les metas de configuration liee aux revisions
+ * Utilisé par inc/config
+ *
+ * @param array $metas
+ * @return array
+ */
+function revisions_configurer_liste_metas($metas){
+	// Dorénavant dans les metas on utilisera un array serialisé de types d'objets
+	// qui corrspondront aux objets versionnés
+	$metas['objets_versions'] =  '';
+
+	return $metas;
+}
+
+/**
+ * Definir la liste des tables possibles
+ * @param object $array
+ * @return
+ */
+function revisions_revisions_liste_objets($array){
+	$array['articles'] = 'revisions:articles';
+	$array['rubriques'] = 'revisions:rubriques';
+
+	return $array;
+}
+
+function revisions_revisions_infos_tables_versions($array){
+	$array['spip_articles'] = array(
+								'table_objet' => 'articles',
+								'type' => 'article',
+								'champs' => array('id_rubrique', 'surtitre', 'titre', 'soustitre', 'j_mots', 'descriptif', 'nom_site', 'url_site', 'chapo', 'texte', 'ps'),
+								'url_voir' => 'articles',
+								'texte_retour' => 'icone_retour_article',
+								'url_edit' => 'articles_edit',
+								'texte_modifier' => 'icone_modifier_article',
+								'icone_objet' => 'article-24.png'
+							);
+	$array['spip_rubriques'] = array(
+								'table_objet' => 'rubriques',
+								'type' => 'rubrique',
+								'champs' => array('titre', 'descriptif', 'texte'),
+								'url_voir' => 'naviguer',
+								'texte_retour' => 'revisions:icone_retour_rubrique',
+								'url_edit' => 'rubriques_edit',
+								'texte_modifier' => 'icone_modifier_rubrique',
+								'icone_objet' => 'rubrique-24.png'
+							);
+	return $array;
+}
 ?>

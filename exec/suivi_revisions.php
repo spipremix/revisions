@@ -22,6 +22,7 @@ function exec_suivi_revisions_dist()
 	$lang_choisie = _request('lang_choisie');
 	$id_auteur = intval(_request('id_auteur'));
 	$id_secteur = intval(_request('id_secteur'));
+	$objet = _request('objet');
 
 	$nom_auteur = $GLOBALS['visiteur_session']['nom'];
 	$connecte = $GLOBALS['visiteur_session']['id_auteur'];
@@ -33,8 +34,8 @@ function exec_suivi_revisions_dist()
 	echo debut_gauche('', true);
 
 	if (autoriser('voir', 'article'))
-	  $req_where = sql_in('articles.statut', array('prepa','prop','publie')); 
-	else $req_where = sql_in('articles.statut', array('prop','publie')); 
+	  $req_where = sql_in('articles.statut', array('prepa','prop','publie'));
+	else $req_where = sql_in('articles.statut', array('prop','publie'));
 
 	echo debut_cadre_relief('', true);
 
@@ -47,32 +48,32 @@ function exec_suivi_revisions_dist()
 	if ($id_auteur) echo "\n<li><b>$nom_auteur</b></li>";
 	else echo "\n<li><a href='" . generer_url_ecrire("suivi_revisions","id_auteur=$connecte") . "'>$nom_auteur</a></li>";
 
-	if (($GLOBALS['meta']['multi_rubriques'] == 'oui') OR ($GLOBALS['meta']['multi_articles'] == 'oui'))
-		$langues = explode(',', $GLOBALS['meta']['langues_multilingue']);
-	else
-		$langues = array();
+	//if (($GLOBALS['meta']['multi_rubriques'] == 'oui') OR ($GLOBALS['meta']['multi_articles'] == 'oui'))
+	//	$langues = explode(',', $GLOBALS['meta']['langues_multilingue']);
+	//else
+	//	$langues = array();
 
-	$result = sql_select("id_rubrique, titre", "spip_rubriques", 'id_parent=0','', '0+titre,titre');
+	// $result = sql_select("id_rubrique, titre", "spip_rubriques", 'id_parent=0','', '0+titre,titre');
 
-	while ($row = sql_fetch($result)) {
-		$id_rubrique = $row['id_rubrique'];
-		$titre = typo($row['titre']);
+	//while ($row = sql_fetch($result)) {
+	//	$id_rubrique = $row['id_rubrique'];
+	//	$titre = typo($row['titre']);
 
-		if ($id_rubrique == $id_secteur)  echo "\n<li><b>$titre</b>";
-		else {
-		  if (sql_countsel('spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_article = articles.id_article', "versions.id_version > 1 AND articles.id_secteur=$id_rubrique AND $req_where"))
-		    echo "\n<li><a href='" . generer_url_ecrire("suivi_revisions","id_secteur=$id_rubrique") . "'>$titre</a></li>";
-		}
-	}
-	foreach ($langues as $lang) {
-		$titre = traduire_nom_langue($lang);
+	//	if ($id_rubrique == $id_secteur)  echo "\n<li><b>$titre</b>";
+	//	else {
+	//	  if (sql_countsel('spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_objet = articles.id_article', "versions.id_version > 1 AND versions.objet='article' AND articles.id_secteur=$id_rubrique AND $req_where"))
+	//	    echo "\n<li><a href='" . generer_url_ecrire("suivi_revisions","id_secteur=$id_rubrique") . "'>$titre</a></li>";
+	//	}
+	//}
+	//foreach ($langues as $lang) {
+	//	$titre = traduire_nom_langue($lang);
 
-		if ($lang == $lang_choisie)  echo "\n<li><b>$titre</b></li>";
-		else {
-			$n = sql_countsel('spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_article = articles.id_article', "versions.id_version > 1 AND articles.lang='$lang' AND $req_where");
-			if ($n) echo "\n<li><a href='" . generer_url_ecrire("suivi_revisions","lang_choisie=$lang") . "'>$titre</a></li>";
-		}
-	}
+		//if ($lang == $lang_choisie)  echo "\n<li><b>$titre</b></li>";
+		//else {
+		//	$n = sql_countsel('spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_objet = articles.id_article', "versions.id_version > 1 AND versions.objet='article' AND articles.lang='$lang' AND $req_where");
+		//	if ($n) echo "\n<li><a href='" . generer_url_ecrire("suivi_revisions","lang_choisie=$lang") . "'>$titre</a></li>";
+		//}
+	//}
 	echo "</ul></div>\n";
 
 // lien vers le rss

@@ -18,7 +18,7 @@ function exec_revisions_restaurer_dist()
 		array('args'=>array('exec'=>'revisions_restaurer'),'data'=>''));
 
 	$commencer_page = charger_fonction('commencer_page', 'inc');
-	echo $commencer_page(_L('Restaurer une version'), "accueil", "accueil");
+	echo $commencer_page(_T('revisions:titre_restaurer_revision'), "accueil", "accueil");
 
 	echo debut_gauche("",true);
 
@@ -38,8 +38,8 @@ function exec_revisions_restaurer_dist()
 
 function reconstituer_version($type, $id_objet, $id_version) {
 	$prev  = array();
-	foreach (sql_allfetsel('id_version', 'spip_versions', 'id_article='.sql_quote($id_objet).' AND id_version <= '.sql_quote($id_version), 'id_version') as $id) {
-		$prev = array_merge($prev, recuperer_version($id_objet, $id['id_version']));
+	foreach (sql_allfetsel('id_version', 'spip_versions', 'id_objet='.intval($id_objet).' AND objet='.sql_quote($type).' AND id_version <= '.sql_quote($id_version), 'id_version') as $id) {
+		$prev = array_merge($prev, recuperer_version($id_objet,$type, $id['id_version']));
 	}
 	return $prev;
 }

@@ -2,11 +2,12 @@
 	<nom>R&#233;visions (suivi des modifications)</nom>
 	<auteur>Collectif SPIP</auteur>
 	<version>1.1</version>
-	<version_base>1.0</version_base>
+	<version_base>1.1</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
 	<description>Suivi des modifications des articles</description>
 	<prefix>revisions</prefix>
+	<options>revisions_options.php</options>
 
 	<pipeline>
 		<nom>pre_edition</nom>
@@ -29,6 +30,18 @@
 		<inclure>inc/revisions_pipeline.php</inclure>
 	</pipeline>
 	<pipeline>
+		<nom>configurer_liste_metas</nom>
+		<inclure>inc/revisions_pipeline.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>revisions_liste_objets</nom>
+		<inclure>inc/revisions_pipeline.php</inclure>
+	</pipeline>
+	<pipeline>
+		<nom>revisions_infos_tables_versions</nom>
+		<inclure>inc/revisions_pipeline.php</inclure>
+	</pipeline>
+	<pipeline>
 		<nom>declarer_tables_interfaces</nom>
 		<inclure>base/revisions.php</inclure>
 	</pipeline>
@@ -41,6 +54,9 @@
 		<icone>images/revision-16.png</icone>
 		<titre>info_historique_titre</titre>
 	</bouton>
-
+	<onglet id='config_revisions' parent='configuration'>
+		<icone>images/revision-24.png</icone>
+		<titre>revisions:titre_revisions</titre>
+	</onglet>
 	<necessite id="SPIP" version="[2.1.0 dev;)" />
 </plugin>

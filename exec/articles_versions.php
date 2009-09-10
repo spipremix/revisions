@@ -15,18 +15,24 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 // http://doc.spip.org/@exec_articles_versions_dist
 function exec_articles_versions_dist()
 {
-	exec_articles_versions_args(intval(_request('id_article')),
+	exec_articles_versions_args(intval(_request('id_objet')),
+		_request('objet'),
 		intval(_request('id_version')),
 		intval(_request('id_diff'))); // code mort ?
 }
 
 // http://doc.spip.org/@exec_articles_versions_args
-function exec_articles_versions_args($id_article, $id_version, $id_diff)
+function exec_articles_versions_args($id_objet,$objet='article', $id_version, $id_diff)
 {
 	global $spip_lang_left, $spip_lang_right;
 
-	if (!autoriser('voirrevisions', 'article', $id_article) 
-	OR !$row = sql_fetsel("*", "spip_articles", "id_article=".sql_quote($id_article))){
+	$table = table_objet_sql($objet);
+	$id_table_objet = id_table_objet($objet);
+	$infos_tables = pipeline('revisions_infos_tables_versions',array());
+
+	if (!autoriser('voirrevisions', $objet, $id_objet)
+	OR !$row = sql_fetsel("*", $table, "$id_table_objet=".intval($id_objet)
+	OR !is_array($infos_tables[$table]))){
 		include_spip('inc/minipres');
 		echo minipres();
 		return;
@@ -36,8 +42,8 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 	include_spip('inc/presentation');
 	include_spip('inc/revisions');
 
-	// recuperer les donnees actuelles de l'article
-	$id_article = $row["id_article"];
+	// recuperer les donnees actuelles de l'objet
+
 	$id_rubrique = $row["id_rubrique"];
 	$titre = $row["titre"];
 	$statut_article = $row["statut"];
@@ -60,7 +66,7 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 
 	echo debut_gauche('', true);
 
-	echo bloc_des_raccourcis(icone_horizontale(_T('icone_retour_article'), generer_url_ecrire("articles","id_article=$id_article"), "article-24.png","", false) .
+	echo bloc_des_raccourcis(icone_horizontale(_T($infos_tables[$table]['texte_retour']), generer_url_ecrire($infos_tables[$table]['url_retour'],"$id_table_objet=$id_objet"), $infos_tables[$table]['icone_objet'],"", false) .
 				 icone_horizontale(_T('icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png","", false));
 
 
@@ -78,13 +84,13 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 //
 // recuperer les donnees versionnees
 //
-	$max_version = sql_getfetsel('MAX(id_version)', 'spip_versions', 'id_article='.intval($id_article));
+	$max_version = sql_getfetsel('MAX(id_version)', 'spip_versions', 'id_objet='.intval($id_objet).' AND objet='.sql_quote($objet));
 	if (!$id_version)
 		$id_version = $max_version;
 
 	$last_version = ($id_version == $max_version);
 
-	$textes = revision_comparee($id_article, $id_version, 'complet', $id_diff);
+	$textes = revision_comparee($id_objet,$objet, $id_version, 'complet', $id_diff);
 
 	unset($id_rubrique); # on n'en n'aura besoin que si on affiche un diff
 
@@ -149,20 +155,20 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 
 	// restaurer
 	// Icone de modification
-	if (autoriser('modifier', 'article', $id_article))
+	if (autoriser('modifier', $objet, $id_objet))
 		if ($last_version)
 			echo icone_inline(
-				_T('icone_modifier_article'),
-				generer_url_ecrire("articles_edit", "id_article=$id_article"),
-				"article-24.png",
+				_T($infos_tables[$table]['texte_modifier']),
+				generer_url_ecrire($infos_tables[$table]['url_edit'], "$id_table_objet=$id_objet"),
+				$infos_tables[$table]['icone_objet'],
 				"edit",
 				$spip_lang_right
 			);
 		else
 			echo icone_inline(
-				_L('Restaurer cette version'),
-				generer_url_ecrire("revisions_restaurer", "id_objet=$id_article&type=article&id_version=$id_version"),
-				"article-24.png",
+				_T('revisions:icone_restaurer_version'),
+				generer_url_ecrire("revisions_restaurer", "id_objet=$id_objet&type=$objet&id_version=$id_version"),
+				$infos_tables[$table]['icone_objet'],
 				"edit",
 				$spip_lang_right
 			);
@@ -179,7 +185,7 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 	//
 	$result = sql_select("id_version, titre_version, date, id_auteur",
 		"spip_versions",
-		"id_article=".sql_quote($id_article)." AND  id_version>0",
+		"id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version>0",
 		"", "id_version DESC");
 
 	echo debut_cadre_relief('', true);
@@ -221,7 +227,7 @@ function exec_articles_versions_args($id_article, $id_version, $id_diff)
 			} else {
 				$res .= " (".$row['id_auteur'].")"; #IP edition anonyme
 		}
-		
+
 		if ($version_aff != $id_version) {
 		  $res .= " <span class='verdana2'>";
 		  if ($version_aff == $id_diff) {
