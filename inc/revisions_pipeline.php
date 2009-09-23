@@ -18,9 +18,9 @@ function revisions_boite_infos($flux){
 	AND autoriser('voirrevisions',$type,$id)
 	// regarder le numero de revision le plus eleve, et afficher le bouton
 	// si c'est interessant (id_version>1)
-	AND sql_countsel('spip_versions', 'id_article='.$id) > 1
+	AND sql_countsel('spip_versions', 'id_objet='.$id.' AND objet = '.sql_quote($type)) > 1
 	)
-		$flux['data'] .= icone_horizontale(_T('info_historique_lien'), generer_url_ecrire('articles_versions',"id_article=$id"), "", "revision-24.png", false);
+		$flux['data'] .= icone_horizontale(_T('info_historique_lien'), generer_url_ecrire('objets_versions',"id_objet=$id&objet=$type"), "", "revision-24.png", false);
 
 	return $flux;
 }
