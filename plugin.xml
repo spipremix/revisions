@@ -38,10 +38,6 @@
 		<inclure>inc/revisions_pipeline.php</inclure>
 	</pipeline>
 	<pipeline>
-		<nom>revisions_infos_tables_versions</nom>
-		<inclure>inc/revisions_pipeline.php</inclure>
-	</pipeline>
-	<pipeline>
 		<nom>declarer_tables_interfaces</nom>
 		<inclure>base/revisions.php</inclure>
 	</pipeline>
@@ -59,4 +55,5 @@
 		<titre>revisions:titre_revisions</titre>
 	</onglet>
 	<necessite id="SPIP" version="[2.1.0 dev;)" />
+	<necessite id="gouverneur" version="[0.1;]" />
 </plugin>

@@ -599,13 +599,13 @@ function propre_diff($texte) {
 function liste_champs_versionnes($table,$type) {
 	$liste_objets_versionnees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
 
-	$infos_tables = pipeline('revisions_infos_tables_versions',array());
+	$infos_tables = pipeline('gouverneur_infos_tables',array());
 
 	$table_objet = table_objet($type);
 
 	$champs = array();
 	if(array_key_exists($table,$infos_tables) && in_array($table_objet,$liste_objets_versionnees)){
-		$champs = $infos_tables[$table]['champs'];
+		$champs = $infos_tables[$table]['champs_versionnes'];
 	}
 	return $champs;
 }
