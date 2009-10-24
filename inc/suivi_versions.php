@@ -109,6 +109,7 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 	}
 	if (!$revisions) return '';
 	else return
+		'<br /><br />'.
 	  revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $req_from, $req_where, $uniq_auteur)
 	  . $revisions
 	  . fin_block()
