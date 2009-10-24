@@ -25,29 +25,6 @@ function revisions_boite_infos($flux){
 	return $flux;
 }
 
-/*
-
-TODO: restaurer une ancienne revision
-
-// si une ancienne revision est demandee, la charger
-// en lieu et place de l'actuelle ; attention les champs
-// qui etaient vides ne sont pas vide's. Ca permet de conserver
-// des complements ajoutes "orthogonalement", et ca fait un code
-// plus generique.
-function revisions_article_select($flux) {
-	if ($id_version) {
-		include_spip('inc/revisions');
-		if ($textes = recuperer_version($id_article, $id_version)) {
-			foreach ($textes as $champ => $contenu)
-				$row[$champ] = $contenu;
-		}
-	}
-
-	return $flux;
-}
-
-*/
-
 /**
  * Afficher les dernieres revisions en bas de la page d'accueil de ecrire/
  */

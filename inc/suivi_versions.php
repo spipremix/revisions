@@ -84,7 +84,7 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 				$id_version = $row['id_version'];
 				$id_auteur = $row['id_auteur'];
 				$date = $row['date'];
-				$titre = typo(supprime_img($row2['titre'].' ('.$row['objet'].')',''));
+				$titre = "<img src='../prive/themes/spip/images/".$row['objet'].'-16.png'."' alt='"._T($row['objet'])."' /> " . typo(supprime_img($row2['titre']));
 
 				// l'id_auteur peut etre un numero IP (edition anonyme)
 				if ($id_auteur == intval($id_auteur)
