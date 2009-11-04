@@ -26,7 +26,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 
 	$table = table_objet_sql($objet);
 	$id_table_objet = id_table_objet($objet);
-	$infos_tables = pipeline('revisions_infos_tables_versions',array());
+	$infos_tables = pipeline('gouverneur_infos_tables',array());
 
 	if (!autoriser('voirrevisions', $objet, $id_objet)
 	OR !$row = sql_fetsel("*", $table, "$id_table_objet=".intval($id_objet)
@@ -65,9 +65,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 	echo debut_gauche('', true);
 
 	echo bloc_des_raccourcis(icone_horizontale(_T($infos_tables[$table]['texte_retour']), generer_url_ecrire($infos_tables[$table]['url_voir'],"$id_table_objet=$id_objet"), $infos_tables[$table]['icone_objet'],"", false) .
-				 icone_horizontale(_T('icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png","", false));
-
-
+				 icone_horizontale(_T('revisions:icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png","", false));
 
 //////////////////////////////////////////////////////
 // Affichage de la colonne de droite
@@ -76,8 +74,6 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 	echo debut_droite('', true);
 
 	$lang_dir = lang_dir(changer_typo($lang));
-
-
 
 //
 // recuperer les donnees versionnees
@@ -91,7 +87,6 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 	$textes = revision_comparee($id_objet,$objet, $id_version, 'complet', $id_diff);
 
 	unset($id_rubrique); # on n'en n'aura besoin que si on affiche un diff
-
 
 //
 // Titre, surtitre, sous-titre
@@ -264,7 +259,6 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 	echo fin_cadre_relief(true);
 
 	echo '</div>'; // /#contenu
-
 
 	echo  fin_gauche(), fin_page();
 

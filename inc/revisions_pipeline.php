@@ -49,7 +49,7 @@ function revisions_affiche_milieu($flux) {
  */
 function revisions_configurer_liste_metas($metas){
 	// Dorénavant dans les metas on utilisera un array serialisé de types d'objets
-	// qui corrspondront aux objets versionnés
+	// qui correspondront aux objets versionnés
 	$metas['objets_versions'] =  '';
 
 	return $metas;

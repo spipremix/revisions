@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_retour_groupe_mot' => 'Retour au groupe de mots cl&eacute;s',
 	'icone_retour_mot' => 'Retour au mot cl&eacute;',
 	'icone_retour_rubrique' => 'Retour &agrave; la rubrique',
+	'icone_suivi_revisions' => 'Suivi des r&eacute;visions',
 
 	// L
 	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions :',
