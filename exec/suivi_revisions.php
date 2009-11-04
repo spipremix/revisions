@@ -29,7 +29,7 @@ function exec_suivi_revisions_dist()
 	//if ($id_auteur == $connecte) $id_auteur = false;
 
 	$commencer_page = charger_fonction('commencer_page', 'inc');
-	echo $commencer_page(_T("icone_suivi_revisions"));
+	echo $commencer_page(_T("revisions:icone_suivi_revisions"));
 
 	echo debut_gauche('', true);
 

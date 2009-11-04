@@ -42,7 +42,17 @@ function titre_rubrique($id_rubrique) {
 }
 
 
-// http://doc.spip.org/@afficher_suivi_versions
+/**
+ * Affiche le suivi des révisions (exemple : ?exec=suivi_revisions)
+ * 
+ * @param int $debut [optional]
+ * @param int $id_secteur [optional]
+ * @param object $uniq_auteur [optional]
+ * @param object $lang [optional]
+ * @param object $court [optional]
+ * @param object $type [optional]
+ * @return string Le contenu de la page
+ */
 function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = false, $lang = "", $court = false,$type="") {
 	changer_typo($lang);
 	$lang_dir = lang_dir($lang);
@@ -98,9 +108,9 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 					$email = '';
 				}
 
-				$aff = revisions_bouton($id_objet,$objet, $id_auteur, $id_version, $titre, $statut, $date, $lang_dir, $nom);
+				$aff = revisions_bouton($id_objet,$objet, intval($id_auteur), $id_version, $titre, $statut, $date, $lang_dir, $nom);
 				if (!$court) {
-						$bouton_id = "b$id_version-$id_article-$id_auteur";
+						$bouton_id = "b$id_version-$objet-$id_objet-".intval($id_auteur);
 						$aff = bouton_block_depliable($aff,false,$bouton_id)
 						  . debut_block_depliable(false,$bouton_id)
 						  . revisions_diff ($id_objet,$objet, $id_version, $court)
@@ -118,7 +128,6 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 	  . fin_cadre();
 }
 
-// http://doc.spip.org/@revisions_diff
 function revisions_diff ($id_objet,$objet, $id_version, $court=true)
 {
 	$textes = revision_comparee($id_objet,$objet, $id_version, 'diff');
@@ -160,7 +169,7 @@ function revisions_bouton($id_objet,$objet, $id_auteur, $id_version, $titre, $st
 function revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $req_from, $req_where, $uniq_auteur)
 {
 
-	$titre_table =  '<b>' . _T('icone_suivi_revisions').aide('suivimodif')  . '</b>';
+	$titre_table =  '<b>' . _T('revisions:icone_suivi_revisions').aide('suivimodif')  . '</b>';
 	if ($court)
 		$titre_table = afficher_plus(generer_url_ecrire("suivi_revisions"))
 		. $titre_table;
