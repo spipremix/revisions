@@ -89,7 +89,7 @@ function exec_suivi_revisions_dist()
 	echo fin_cadre_relief(true);
 
 	echo debut_droite("", true);
-	echo afficher_suivi_versions($debut, $id_secteur, $id_auteur, $lang_choisie);
+	echo afficher_suivi_versions($debut, $id_secteur, $id_auteur, $lang_choisie,"", $objet);
 	echo fin_gauche(), fin_page();
 }
 ?>

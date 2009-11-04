@@ -58,6 +58,8 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 	$lang_dir = lang_dir($lang);
 	$nb_aff = 10;
 
+	$infos_tables = pipeline('gouverneur_infos_tables',array());
+	
 	if ($uniq_auteur) {
 		$req_where = " AND id_auteur = $uniq_auteur";
 	}
@@ -96,7 +98,8 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 				$id_version = $row['id_version'];
 				$id_auteur = $row['id_auteur'];
 				$date = $row['date'];
-				$titre = "<img src='../prive/themes/spip/images/".$row['objet'].'-16.png'."' alt='"._T($row['objet'])."' /> " . typo(supprime_img($row2['titre']));
+				$img = $infos_tables[$table]['icone_objet'].'-16.png';
+				$titre = http_img_pack($img,$infos_tables[$table]['texte_unique'])." ".typo(supprime_img($row2['titre']));
 
 				// l'id_auteur peut etre un numero IP (edition anonyme)
 				if ($id_auteur == intval($id_auteur)
