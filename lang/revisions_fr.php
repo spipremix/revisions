@@ -22,7 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_suivi_revisions' => 'Suivi des r&eacute;visions',
 
 	// L
-	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions :',
+	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions&nbsp;:',
 
 	// M
 	'mots' => 'Les mots cl&eacute;s',
