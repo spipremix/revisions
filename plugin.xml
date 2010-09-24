@@ -1,7 +1,7 @@
 <plugin>
 	<nom>R&#233;visions (suivi des modifications)</nom>
 	<auteur>Collectif SPIP</auteur>
-	<version>1.1</version>
+	<version>1.1.1</version>
 	<version_base>1.1</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
@@ -50,10 +50,10 @@
 		<icone>images/revision-16.png</icone>
 		<titre>info_historique_titre</titre>
 	</bouton>
-	<onglet id='config_revisions' parent='configuration'>
-		<icone>images/revision-24.png</icone>
+	<bouton id='configurer_revisions' parent='bando_configuration'>
+		<icone>images/revision-16.png</icone>
 		<titre>revisions:titre_revisions</titre>
-	</onglet>
+	</bouton>
 	<necessite id="SPIP" version="[2.1.0 dev;)" />
 	<necessite id="gouverneur" version="[0.1;]" />
 </plugin>

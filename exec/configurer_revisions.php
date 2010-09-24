@@ -38,7 +38,7 @@ function exec_config_revisions_dist()
 	echo pipeline('affiche_droite',array('args'=>array('exec'=>'config_revisions'),'data'=>''));
 	echo debut_droite('', true);
 
-	echo pipeline('affiche_milieu',array('args'=>array('exec'=>'config_revision'),'data'=>recuperer_fond("prive/configurer/revisions",array())));
+	echo pipeline('affiche_milieu',array('args'=>array('exec'=>'config_revision'),'data'=>recuperer_fond("prive/squelettes/contenu/page-configurer_revisions",array())));
 
 	echo fin_gauche(), fin_page();
 	}
