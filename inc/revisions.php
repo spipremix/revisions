@@ -664,8 +664,9 @@ function revisions_post_edition($x) {
 		include_spip('inc/texte');
 		$mots = array();
 		foreach(
-			sql_allfetsel('id_mot', 'spip_mots_articles',
-			'id_article='.sql_quote($x['args']['id_objet']))
+			sql_allfetsel('id_mot', 'spip_mots_liens',array(
+				'id_objet='.sql_quote($x['args']['id_objet'],
+				'objet='.sql_quote('article'))))
 		as $mot)
 			$mots[] = "[->mot".$mot['id_mot']."]";
 		$champs['j_mots'] = join(' ', $mots);
