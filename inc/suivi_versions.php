@@ -58,8 +58,9 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 	$lang_dir = lang_dir($lang);
 	$nb_aff = 10;
 
-	$infos_tables = pipeline('gouverneur_infos_tables',array());
-	
+	include_spip('base/objets');
+	$infos_tables=lister_tables_objets_sql();
+
 	if ($uniq_auteur) {
 		$req_where = " AND id_auteur = $uniq_auteur";
 	}
