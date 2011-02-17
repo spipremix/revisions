@@ -100,7 +100,7 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 				$id_auteur = $row['id_auteur'];
 				$date = $row['date'];
 				$img = $infos_tables[$table]['icone_objet'].'-16.png';
-				$titre = http_img_pack($img,$infos_tables[$table]['texte_unique'])." ".typo(supprime_img($row2['titre']));
+				$titre = http_img_pack($img,$infos_tables[$table]['texte_objet'])." ".typo(supprime_img($row2['titre']));
 
 				// l'id_auteur peut etre un numero IP (edition anonyme)
 				if ($id_auteur == intval($id_auteur)
