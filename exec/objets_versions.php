@@ -66,8 +66,8 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 
 	echo debut_gauche('', true);
 
-	echo bloc_des_raccourcis(icone_horizontale(_T($infos_table['texte_retour']), generer_url_ecrire($infos_table['url_voir'],"$id_table_objet=$id_objet"), $infos_table['icone_objet'].'-24.png',"", false) .
-				 icone_horizontale(_T('revisions:icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png","", false));
+	echo bloc_des_raccourcis(icone_horizontale(_T($infos_table['texte_retour']), generer_url_ecrire($infos_table['url_voir'],"$id_table_objet=$id_objet"), $infos_table['icone_objet'].'-24.png') .
+				 icone_horizontale(_T('revisions:icone_suivi_revisions'), generer_url_ecrire("suivi_revisions",""), "revision-24.png"));
 
 //////////////////////////////////////////////////////
 // Affichage de la colonne de droite
@@ -152,7 +152,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 	// Icone de modification
 	if (autoriser('modifier', $objet, $id_objet))
 		if ($last_version)
-			echo icone_inline(
+			echo icone_verticale(
 				_T($infos_table['texte_modifier']),
 				generer_url_ecrire($infos_table['url_edit'], "$id_table_objet=$id_objet".$infos_table['url_edit_param']),
 				$infos_table['icone_objet'].'-24.png',
@@ -160,7 +160,7 @@ function exec_objets_versions_args($id_objet,$objet='article', $id_version, $id_
 				$spip_lang_right
 			);
 		else
-			echo icone_inline(
+			echo icone_verticale(
 				_T('revisions:icone_restaurer_version'),
 				generer_url_ecrire("revisions_restaurer", "id_objet=$id_objet&type=$objet&id_version=$id_version"),
 				$infos_table['icone_objet'].'-24.png',

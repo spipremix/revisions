@@ -21,7 +21,7 @@ function revisions_boite_infos($flux){
 	AND sql_countsel('spip_versions', 'id_objet='.$id.' AND objet = '.sql_quote($type)) > 1
 	) {
 		include_spip('inc/presentation');
-		$flux['data'] .= icone_horizontale(_T('info_historique_lien'), generer_url_ecrire('objets_versions',"id_objet=$id&objet=$type"), "", "revision-24.png", false);
+		$flux['data'] .= icone_horizontale(_T('info_historique_lien'), generer_url_ecrire('objets_versions',"id_objet=$id&objet=$type"), "", "revision-24.png");
 	}
 
 	return $flux;
