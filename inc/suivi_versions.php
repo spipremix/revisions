@@ -172,7 +172,7 @@ function revisions_bouton($id_objet,$objet, $id_auteur, $id_version, $titre, $st
 // http://doc.spip.org/@revisions_entete_boite
 function revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $req_from, $req_where, $uniq_auteur)
 {
-
+	include_spip('inc/presentation');
 	$titre_table =  '<b>' . _T('revisions:icone_suivi_revisions').aide('suivimodif')  . '</b>';
 	if ($court)
 		$titre_table = afficher_plus(generer_url_ecrire("suivi_revisions"))
