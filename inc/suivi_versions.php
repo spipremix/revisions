@@ -79,15 +79,16 @@ function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = fa
 	//$req_from = 'spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_objet = articles.id_article';
 
 	$liste_objets_versionnees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
+	$where_objets = sql_in('objet',array_map('objet_type',$liste_objets_versionnees));
 
 	$revisions = '';
 	$items = array();
-	$result = sql_select($req_sel, 'spip_versions', $req_where, '', 'date DESC', "$debut, $nb_aff");
+	$result = sql_select($req_sel, 'spip_versions', array($req_where,$where_objets), '', 'date DESC', "$debut, $nb_aff");
 	while ($row = sql_fetch($result)) {
 			$id_objet = $row['id_objet'];
 			$objet = $row['objet'];
 			$table_objet = table_objet($objet);
-			if (autoriser('voir',$objet,$id_objet) && in_array($table_objet,$liste_objets_versionnees)){
+			if (autoriser('voir',$objet,$id_objet)){
 				$table = table_objet_sql($objet);
 				$id_table_objet = id_table_objet($objet);
 				

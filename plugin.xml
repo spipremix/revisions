@@ -1,14 +1,13 @@
 <plugin>
 	<nom>R&#233;visions (suivi des modifications)</nom>
 	<auteur>Collectif SPIP</auteur>
-	<icon>prive/themes/spip/images/revision-24.png</icon>
-	<version>1.2.0</version>
-	<version_base>1.1.0</version_base>
+	<icon>prive/themes/spip/images/revision-32.png</icon>
+	<version>1.2.1</version>
+	<version_base>1.1.2</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
-	<description>Suivi des modifications des articles</description>
+	<description>Suivi des modifications des objets editoriaux</description>
 	<prefix>revisions</prefix>
-	<options>revisions_options.php</options>
 
 	<pipeline>
 		<nom>pre_edition</nom>
@@ -46,6 +45,12 @@
 		<nom>declarer_tables_auxiliaires</nom>
 		<inclure>base/revisions.php</inclure>
 	</pipeline>
+	<pipeline>
+		<nom>declarer_tables_objets_sql</nom>
+		<inclure>base/revisions.php</inclure>
+	</pipeline>
+
+
 
 	<bouton id='suivi_revisions' parent='bando_publication'>
 		<icone>images/revision-16.png</icone>

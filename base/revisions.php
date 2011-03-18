@@ -13,12 +13,22 @@
 
 function revisions_declarer_tables_interfaces($interface){
 
-	$interface['tables_jointures']['spip_articles'][] = 'versions';
-	$interface['tables_jointures']['spip_rubriques'][] = 'versions';
-
 	$interface['table_des_tables']['versions']='versions';
 
 	return $interface;
+}
+
+/**
+ * Declaration des jointures generiques
+ * @param  $tables
+ * @return
+ */
+function revisions_declarer_tables_objets_sql($tables){
+
+	// jointures sur les mots pour tous les objets
+	$tables[]['tables_jointures'][]= 'versions';
+
+	return $tables;
 }
 
 /**

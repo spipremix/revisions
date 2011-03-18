@@ -13,16 +13,17 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function formulaires_configurer_revisions_objets_charger_dist(){
-	$valeurs = array();
+	if (!$objets = unserialize($GLOBALS['meta']['objets_versions']))
+		$objets = array();
+	$valeurs = array(
+		'objets_versions'=>$objets,
+	);
 
 	return $valeurs;
 }
 
 function formulaires_configurer_revisions_objets_traiter_dist(){
 
-	// On ne peut utiliser inc/config car ca ne serialisera pas l'array
-	//include_spip('inc/config');
-	//appliquer_modifs_config();
 	include_spip('inc/meta');
 	$tables = serialize(_request('objets_versions'));
 	ecrire_meta('objets_versions',$tables);
