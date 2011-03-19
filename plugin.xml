@@ -2,7 +2,7 @@
 	<nom>R&#233;visions (suivi des modifications)</nom>
 	<auteur>Collectif SPIP</auteur>
 	<icon>prive/themes/spip/images/revision-32.png</icon>
-	<version>1.2.1</version>
+	<version>1.3.0</version>
 	<version_base>1.1.2</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
@@ -52,7 +52,7 @@
 
 
 
-	<bouton id='suivi_revisions' parent='bando_publication'>
+	<bouton id='revisions' parent='bando_publication'>
 		<icone>images/revision-16.png</icone>
 		<titre>info_historique_titre</titre>
 	</bouton>

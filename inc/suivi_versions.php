@@ -15,7 +15,13 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 include_spip('inc/revisions');
 include_spip('inc/diff');
 
-// http://doc.spip.org/@afficher_para_modifies
+/**
+ * http://doc.spip.org/@afficher_para_modifies
+ *
+ * @param string $texte
+ * @param bool $court
+ * @return string
+ */
 function afficher_para_modifies ($texte, $court = false) {
 	// Limiter la taille de l'affichage
 	if ($court) $max = 200;
@@ -31,110 +37,31 @@ function afficher_para_modifies ($texte, $court = false) {
 }
 
 
-// Retourne le titre de la rubrique demandee, pour affichage de la chaine
-// "deplace de XX vers YY"
-// http://doc.spip.org/@titre_rubrique
+/**
+ * Retourne le titre de la rubrique demandee, pour affichage de la chaine
+ * "deplace de XX vers YY"
+ * http://doc.spip.org/@titre_rubrique
+ *
+ * @param  $id_rubrique
+ * @return mixed|string
+ */
 function titre_rubrique($id_rubrique) {
-	if (!$id = intval($id_rubrique))
+	if (!$id_rubrique = intval($id_rubrique))
 		return _T('info_sans_titre');
 
-	return typo(sql_getfetsel('titre', 'spip_rubriques', "id_rubrique=$id"));
+	return generer_info_entite($id_rubrique,'rubrique','titre');
 }
-
 
 /**
- * Affiche le suivi des révisions (exemple : ?exec=suivi_revisions)
+ * Afficher un diff correspondant a une revision d'un objet
  * 
- * @param int $debut [optional]
- * @param int $id_secteur [optional]
- * @param object $uniq_auteur [optional]
- * @param object $lang [optional]
- * @param object $court [optional]
- * @param object $type [optional]
- * @return string Le contenu de la page
+ * @param int $id_objet
+ * @param string $objet
+ * @param int $id_version
+ * @param bool $court
+ * @return string
  */
-function afficher_suivi_versions ($debut = 0, $id_secteur = 0, $uniq_auteur = false, $lang = "", $court = false,$type="") {
-	changer_typo($lang);
-	$lang_dir = lang_dir($lang);
-	$nb_aff = 10;
-
-	include_spip('base/objets');
-	$infos_tables=lister_tables_objets_sql();
-
-	if ($uniq_auteur) {
-		$req_where = " AND id_auteur = $uniq_auteur";
-	}
-
-	//if (strlen($lang) > 0)
-	//	$req_where .= " AND articles.lang=" . sql_quote($lang);
-
-	//if ($id_secteur > 0)
-	//	$req_where .= " AND articles.id_secteur = ".intval($id_secteur);
-
-	//$req_where = "objet='article' AND versions.id_version > 1 $req_where";
-	$req_where = "id_version > 1 $req_where";
-
-	//$req_sel = "versions.id_version, versions.id_auteur, versions.date, versions.id_objet, versions.objet, articles.statut, articles.titre";
-	$req_sel = "id_version, id_auteur, date, id_objet, objet";
-	//$req_from = 'spip_versions AS versions LEFT JOIN spip_articles AS articles ON versions.id_objet = articles.id_article';
-
-	$liste_objets_versionnees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
-	$where_objets = sql_in('objet',array_map('objet_type',$liste_objets_versionnees));
-
-	$revisions = '';
-	$items = array();
-	$result = sql_select($req_sel, 'spip_versions', array($req_where,$where_objets), '', 'date DESC', "$debut, $nb_aff");
-	while ($row = sql_fetch($result)) {
-			$id_objet = $row['id_objet'];
-			$objet = $row['objet'];
-			$table_objet = table_objet($objet);
-			if (autoriser('voir',$objet,$id_objet)){
-				$table = table_objet_sql($objet);
-				$id_table_objet = id_table_objet($objet);
-				
-				$champ_titre = $GLOBALS['table_titre'][$table_objet] ? $GLOBALS['table_titre'][$table_objet] : 'titre';
-				$statut = $GLOBALS['tables_principales'][$table]['statut'] ? ',statut':'';
-				$row2 = sql_fetsel("$champ_titre$statut",$table,$id_table_objet.'='.$row['id_objet']);
-				$statut = $row2['statut'] ? $row2['statut'] : 'publie';
-
-				$id_version = $row['id_version'];
-				$id_auteur = $row['id_auteur'];
-				$date = $row['date'];
-				$img = $infos_tables[$table]['icone_objet'].'-16.png';
-				$titre = http_img_pack($img,$infos_tables[$table]['texte_objet'])." ".typo(supprime_img($row2['titre']));
-
-				// l'id_auteur peut etre un numero IP (edition anonyme)
-				if ($id_auteur == intval($id_auteur)
-				AND $row_auteur = sql_fetsel('nom,email', 'spip_auteurs', "id_auteur = ".sql_quote($id_auteur))) {
-					$nom = typo($row_auteur["nom"]);
-					$email = $row_auteur['email'];
-				} else {
-					$nom = $id_auteur;
-					$email = '';
-				}
-
-				$aff = revisions_bouton($id_objet,$objet, intval($id_auteur), $id_version, $titre, $statut, $date, $lang_dir, $nom);
-				if (!$court) {
-						$bouton_id = "b$id_version-$objet-$id_objet-".intval($id_auteur);
-						$aff = bouton_block_depliable($aff,false,$bouton_id)
-						  . debut_block_depliable(false,$bouton_id)
-						  . safehtml(revisions_diff ($id_objet,$objet, $id_version, $court))
-						  . fin_block();
-				}
-				$revisions .= "\n<div class='tr_liste' style='padding: 5px; border-top: 1px solid #aaaaaa;'>$aff</div>";
-			}
-	}
-	if (!$revisions) return '';
-	else return
-		'<br /><br />'.
-	  revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $req_from, $req_where, $uniq_auteur)
-	  . $revisions
-	  . fin_block()
-	  . fin_cadre();
-}
-
-function revisions_diff ($id_objet,$objet, $id_version, $court=true)
-{
+function revisions_diff ($id_objet,$objet, $id_version, $court=false){
 	$textes = revision_comparee($id_objet,$objet, $id_version, 'diff');
 	if (!is_array($textes)) return $textes;
 	$rev = '';
@@ -149,71 +76,29 @@ function revisions_diff ($id_objet,$objet, $id_version, $court=true)
 					$aff .= '<p>'.$GLOBALS['les_notes'].'</p>';
 					$GLOBALS['les_notes'] = '';
 				}
-				$rev .= "<blockquote class='serif1'>$aff</blockquote>";
+				$rev .= "<blockquote>$aff</blockquote>";
 			}
 		}
 	}
 	return $court ? _T('taille_octets', array('taille' => $nb)) : $rev;
 }
 
-// http://doc.spip.org/@revisions_bouton
-function revisions_bouton($id_objet,$objet, $id_auteur, $id_version, $titre, $statut, $date, $lang_dir, $nom)
-{
-	$titre_bouton = "<span class='arial2'>";
-	$titre_bouton .= puce_statut($statut);
-	$titre_bouton .= "\n&nbsp;<a class='$statut' style='font-weight: bold;' href='" . generer_url_ecrire("objets_versions","objet=$objet&id_objet=$id_objet") . "'>$titre</a>";
-	$titre_bouton .= "<span class='arial1' dir='$lang_dir'>";
-	$titre_bouton .= "\n".date_relative($date)." "; # laisser un peu de privacy aux redacteurs
-	$titre_bouton .= "</span>";
-	if (strlen($nom)>0) $titre_bouton .= "($nom)";
-	$titre_bouton .= "</span>";
-	return $titre_bouton;
-}
-
-// http://doc.spip.org/@revisions_entete_boite
-function revisions_entete_boite($court, $debut, $id_secteur, $lang, $nb_aff, $req_from, $req_where, $uniq_auteur)
-{
-	include_spip('inc/presentation');
-	$titre_table =  '<b>' . _T('revisions:icone_suivi_revisions').aide('suivimodif')  . '</b>';
-	if ($court)
-		$titre_table = afficher_plus(generer_url_ecrire("suivi_revisions"))
-		. $titre_table;
-
-	$total = sql_countsel($req_from, $req_where);
-	if ($total >= 150) $total = 149;
-	$id_liste = 't'.substr(md5("$req_where 149"),0,8);
-	$bouton = bouton_block_depliable($titre_table,true,$id_liste);
-	$revisions = debut_cadre('liste',"revision-24.png",'',$bouton)
-	. debut_block_depliable(true,$id_liste);
-
-	if ($total > $nb_aff) {
-		$nb_tranches = ceil($total / $nb_aff);
-
-		$revisions .= "\n<div class='arial2' style='background-color: #dddddd; padding: 5px;'>\n";
-
-		for ($i = 0; $i < $nb_tranches; $i++) {
-			if ($i > 0) $revisions .= " | ";
-			if ($i*$nb_aff == $debut)
-				$revisions .= "<b>";
-			else {
-				$next = ($i * $nb_aff);
-				$revisions .= "<a href='".generer_url_ecrire('suivi_revisions', "debut=$next&id_secteur=$id_secteur&id_auteur=$uniq_auteur&lang_choisie=$lang")."'>";
-			}
-			$revisions .= (($i * $nb_aff) + 1);
-			if ($i*$nb_aff == $debut) $revisions .= "</b>";
-			else $revisions .= "</a>";
-		}
-		$revisions .= "</div>";
-	}
-	return $revisions;
-}
-
-// retourne un array() des champs modifies a la version id_version
-// le format =
-//    - diff => seulement les modifs (suivi_revisions)
-//    - apercu => idem, mais en plus tres cout s'il y en a bcp
-//    - complet => tout, avec surlignage des modifications (objets_versions)
-// http://doc.spip.org/@revision_comparee
+/**
+ * retourne un array() des champs modifies a la version id_version
+ * le format =
+ *    - diff => seulement les modifs (suivi_revisions)
+ *    - apercu => idem, mais en plus tres cout s'il y en a bcp
+ *    - complet => tout, avec surlignage des modifications (objets_versions)
+ *
+ * http://doc.spip.org/@revision_comparee
+ *
+ * @param int $id_objet
+ * @param string $objet
+ * @param int $id_version
+ * @param string $format
+ * @param null $id_diff
+ * @return array
+ */
 function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_diff=NULL) {
 	include_spip('inc/diff');
 

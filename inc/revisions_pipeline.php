@@ -32,14 +32,10 @@ function revisions_boite_infos($flux){
  */
 function revisions_affiche_milieu($flux) {
 	if ($flux['args']['exec'] == 'accueil') {
-		include_spip('inc/suivi_versions');
-		include_spip('inc/presentation');
-		$flux['data'] .= afficher_suivi_versions (0, 0, false, "", true);
+		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',array(),array('ajax'=>true));
 	}
 	if ($flux['args']['exec'] == 'suivi_edito') {
-		include_spip('inc/suivi_versions');
-		include_spip('inc/presentation');
-		$flux['data'] .= afficher_suivi_versions (0, 0, false, "", true);
+		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',array(),array('ajax'=>true));
 	}
 	return $flux;
 }
