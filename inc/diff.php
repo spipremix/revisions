@@ -212,18 +212,18 @@ class DiffTexte {
 // http://doc.spip.org/@ajouter
 	function ajouter($p) {
 		$p = trim($p);
-		$this->r .= "\n\n\n<div class=\"diff-para-ajoute\" title=\""._T('diff_para_ajoute')."\">".$p."</div rem=\"diff-\">";
+		$this->r .= "\n\n\n<span class=\"diff-para-ajoute\" title=\""._T('diff_para_ajoute')."\">".$p."</span rem=\"diff-\">";
 	}
 // http://doc.spip.org/@supprimer
 	function supprimer($p_old) {
 		$p_old = trim($p_old);
-		$this->r .= "\n\n\n<div class=\"diff-para-supprime\" title=\""._T('diff_para_supprime')."\">".$p_old."</div rem=\"diff-\">";
+		$this->r .= "\n\n\n<span class=\"diff-para-supprime\" title=\""._T('diff_para_supprime')."\">".$p_old."</span rem=\"diff-\">";
 	}
 // http://doc.spip.org/@deplacer
 	function deplacer($p, $p_old) {
-		$this->r .= "\n\n\n<div class=\"diff-para-deplace\" title=\""._T('diff_para_deplace')."\">";
+		$this->r .= "\n\n\n<span class=\"diff-para-deplace\" title=\""._T('diff_para_deplace')."\">";
 		$this->r .= trim($this->_diff($p, $p_old));
-		$this->r .= "</div rem=\"diff-\">";
+		$this->r .= "</span rem=\"diff-\">";
 	}
 // http://doc.spip.org/@comparer
 	function comparer($p, $p_old) {
