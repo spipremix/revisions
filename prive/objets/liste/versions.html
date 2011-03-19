@@ -26,7 +26,7 @@
 			(#GET{diff}|oui)]
 			</td>
 			<td class='titre principale'><a #SET{titre,#INFO_TITRE{#OBJET,#ID_OBJET}}
-							href="[(#URL_ECRIRE{objets_versions,id_objet=#ID_OBJET}|parametre_url{objet,#OBJET})]"
+							href="[(#URL_ECRIRE{objets_versions,id_objet=#ID_OBJET}|parametre_url{objet,#OBJET}|parametre_url{id_version,#ID_VERSION})]"
 							title="<:revisions:voir_revisions{objet=#OBJET,id_objet=#ID_OBJET,titre=#GET{titre}}|attribut_html:>">#GET{titre}</a>[ ((#TITRE_VERSION))]
 				[<div class="none-js diff">
 				(#GET{diff}|safehtml)
