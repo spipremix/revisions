@@ -594,13 +594,20 @@ function propre_diff($texte) {
 }
 
 
-// liste les champs versionnes d'un objet
-// http://doc.spip.org/@liste_champs_versionnes
-function liste_champs_versionnes($table,$type) {
+/**
+ * liste les champs versionnes d'une table objet,
+ * designe par le nom complet de sa table sql
+ * ex : 'spip_articles'
+ * 
+ * http://doc.spip.org/@liste_champs_versionnes
+ *
+ * @param string $table
+ * @return array
+ */
+function liste_champs_versionnes($table) {
 	$liste_objets_versionnees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
 
-	$table_objet = table_objet($type);
-	if (!in_array($table_objet,$liste_objets_versionnees))
+	if (!in_array($table,$liste_objets_versionnees))
 		return array();
 
 	include_spip('base/objets');
@@ -615,7 +622,7 @@ function liste_champs_versionnes($table,$type) {
 // code a revoir car il ne marche pas bien (ne prend pas en compte les j_mots,
 // cherche un titre qui n'existe pas chez les auteurs, etc
 function revisions_pre_edition($x) {
-	if  ($champs = liste_champs_versionnes($x['args']['table'],$x['args']['type'])) {
+	if  ($champs = liste_champs_versionnes($x['args']['table'])) {
 
 		$id_objet = $x['args']['id_objet'];
 		$objet= $x['args']['type'];
@@ -655,7 +662,7 @@ function revisions_pre_edition($x) {
 function revisions_post_edition($x) {
 	// Regarder si au moins une des modifs est versionnable
 	$champs = array();
-	foreach (liste_champs_versionnes($x['args']['table'],$x['args']['type']) as $key)
+	foreach (liste_champs_versionnes($x['args']['table']) as $key)
 		if (isset($x['data'][$key]))
 			$champs[$key] = $x['data'][$key];
 

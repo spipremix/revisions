@@ -16,43 +16,6 @@ include_spip('inc/revisions');
 include_spip('inc/diff');
 
 /**
- * http://doc.spip.org/@afficher_para_modifies
- *
- * @param string $texte
- * @param bool $court
- * @return string
- */
-function afficher_para_modifies ($texte, $court = false) {
-	// Limiter la taille de l'affichage
-	if ($court) $max = 200;
-	else $max = 2000;
-
-	$paras = explode ("\n",$texte);
-	for ($i = 0; $i < count($paras) AND strlen($texte_ret) < $max; $i++) {
-		if (strpos($paras[$i], '"diff-')) $texte_ret .= $paras[$i]."\n\n";
-#		if (strlen($texte_ret) > $max) $texte_ret .= '(...)';
-	}
-	$texte = $texte_ret;
-	return $texte;
-}
-
-
-/**
- * Retourne le titre de la rubrique demandee, pour affichage de la chaine
- * "deplace de XX vers YY"
- * http://doc.spip.org/@titre_rubrique
- *
- * @param  $id_rubrique
- * @return mixed|string
- */
-function titre_rubrique($id_rubrique) {
-	if (!$id_rubrique = intval($id_rubrique))
-		return _T('info_sans_titre');
-
-	return generer_info_entite($id_rubrique,'rubrique','titre');
-}
-
-/**
  * Afficher un diff correspondant a une revision d'un objet
  * 
  * @param int $id_objet
@@ -81,6 +44,34 @@ function revisions_diff ($id_objet,$objet, $id_version, $court=false){
 		}
 	}
 	return $court ? _T('taille_octets', array('taille' => $nb)) : $rev;
+}
+
+/**
+ * Retrouver le champ d'un objet, pour une version demandee
+ * @param string $objet
+ * @param int $id_objet
+ * @param int $id_version
+ * @param string $champ
+ * @param array $champs
+ */
+function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$champs){
+	if (isset($champs[$champ]))
+		return;
+
+	// Remonter dans le temps pour trouver le champ en question
+	// pour la version demandee
+	$id_ref = $id_version-1;
+	$prev = array();
+	while (!isset($prev[$champ]) AND $id_ref>0) {
+		$prev = recuperer_version($id_objet,$objet, $id_ref--);
+	}
+	if (isset($prev[$champ]))
+		$champs[$champ] = $prev[$champ];
+	else {
+		// le champ n'a jamais ete versionne :
+		// il correspond a la version courante en base
+		$champs[$champ] = generer_info_entite($id_objet,$objet,$champ,"**");
+	}
 }
 
 /**
@@ -125,7 +116,7 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 		// Mode "complet": on veut afficher tous les champs
 		switch ($format) {
 			case 'complet':
-				$champs = liste_champs_versionnes('spip_articles','articles');
+				$champs = liste_champs_versionnes(table_objet_sql($objet));
 				break;
 			case 'diff':
 			case 'apercu':
@@ -135,15 +126,11 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 		}
 
 		foreach ($champs as $champ) {
-			// si la version precedente est partielle,
-			// il faut remonter dans le temps
-			$id_ref = $id_diff-1;
-			while (!isset($old[$champ])
-			AND $id_ref>0) {
-				$prev = recuperer_version($id_objet,$objet, $id_ref--);
-				if (isset($prev[$champ]))
-					$old[$champ] = $prev[$champ];
-			}
+			// Remonter dans le temps pour trouver le champ en question
+			// pour chaque version
+			retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,$new);
+			retrouver_champ_version_objet($objet,$id_objet,$id_diff,$champ,$old);
+
 			if (!strlen($new[$champ]) && !strlen($old[$champ])) continue;
 
 			// si on n'a que le vieux, ou que le nouveau, on ne
@@ -153,25 +140,12 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 					? $new[$champ] : $old[$champ];
 
 			// si on a les deux, le diff nous interesse, plus ou moins court
-			if (isset($new[$champ])
-			AND isset($old[$champ])) {
-				// cas particulier : id_rubrique
-				if (in_array($champ, array('id_rubrique'))) {
-					$textes[$champ] = _T('version_deplace_rubrique',
-										 array('from'=> titre_rubrique($old[$champ])
-											   ,'to'=>titre_rubrique($new[$champ]))
-										 );
-				}
+			if (isset($new[$champ]) AND isset($old[$champ])) {
+				if (!$afficher_diff = charger_fonction($objet."_".$champ,'afficher_diff',true)
+				  AND !$afficher_diff = charger_fonction($champ,'afficher_diff',true))
+					$afficher_diff = charger_fonction('champ','afficher_diff');
 
-				// champs textuels
-				else {
-					$diff = new Diff(new DiffTexte);
-					$n = preparer_diff($new[$champ]);
-					$o = preparer_diff($old[$champ]);
-					$textes[$champ] = afficher_diff($diff->comparer($n,$o));
-					if ($format == 'diff' OR $format == 'apercu')
-						$textes[$champ] = afficher_para_modifies($textes[$champ], ($format == 'apercu'));
-				}
+				$textes[$champ] = $afficher_diff($champ,$old[$champ],$new[$champ],$format);
 			}
 		}
 	}
