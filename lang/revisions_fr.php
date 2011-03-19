@@ -14,6 +14,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'groupes_mots' => 'Les groupes de mots cl&eacute;s',
 
 	// I
+	'info_aucune_revision'=> 'Aucune r&eacute;vision',
+	'info_1_revision'=> '1 r&eacute;vision',
+	'info_nb_revisions'=> '@nb@ r&eacute;visions',
+	
 	'icone_restaurer_version' => 'Restaurer cette version',
 	'icone_retour_breve' => 'Retour &agrave; la br&egrave;ve',
 	'icone_retour_groupe_mot' => 'Retour au groupe de mots cl&eacute;s',
@@ -27,6 +31,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'mots' => 'Les mots cl&eacute;s',
 
+	// O
+	'objet_editorial' => 'objet',
+
 	// P
 	'plugin_update' => 'Mise &agrave; jour du plugin "R&eacute;visions" en version @version@.',
 
@@ -37,6 +44,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_form_revisions_objets' => 'Activer les r&eacute;visions',
 	'titre_restaurer_version' => 'Restaurer une version',
 	'titre_revisions' => 'R&eacute;visions',
+
+	// V
+	'voir_revisions'=>'Voir les révisions (@objet@ @id_objet@&nbsp: @titre@)',
 
 	// Z
 	'z' => 'zzz'
