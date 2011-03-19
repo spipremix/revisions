@@ -1,0 +1,4 @@
+<BOUCLE_lastv(VERSIONS){id_objet}{objet}{!par id_version}{0,1}>#SET{lastversion,#ID_VERSION}</BOUCLE_lastv>
+#SET{id_version,#ENV{id_version,#GET{lastversion}}}
+#SET{id_diff,#ENV{id_diff,#GET{lastversion}}|min{#GET{lastversion}|moins{1}}}
+#FORMULAIRE_REVISER{#OBJET,#ID_OBJET,#GET{id_version},#GET{id_diff}}

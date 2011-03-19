@@ -77,9 +77,9 @@ function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$cha
 /**
  * retourne un array() des champs modifies a la version id_version
  * le format =
- *    - diff => seulement les modifs (suivi_revisions)
+ *    - diff => seulement les modifs (page revisions)
  *    - apercu => idem, mais en plus tres cout s'il y en a bcp
- *    - complet => tout, avec surlignage des modifications (objets_versions)
+ *    - complet => tout, avec surlignage des modifications (page revision)
  *
  * http://doc.spip.org/@revision_comparee
  *

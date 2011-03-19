@@ -1,0 +1,36 @@
+[(#AUTORISER{voirrevisions,#OBJET,#ID_OBJET}|sinon_interdire_acces)]
+<h1><:info_historique:> &laquo;&nbsp;<a
+				href="[(#ID_OBJET|generer_url_entite{#OBJET})]"
+				title="[(#OBJET|objet_info{texte_objet}|_T) ]#ID_OBJET"
+				>#INFO_TITRE{#OBJET,#ID_OBJET}</a>&nbsp;&raquo;</h1>
+
+<BOUCLE_lastv(VERSIONS){id_objet}{objet}{!par id_version}{0,1}>#SET{lastversion,#ID_VERSION}</BOUCLE_lastv>
+#SET{id_version,#ENV{id_version,#GET{lastversion}}}
+#SET{id_diff,#ENV{id_diff,#GET{lastversion}}|min{#GET{lastversion}|moins{1}}}
+#SET{textes,#ID_OBJET|revision_comparee{#OBJET,#GET{id_version},complet,#GET{id_diff}}}
+
+[(#BOITE_OUVRIR{[
+
+	[(#AUTORISER{modifier,#OBJET,#ID_OBJET})
+
+		[(#GET{id_version}|=={#GET{lastversion}}|oui)
+			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}|icone_verticale{[(#OBJET|objet_info{texte_modifier}|_T)],#OBJET|objet_info{icone_objet},edit,right})]
+		]
+		[(#GET{id_version}|=={#GET{lastversion}}|non)
+			[(#URL_ECRIRE{revisions_restaurer,id_objet=#ID_OBJET}
+				|parametre_url{type,#OBJET}
+				|parametre_url{id_version,#GET{id_version}}
+				|icone_verticale{<:revisions:icone_restaurer_version:>,#OBJET|objet_info{icone_objet},'edit',right})]
+		]
+	]
+	[<div class='id_rubrique'>(#GET{textes}|table_valeur{id_rubrique})</div>]
+	[<h4 class='surtitre'>(#GET{textes}|table_valeur{surtitre})</h4>]
+	<h1>[(#INFO_STATUT{#OBJET,#ID_OBJET}|puce_statut) ](#GET{textes}|table_valeur{titre}|sinon{<:info_sans_titre:>})[(#OBJET|objet_icone|inserer_attribut{class,cadre-icone})]</h1>
+	[<h2 class='soustitre'>(#GET{textes}|table_valeur{soustitre})</h2>]
+],simple fiche_objet})]
+
+<div id="wysiwyg">
+	<INCLURE{fond=prive/objets/contenu/revision,textes=#GET*{textes},env}>
+</div>
+
+#BOITE_FERMER

@@ -13,9 +13,23 @@
 /* fonction pour le pipeline d'autorisation */
 function revisions_autoriser(){}
 
-// Voir les revisions ?
-// = voir l'objet
+/**
+ * Voir les revisions ?
+ * = revisions definies pour cet objet
+ * + l'objet existe
+ * + autorise a voir l'objet
+ */
 function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
+	$table = table_objet_sql($type);
+	$id_table_objet = id_table_objet($type);
+
+	include_spip('inc/revisions');
+	if (!liste_champs_versionnes($table))
+		return false;
+
+	if (!$row = sql_fetsel("*", $table, "$id_table_objet=".intval($id)))
+		return false;
+
 	return
 		autoriser('voir', $type, $id, $qui, $opt);
 }
