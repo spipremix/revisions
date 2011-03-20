@@ -5,7 +5,7 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// B
-	'bouton_comparer' => 'Comparer',
+	'bouton_comparer' => 'Voir les diff&eacute;rences',
 
 	// D
 	'differences_versions' => 'Diff&eacute;rences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@',
