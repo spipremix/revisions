@@ -3,11 +3,11 @@
 				href="[(#ID_OBJET|generer_url_entite{#OBJET})]"
 				title="[(#OBJET|objet_info{texte_objet}|_T) ]#ID_OBJET"
 				>#INFO_TITRE{#OBJET,#ID_OBJET}</a>&nbsp;&raquo;</h1>
-
 <BOUCLE_lastv(VERSIONS){id_objet}{objet}{!par id_version}{0,1}>#SET{lastversion,#ID_VERSION}</BOUCLE_lastv>
 #SET{id_version,#ENV{id_version,#GET{lastversion}}}
 #SET{id_diff,#ENV{id_diff,#GET{lastversion}}|min{#GET{lastversion}|moins{1}}}
 #SET{textes,#ID_OBJET|revision_comparee{#OBJET,#GET{id_version},complet,#GET{id_diff}}}
+<h2><:revisions:differences_versions{id_version=#GET{id_version},id_diff=#GET{id_diff}}:></h2>
 
 [(#BOITE_OUVRIR{[
 
@@ -29,7 +29,7 @@
 	[<h2 class='soustitre'>(#GET{textes}|table_valeur{soustitre})</h2>]
 ],simple fiche_objet})]
 
-<div id="wysiwyg">
+<div id="wysiwyg" class="revision">
 	<INCLURE{fond=prive/objets/contenu/revision,textes=#GET*{textes},env}>
 </div>
 
