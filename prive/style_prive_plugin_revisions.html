@@ -22,9 +22,11 @@
 #SET{rtl,#ENV{ltr}|choixsiegal{left,'',_rtl}}
 
 /* * Comparaison d articles */
-.diff-para-deplace { display:block;background: #e8e8ff; }
-.diff-para-ajoute { display:block;background: #d0ffc0; color: #000; }
-.diff-para-supprime { display:block;background: #ffd0c0; color: #904040; text-decoration: line-through; }
+.diff-para-deplace { background: #e8e8ff; }
+.diff-para-ajoute { background: #d0ffc0; color: #000; }
+.diff-para-supprime { background: #ffd0c0; color: #904040; text-decoration: line-through; }
+p>.diff-para-deplace,p>.diff-para-ajoute,p>.diff-para-supprime {display:block;}
+
 .diff-deplace { background: #e8e8ff; }
 .diff-ajoute { background: #d0ffc0; }
 .diff-supprime { background: #ffd0c0; color: #802020; text-decoration: line-through; }

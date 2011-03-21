@@ -13,7 +13,7 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 $GLOBALS['agregation_versions'] = 10;
-define('_INTERVALLE_REVISIONS', 300); // intervalle de temps separant deux revisions par un meme auteur
+define('_INTERVALLE_REVISIONS', 600); // intervalle de temps separant deux revisions par un meme auteur
 
 // http://doc.spip.org/@separer_paras
 function separer_paras($texte, $paras = "") {
@@ -734,16 +734,20 @@ function revisions_pre_edition($x) {
  * @return
  */
 function revisions_pre_edition_lien($x) {
-	// ex : si le champ jointure_mots est versionnable sur les articles
-	if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet']))
-		AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
-		verifier_premiere_revision($table,$x['args']['objet'],$x['data'],$versionnes);
-	}
+	if (intval($x['args']['id_objet_source'])>0
+	    AND intval($x['args']['id_objet'])>0) {
 
-	// ex : si le champ jointure_articles est versionnable sur les mots
-	if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet_source']))
-		AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
-		verifier_premiere_revision($table,$x['args']['objet_source'],$x['args']['id_objet_source'],$versionnes);
+		// ex : si le champ jointure_mots est versionnable sur les articles
+		if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet']))
+			AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
+			verifier_premiere_revision($table,$x['args']['objet'],$x['data'],$versionnes);
+		}
+
+		// ex : si le champ jointure_articles est versionnable sur les mots
+		if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet_source']))
+			AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
+			verifier_premiere_revision($table,$x['args']['objet_source'],$x['args']['id_objet_source'],$versionnes);
+		}
 	}
 
 	return $x;
@@ -791,19 +795,22 @@ function revisions_post_edition_lien($x) {
 			'data' => $id_o
 		)
 	*/
+	if (intval($x['args']['id_objet_source'])>0
+	    AND intval($x['args']['id_objet'])>0) {
 
-	// ex : si le champ jointure_mots est versionnable sur les articles
-	if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet']))
-	  AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
-		$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet'],$x['data'],$x['args']['objet_source']));
-		ajouter_version($x['data'],$x['args']['objet'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
-	}
+		// ex : si le champ jointure_mots est versionnable sur les articles
+		if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet']))
+			AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
+			$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet'],$x['data'],$x['args']['objet_source']));
+			ajouter_version($x['data'],$x['args']['objet'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+		}
 
-	// ex : si le champ jointure_articles est versionnable sur les mots
-	if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet_source']))
-		AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
-		$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet_source'],$x['args']['id_objet_source'],$x['args']['objet']));
-		ajouter_version($x['args']['id_objet_source'],$x['args']['objet_source'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+		// ex : si le champ jointure_articles est versionnable sur les mots
+		if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet_source']))
+			AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
+			$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet_source'],$x['args']['id_objet_source'],$x['args']['objet']));
+			ajouter_version($x['args']['id_objet_source'],$x['args']['objet_source'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+		}
 	}
 
 	return $x;

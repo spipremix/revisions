@@ -35,20 +35,24 @@ function afficher_diff_jointure_dist($champ,$old,$new,$format='diff'){
 	// les communs
 	$intersection = array_intersect($new,$old);
 	foreach($intersection as $id)
-		if ($id=intval($id))
-			$liste[$id] = generer_info_entite(intval(trim($id)),$objet,'titre');
+		if ($id=intval(trim($id)))
+			$liste[$id] = "<a href='".generer_url_entite($id,$objet)."' title='"._T(objet_info($objet,'texte_objet'))." $id'>".generer_info_entite($id,$objet,'titre')."</a>";
 
 	// les supprimes
 	$old = array_diff($old,$intersection);
 	foreach($old as $id)
-		if ($id=intval($id))
-			$liste[$id] = "<span class='diff-supprime'>".generer_info_entite(intval(trim($id)),$objet,'titre')."</span>";
+		if ($id=intval(trim($id)))
+			$liste[$id] = "<span class='diff-supprime'>"
+			              . "<a href='".generer_url_entite($id,$objet)."' title='"._T(objet_info($objet,'texte_objet'))." $id'>".generer_info_entite($id,$objet,'titre')."</a>"
+			              . "</span>";
 
 	// les ajoutes
 	$new = array_diff($new,$intersection);
 	foreach($new as $id)
-		if ($id=intval($id))
-			$liste[$id] = "<span class='diff-ajoute'>".generer_info_entite(intval(trim($id)),$objet,'titre')."</span>";
+		if ($id=intval(trim($id)))
+			$liste[$id] = "<span class='diff-ajoute'>"
+			              . "<a href='".generer_url_entite($id,$objet)."' title='"._T(objet_info($objet,'texte_objet'))." $id'>".generer_info_entite($id,$objet,'titre')."</a>"
+			              . "</span>";
 
 	ksort($liste);
 	$liste = implode(', ',$liste);

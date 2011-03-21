@@ -2,7 +2,7 @@
 	<nom>R&#233;visions (suivi des modifications)</nom>
 	<auteur>Collectif SPIP</auteur>
 	<icon>prive/themes/spip/images/revision-32.png</icon>
-	<version>1.4.0</version>
+	<version>1.4.1</version>
 	<version_base>1.1.2</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
