@@ -69,8 +69,11 @@ function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$cha
 		$champs[$champ] = $prev[$champ];
 	else {
 		// le champ n'a jamais ete versionne :
-		// il correspond a la version courante en base
-		$champs[$champ] = generer_info_entite($id_objet,$objet,$champ,"**");
+		// il etait initialement vide
+		if (strncmp($champ,'jointure_',9)==0)
+			$champs[$champ] = '';
+		else
+			$champs[$champ] = '';
 	}
 }
 
@@ -143,7 +146,7 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 			if (isset($new[$champ]) AND isset($old[$champ])) {
 				if (!$afficher_diff = charger_fonction($objet."_".$champ,'afficher_diff',true)
 				  AND !$afficher_diff = charger_fonction($champ,'afficher_diff',true))
-					$afficher_diff = charger_fonction('champ','afficher_diff');
+					$afficher_diff = charger_fonction(strncmp($champ,'jointure_',9)==0?'jointure':'champ','afficher_diff');
 
 				$textes[$champ] = $afficher_diff($champ,$old[$champ],$new[$champ],$format);
 			}

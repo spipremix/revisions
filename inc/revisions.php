@@ -13,7 +13,7 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 $GLOBALS['agregation_versions'] = 10;
-define('_INTERVALLE_REVISIONS', 3600); // intervalle de temps separant deux revisions par un meme auteur
+define('_INTERVALLE_REVISIONS', 10); // intervalle de temps separant deux revisions par un meme auteur
 
 // http://doc.spip.org/@separer_paras
 function separer_paras($texte, $paras = "") {
@@ -618,70 +618,193 @@ function liste_champs_versionnes($table) {
 	return array();
 }
 
-// anciennement enregistrer_premiere_revision
-// code a revoir car il ne marche pas bien (ne prend pas en compte les j_mots,
-// cherche un titre qui n'existe pas chez les auteurs, etc
-function revisions_pre_edition($x) {
-	if  ($champs = liste_champs_versionnes($x['args']['table'])) {
+/**
+ * Lorsqu'un champ versionne est une jointure, recuperer tous les liens
+ * et les mettre sous forme de liste enumeree
+ * 
+ * @param string $objet
+ * @param string $id_objet
+ * @param string $jointure
+ * @return string
+ */
+function recuperer_valeur_champ_jointure($objet,$id_objet,$jointure){
+	$objet_joint = objet_type($jointure);
+	include_spip('action/editer_liens');
+	$v = array();
+	if (objet_associable($objet_joint)) {
+		$liens = objet_trouver_liens(array($objet_joint=>'*'),array($objet=>$id_objet));
+		foreach($liens as $l)
+			$v[] = $l[$objet_joint];
+	}
+	elseif(objet_associable($objet)) {
+		$liens = objet_trouver_liens(array($objet=>$id_objet),array($objet_joint=>'*'));
+		foreach($liens as $l)
+			$v[] = $l[$objet];
+	}
+	sort($v);
+	return implode(",",$v);
+}
 
-		$id_objet = $x['args']['id_objet'];
-		$objet= $x['args']['type'];
-		$table_spip = $x['args']['table'];
-		$id_table_objet = id_table_objet($objet);
+/**
+ * Creer la premiere revision d'un objet si necessaire
+ * notamment si on vient d'activer l'extension et qu'on fait une modif
+ * sur un objet qui etait deja en base, mais non versionne
+ *
+ * la fonction renvoie le numero de la derniere version de l'objet,
+ * et 0 si pas de version pour cet objet
+ * 
+ * @param string $table
+ * @param string $objet
+ * @param int $id_objet
+ * @param array $champs
+ * @return int
+ */
+function verifier_premiere_revision($table,$objet,$id_objet,$champs=null){
 
-		if (!sql_countsel('spip_versions',"id_objet=".intval($id_objet)." AND objet=".sql_quote($objet))) {
-			$originaux = sql_fetsel("*", $table_spip, "$id_table_objet=$id_objet");
-			foreach($champs as $v)
-				if (isset($originaux[$v]))
-					$champs_originaux[$v] = $originaux[$v];
+	$id_table_objet = id_table_objet($objet);
+	if (!$champs)
+		$champs = liste_champs_versionnes($table);
+	if (!$champs)
+		return false;
 
-			// Si le titre est vide, c'est qu'on vient de creer l'objet
-			// (sauf dans le cas des auteurs)
-			if ($champs_originaux['titre'] !== '') {
-				$date_modif = $champs_originaux['date_modif'];
-				$date = $champs_originaux['date'];
-				unset ($champs_originaux['date_modif']);
-				unset ($champs_originaux['date']);
-				$id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('version_initiale'), 0);
-				// Inventer une date raisonnable pour la version initiale
-				if ($date_modif>'1970-')
-					$date_modif = strtotime($date_modif);
-				else if ($date>'1970-')
-					$date_modif = strtotime($date);
-				else
-					$date_modif = time()-7200;
-				sql_updateq('spip_versions', array('date' => date("Y-m-d H:i:s", $date_modif)), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version=$id_version");
+	if (!$id_version = sql_getfetsel('id_version','spip_versions',"id_objet=".intval($id_objet)." AND objet=".sql_quote($objet),'','id_version DESC','0,1')) {
+		// recuperer toutes les valeurs actuelles des champs
+		// pour l'objet
+		$originaux = sql_fetsel("*", $table, "$id_table_objet=".intval($id_objet));
+		$premiere = false;
+		foreach($champs as $v){
+			if (isset($originaux[$v])){
+				$champs_originaux[$v] = $originaux[$v];
 			}
+			else if(strncmp($v,'jointure_',9)==0) {
+				$champs_originaux[$v] = recuperer_valeur_champ_jointure($objet,$id_objet,substr($v,9));
+			}
+			if (isset($champs_originaux[$v]) AND strlen($originaux[$v]))
+				$premiere = true;
 		}
+
+		// Si un champ est non vide,
+		// il faut creer une premiere revision
+		if ($premiere) {
+			$trouver_table = charger_fonction('trouver_table','base');
+			$desc = $trouver_table($table);
+
+			// "trouver" une date raisonnable pour la version initiale
+
+			$date_modif = "";
+			foreach(array('date_modif','maj') as $d){
+				if (!$date_modif AND isset($originaux[$d]) AND $t=strtotime($d))
+					$date_modif = date("Y-m-d H:i:s", $t);
+			}
+			if (!$date_modif AND isset($desc['date'])) {
+				$date_modif = (isset($originaux[$desc['date']])?$originaux[$desc['date']]:sql_getfetsel($desc['date'],$table,"$id_table_objet=".intval($id_objet)));
+			}
+			if (!$date_modif)
+				$date_modif = date("Y-m-d H:i:s", time()-7200);
+			
+			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('version_initiale'), 0))
+				sql_updateq('spip_versions', array('date' => $date_modif), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version=$id_version");
+		}
+	}
+	return $id_version;
+}
+
+/**
+ * Avant toute modification en base
+ * verifier qu'une version initiale existe bien pour cet objet
+ * et la creer sinon avec l'etat actuel de l'objet
+ *
+ * @param array $x
+ * @return array
+ */
+function revisions_pre_edition($x) {
+	$table = $x['args']['table'];
+	if  ($champs = liste_champs_versionnes($table)) {
+
+		verifier_premiere_revision($table,$x['args']['type'],$x['args']['id_objet'],$champs);
 	}
 	return $x;
 }
 
-
-// anciennement enregistrer_nouvelle_revision
-function revisions_post_edition($x) {
-	// Regarder si au moins une des modifs est versionnable
-	$champs = array();
-	foreach (liste_champs_versionnes($x['args']['table']) as $key)
-		if (isset($x['data'][$key]))
-			$champs[$key] = $x['data'][$key];
-
-	// A moins qu'il ne s'agisse d'operation (ajout/suppr) sur les mots-cles?
-	if ($x['args']['operation'] == 'editer_mots'
-	AND $x['args']['table'] == 'spip_articles') {
-		include_spip('inc/texte');
-		$mots = array();
-		foreach(
-			sql_allfetsel('id_mot', 'spip_mots_liens',array(
-				'id_objet='.sql_quote($x['args']['id_objet'],
-				'objet='.sql_quote('article'))))
-		as $mot)
-			$mots[] = "[->mot".$mot['id_mot']."]";
-		$champs['j_mots'] = join(' ', $mots);
+/**
+ * Avant modification en base d'un lien,
+ * enregistrer une premiere revision de l'objet si necessaire
+ *
+ * @param  $x
+ * @return
+ */
+function revisions_pre_edition_lien($x) {
+	// ex : si le champ jointure_mots est versionnable sur les articles
+	if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet']))
+		AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
+		verifier_premiere_revision($table,$x['args']['objet'],$x['data'],$versionnes);
 	}
 
-	if (count($champs))
-		ajouter_version($x['args']['id_objet'],$x['args']['type'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+	// ex : si le champ jointure_articles est versionnable sur les mots
+	if ($versionnes = liste_champs_versionnes($table=table_objet_sql($x['args']['objet_source']))
+		AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
+		verifier_premiere_revision($table,$x['args']['objet_source'],$x['args']['id_objet_source'],$versionnes);
+	}
+
+	return $x;
+}
+
+/**
+ * Apres modification en base, versionner l'objet
+ *
+ * @param  $x
+ * @return
+ */
+function revisions_post_edition($x) {
+	if ($versionnes = liste_champs_versionnes($x['args']['table'])){
+		// Regarder si au moins une des modifs est versionnable
+		$champs = array();
+		foreach ($versionnes as $key)
+			if (isset($x['data'][$key]))
+				$champs[$key] = $x['data'][$key];
+
+		if (count($champs))
+			ajouter_version($x['args']['id_objet'],$x['args']['type'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+	}
+
+	return $x;
+}
+
+
+/**
+ * Apres modification en base d'un lien, versionner l'objet si necessaire
+ *
+ * @param  $x
+ * @return
+ */
+function revisions_post_edition_lien($x) {
+	/*pipeline('post_edition_lien',
+		array(
+			'args' => array(
+				'table_lien' => $table_lien,
+				'objet_source' => $objet_source,
+				'id_objet_source' => $l[$primary],
+				'objet' => $l['objet'],
+				'id_objet' => $id_o,
+				'action'=>'delete',
+			),
+			'data' => $id_o
+		)
+	*/
+
+	// ex : si le champ jointure_mots est versionnable sur les articles
+	if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet']))
+	  AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
+		$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet'],$x['data'],$x['args']['objet_source']));
+		ajouter_version($x['data'],$x['args']['objet'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+	}
+
+	// ex : si le champ jointure_articles est versionnable sur les mots
+	if ($versionnes = liste_champs_versionnes(table_objet_sql($x['args']['objet_source']))
+		AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
+		$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet_source'],$x['args']['id_objet_source'],$x['args']['objet']));
+		ajouter_version($x['args']['id_objet_source'],$x['args']['objet_source'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+	}
 
 	return $x;
 }
