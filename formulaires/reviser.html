@@ -46,13 +46,13 @@
 function check_diff(){
 	var v=jQuery('input[name=id_version]:checked');
 	var d=jQuery('input[name=id_diff]:checked');
-	if (!d.length || d.attr('value')>=v.attr('value'))
+	if (!d.length || parseInt(d.attr('value'))>=parseInt(v.attr('value')))
 		v.parents('tr').next('tr').find('input[name=id_diff]').attr('checked','checked');
 }
 function check_version(){
 	var v=jQuery('input[name=id_version]:checked');
 	var d=jQuery('input[name=id_diff]:checked');
-	if (!v.length || d.attr('value')>=v.attr('value'))
+	if (!v.length || parseInt(d.attr('value'))>=parseInt(v.attr('value')))
 		d.parents('tr').prev('tr').find('input[name=id_version]').attr('checked','checked');
 }
 /*]]>*/</script>
