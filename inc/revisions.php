@@ -13,7 +13,7 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 $GLOBALS['agregation_versions'] = 10;
-define('_INTERVALLE_REVISIONS', 10); // intervalle de temps separant deux revisions par un meme auteur
+define('_INTERVALLE_REVISIONS', 300); // intervalle de temps separant deux revisions par un meme auteur
 
 // http://doc.spip.org/@separer_paras
 function separer_paras($texte, $paras = "") {
