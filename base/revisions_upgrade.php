@@ -53,7 +53,7 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 			sql_updateq("spip_versions",array('objet'=>'article'),"objet=''");
 			sql_updateq("spip_versions_fragments",array('objet'=>'article'),"objet=''");
 			echo _T('revisions:plugin_update',array('version'=>'1.1.2'));
-			#ecrire_meta($nom_meta_base_version,$current_version='1.1.2');
+			ecrire_meta($nom_meta_base_version,$current_version='1.1.2');
 		}
 	}
 }
