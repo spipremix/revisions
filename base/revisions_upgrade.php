@@ -44,7 +44,7 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 			include_spip('inc/meta');
 			revisions_objet_upgrade_11();
 			revisions_upate_meta();
-			echo _T('revisions:plugin_update',array('version'=>'1.1'));
+			echo _T('revisions:plugin_update',array('version'=>'1.1'))."<br />";
 			ecrire_meta($nom_meta_base_version,$current_version='1.1');
 		}
 		if (spip_version_compare($current_version,'1.1.2','<')){
@@ -52,7 +52,7 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 			revisions_upate_meta();
 			sql_updateq("spip_versions",array('objet'=>'article'),"objet=''");
 			sql_updateq("spip_versions_fragments",array('objet'=>'article'),"objet=''");
-			echo _T('revisions:plugin_update',array('version'=>'1.1.2'));
+			echo _T('revisions:plugin_update',array('version'=>'1.1.2'))."<br />";
 			ecrire_meta($nom_meta_base_version,$current_version='1.1.2');
 		}
 	}
