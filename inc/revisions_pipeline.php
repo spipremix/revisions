@@ -69,4 +69,30 @@ function revisions_revisions_liste_objets($array){
 
 	return $array;
 }
+
+function revisions_formulaire_charger($flux){
+	if (strncmp($flux['args']['form'],'editer_',7)==0
+	  AND $id_version = _request('id_version')
+	  AND $objet = substr($flux['args']['form'],7)
+	  AND $id_table_objet = id_table_objet($objet)
+	  AND isset($flux['data'][$id_table_objet])
+		AND $id = intval($flux['data'][$id_table_objet])
+	  AND !$flux['args']['je_suis_poste']){
+		// ajouter un message convival pour indiquer qu'on a restaure la version
+		$flux['data']['message_ok'] = _T('revisions:icone_restaurer_version',array('version'=>$id_version));
+		// recuperer la version
+		include_spip('inc/revisions');
+		$champs = recuperer_version($id,$objet, $id_version);
+		foreach($champs as $champ=>$valeur){
+			if (!strncmp($champ,'jointure_',9)==0){
+				if ($champ=='id_rubrique'){
+					$flux['data']['id_parent'] = $valeur;
+				}
+				else
+					$flux['data'][$champ] = $valeur;
+			}
+		}
+	}
+	return $flux;
+}
 ?>

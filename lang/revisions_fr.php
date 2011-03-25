@@ -15,7 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_revision'=> '1 r&eacute;vision',
 	'info_nb_revisions'=> '@nb@ r&eacute;visions',
 	
-	'icone_restaurer_version' => 'Restaurer cette version',
+	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@',
 	'icone_suivi_revisions' => 'Suivi des r&eacute;visions',
 
 	// L

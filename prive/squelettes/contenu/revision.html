@@ -5,6 +5,16 @@
 #SET{textes,#ID_OBJET|revision_comparee{#OBJET,#GET{id_version},complet,#GET{id_diff}}}
 
 [(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,#OBJET,#ID_OBJET})
+		[(#GET{id_version}|=={#GET{lastversion}}|oui)
+			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}|icone_verticale{[(#OBJET|objet_info{texte_modifier}|_T)],#OBJET|objet_info{icone_objet},edit,right})]
+		]
+		[(#GET{id_version}|=={#GET{lastversion}}|non)
+			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}
+				|parametre_url{id_version,#GET{id_version}}
+				|icone_verticale{[(#VAL{revisions:icone_restaurer_version}|_T{#ARRAY{version,#GET{id_version}}})],revision-24.png,'edit',right})]
+		]
+	]
 	<h1>[(#CHEMIN_IMAGE{diff-24.png}|balise_img{'',cadre-icone})]<:info_historique:> &laquo;&nbsp;<a
 					href="[(#ID_OBJET|generer_url_entite{#OBJET})]"
 					title="[(#OBJET|objet_info{texte_objet}|_T) ]#ID_OBJET"
@@ -16,15 +26,10 @@
 
 
 	[(#AUTORISER{modifier,#OBJET,#ID_OBJET})
-
-		[(#GET{id_version}|=={#GET{lastversion}}|oui)
-			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}|icone_verticale{[(#OBJET|objet_info{texte_modifier}|_T)],#OBJET|objet_info{icone_objet},edit,right})]
-		]
-		[(#GET{id_version}|=={#GET{lastversion}}|non)
-			[(#URL_ECRIRE{revisions_restaurer,id_objet=#ID_OBJET}
-				|parametre_url{type,#OBJET}
-				|parametre_url{id_version,#GET{id_version}}
-				|icone_verticale{<:revisions:icone_restaurer_version:>,#OBJET|objet_info{icone_objet},'edit',right})]
+		[(#AUTORISER{modifier,#OBJET,#ID_OBJET}|oui)
+			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}
+				|parametre_url{id_version,#GET{id_diff}}
+				|icone_verticale{[(#VAL{revisions:icone_restaurer_version}|_T{#ARRAY{version,#GET{id_diff}}})],revision-24.png,'edit',right})]
 		]
 	]
 	[<div class='id_rubrique'>(#GET{textes}|table_valeur{id_rubrique})</div>]
