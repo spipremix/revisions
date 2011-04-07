@@ -19,7 +19,7 @@
 	<tbody>
 	<BOUCLE_liste_rev(VERSIONS){id_version>1}{objet!=''}{id_auteur?}{id_objet?}{objet?}{where?}{recherche?}{tri #ENV{par,date},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
-			<td class='statut'>[(#INFO_STATUT{#OBJET,#ID_OBJET}|puce_statut)]</td>
+			<td class='statut'>[(#INFO_STATUT{#OBJET,#ID_OBJET}|puce_statut{#OBJET})]</td>
 			<td class="type">[(#OBJET|objet_icone{16})]</td>
 			<td class='diff'>#SET{diff,#ID_OBJET|revisions_diff{#OBJET,#ID_VERSION}}
 			[<a href="#" onclick="$(this).parent().next().find('.diff').toggle('fast');return false;" title="<:revisions:voir_differences|attribut_html:>">[(#CHEMIN_IMAGE{diff-16.png}|balise_img{<:revisions:voir_differences:>})]</a>

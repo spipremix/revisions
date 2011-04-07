@@ -34,7 +34,7 @@
 	]
 	[<div class='id_rubrique'>(#GET{textes}|table_valeur{id_rubrique})</div>]
 	[<h4 class='surtitre'>(#GET{textes}|table_valeur{surtitre})</h4>]
-	<h1>[(#INFO_STATUT{#OBJET,#ID_OBJET}|puce_statut) ][(#GET{textes}|table_valeur{titre}|sinon{<:info_sans_titre:>})]</h1>
+	<h1>[(#INFO_STATUT{#OBJET,#ID_OBJET}|puce_statut{#OBJET}) ][(#GET{textes}|table_valeur{titre}|sinon{<:info_sans_titre:>})]</h1>
 	[<h2 class='soustitre'>(#GET{textes}|table_valeur{soustitre})</h2>]
 
 	<div class="nettoyeur"></div>
