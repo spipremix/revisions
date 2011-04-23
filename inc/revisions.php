@@ -720,8 +720,8 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null){
 function revisions_pre_edition($x) {
 	$table = $x['args']['table'];
 	if  ($champs = liste_champs_versionnes($table)) {
-
-		verifier_premiere_revision($table,$x['args']['type'],$x['args']['id_objet'],$champs);
+		$objet = isset($x['args']['type']) ? $x['args']['type'] : table_objet($table);
+		verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $champs);
 	}
 	return $x;
 }
