@@ -702,7 +702,7 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null){
 			if (!$date_modif)
 				$date_modif = date("Y-m-d H:i:s", time()-7200);
 			
-			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('version_initiale'), 0))
+			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('revisions:version_initiale'), 0))
 				sql_updateq('spip_versions', array('date' => $date_modif), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version=$id_version");
 		}
 	}

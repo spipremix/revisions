@@ -64,7 +64,7 @@
 
 	<bouton id='revisions' parent='bando_publication'>
 		<icone>images/revision-16.png</icone>
-		<titre>info_historique_titre</titre>
+		<titre>revisions:info_historique_titre</titre>
 	</bouton>
 	<bouton id='configurer_revisions' parent='bando_configuration'>
 		<icone>images/revision-16.png</icone>

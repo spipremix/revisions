@@ -31,7 +31,7 @@ function afficher_diff_id_rubrique_dist($champ,$old,$new,$format='diff'){
 		$out = _T('info_dans_rubrique')
 		       . " <b>&#171;&nbsp;".generer_info_entite($new,'rubrique','titre')."&nbsp;&#187;</b>";
 	else
-		$out = _T('version_deplace_rubrique',
+		$out = _T('revisions:version_deplace_rubrique',
 							 array('from'=> generer_info_entite($old,'rubrique','titre')
 									 ,'to'=>generer_info_entite($new,'rubrique','titre')
 							 )
