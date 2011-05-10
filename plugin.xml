@@ -71,4 +71,6 @@
 		<titre>revisions:titre_revisions</titre>
 	</bouton>
 	<necessite id="SPIP" version="[3.0.0-dev;)" />
+	<categorie>edition</categorie>
+	<traduire gestionnaire="salvatore" module="revisions" reference="fr" />
 </plugin>
