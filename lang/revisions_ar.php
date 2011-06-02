@@ -8,7 +8,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// B
-	'bouton_comparer' => 'Voir les diff&eacute;rences', # NEW
+	'bouton_comparer' => 'عرض الفوارق',
 
 	// D
 	'diff_para_ajoute' => 'فقرة مضافة',
@@ -17,43 +17,43 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'diff_texte_ajoute' => 'نص مضاف',
 	'diff_texte_deplace' => 'نص منقول',
 	'diff_texte_supprime' => 'نص محذوف',
-	'differences_versions' => 'Diff&eacute;rences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@', # NEW
+	'differences_versions' => 'الفوارق بين الإصدار رقم @id_version@ والإصدار رقم @id_diff@',
 
 	// I
-	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@', # NEW
-	'icone_suivi_revisions' => 'Suivi des r&eacute;visions', # NEW
-	'info_1_revision' => '1 r&eacute;vision', # NEW
-	'info_aucune_revision' => 'Aucune r&eacute;vision', # NEW
+	'icone_restaurer_version' => 'استرجاع الإصدار رقم @version@',
+	'icone_suivi_revisions' => 'متابعة التعديلات',
+	'info_1_revision' => 'تعديل واحد',
+	'info_aucune_revision' => 'لا يوجد تعديلات',
 	'info_historique' => 'التعديلات:',
 	'info_historique_lien' => 'عرض التعديلات',
 	'info_historique_titre' => 'متابعة التعديلات',
-	'info_nb_revisions' => '@nb@ r&eacute;visions', # NEW
+	'info_nb_revisions' => '@nb@ تعديل',
 
 	// L
-	'label_choisir_id_version' => 'S&eacute;lectionnez les versions &agrave; comparer', # NEW
-	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions&nbsp;:', # NEW
+	'label_choisir_id_version' => 'تحديد الإصدارات للمقارنة',
+	'label_config_revisions_objets' => 'على اي عناصر يجب تفعيل التعديلات:',
 
 	// O
-	'objet_editorial' => 'objet', # NEW
+	'objet_editorial' => 'عنصر',
 
 	// P
-	'plugin_update' => 'Mise &agrave; jour du plugin "R&eacute;visions" en version @version@.', # NEW
+	'plugin_update' => 'تحديث ملحق «التعديلات» الى الإصدار @version@.',
 
 	// T
-	'titre_form_revisions_objets' => 'Activer les r&eacute;visions', # NEW
-	'titre_restaurer_version' => 'Restaurer une version', # NEW
-	'titre_revisions' => 'R&eacute;visions', # NEW
+	'titre_form_revisions_objets' => 'تفعيل التعديلات',
+	'titre_restaurer_version' => 'استرجاع إصدار',
+	'titre_revisions' => 'التعديلات',
 
 	// V
 	'version_deplace_rubrique' => 'منقول من <b>«@from@»</b> الى <b>«@to@»</b>.',
 	'version_initiale' => 'الاصدار الاصلي',
-	'voir_differences' => 'Voir les diff&eacute;rences', # NEW
-	'voir_mes_revisions' => 'Mes r&eacute;visions', # NEW
-	'voir_revisions' => 'Voir les r&eacute;visions (@objet@ @id_objet@&nbsp;: @titre@)', # NEW
-	'voir_toutes_les_revisions' => 'Toutes les r&eacute;visions', # NEW
+	'voir_differences' => 'عرض الفوارق',
+	'voir_mes_revisions' => 'تعديلاعتي',
+	'voir_revisions' => 'عرض التعديلات (@objet@ @id_objet@: @titre@)',
+	'voir_toutes_les_revisions' => 'كل التعديلات',
 
 	// Z
-	'z' => 'zzz' # NEW
+	'z' => 'zzz'
 );
 
 ?>
