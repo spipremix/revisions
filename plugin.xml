@@ -6,6 +6,7 @@
 	<version_base>1.1.2</version_base>
 	<install>base/revisions_upgrade.php</install>
 	<etat>test</etat>
+	<slogan>Suivi des modifications des objets &eacute;ditoriaux</slogan>
 	<description>Suivi des modifications des objets &eacute;ditoriaux</description>
 	<prefix>revisions</prefix>
 
