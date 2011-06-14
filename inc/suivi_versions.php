@@ -128,6 +128,9 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 				break;
 		}
 
+		// memoriser les cas les plus courant
+		$afficher_diff_champ = charger_fonction('champ','afficher_diff');
+		$afficher_diff_jointure = charger_fonction('jointure','afficher_diff');
 		foreach ($champs as $champ) {
 			// Remonter dans le temps pour trouver le champ en question
 			// pour chaque version
@@ -146,7 +149,7 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 			if (isset($new[$champ]) AND isset($old[$champ])) {
 				if (!$afficher_diff = charger_fonction($objet."_".$champ,'afficher_diff',true)
 				  AND !$afficher_diff = charger_fonction($champ,'afficher_diff',true))
-					$afficher_diff = charger_fonction(strncmp($champ,'jointure_',9)==0?'jointure':'champ','afficher_diff');
+					$afficher_diff = (strncmp($champ,'jointure_',9)==0?$afficher_diff_jointure:$afficher_diff_champ);
 
 				$textes[$champ] = $afficher_diff($champ,$old[$champ],$new[$champ],$format);
 			}
