@@ -11,12 +11,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_comparer' => 'Voir les diff&eacute;rences', # NEW
 
 	// D
-	'diff_para_ajoute' => 'Added paragraph',
-	'diff_para_deplace' => 'Moved paragraph',
-	'diff_para_supprime' => 'Deleted paragraph',
-	'diff_texte_ajoute' => 'Added text',
-	'diff_texte_deplace' => 'Moved text',
-	'diff_texte_supprime' => 'Deleted text',
+	'diff_para_ajoute' => 'Pridaný odsek',
+	'diff_para_deplace' => 'Presunutý odsek',
+	'diff_para_supprime' => 'Odstránený odsek',
+	'diff_texte_ajoute' => 'Pridaný text',
+	'diff_texte_deplace' => 'Presunutý text',
+	'diff_texte_supprime' => 'Odstránený text',
 	'differences_versions' => 'Diff&eacute;rences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@', # NEW
 
 	// I
@@ -24,9 +24,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_suivi_revisions' => 'Suivi des r&eacute;visions', # NEW
 	'info_1_revision' => '1 r&eacute;vision', # NEW
 	'info_aucune_revision' => 'Aucune r&eacute;vision', # NEW
-	'info_historique' => 'Revisions:',
-	'info_historique_lien' => 'Display list of versions', # MODIF
-	'info_historique_titre' => 'Revision tracking',
+	'info_historique' => 'Opravy:',
+	'info_historique_lien' => 'Zobraziť zoznam verzií',
+	'info_historique_titre' => 'Sledovanie opráv',
 	'info_nb_revisions' => '@nb@ r&eacute;visions', # NEW
 
 	// L
@@ -45,8 +45,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_revisions' => 'R&eacute;visions', # NEW
 
 	// V
-	'version_deplace_rubrique' => 'Moved from <b>« @from@ »</b> to <b>« @to@ »</b>.',
-	'version_initiale' => 'Initial version', # MODIF
+	'version_deplace_rubrique' => 'Presunuté z <b>"@from@"</b> na <b>"@to@".</b>',
+	'version_initiale' => 'Prvá verzia',
 	'voir_differences' => 'Voir les diff&eacute;rences', # NEW
 	'voir_mes_revisions' => 'Mes r&eacute;visions', # NEW
 	'voir_revisions' => 'Voir les r&eacute;visions (@objet@ @id_objet@&nbsp;: @titre@)', # NEW
