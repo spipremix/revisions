@@ -35,7 +35,7 @@ function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
 }
 
 // tout le monde peut voir le bouton de suivi des revisions
-function autoriser_suivi_revisions_bouton_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_suivi_revisions_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
 	return true;
 }
 
