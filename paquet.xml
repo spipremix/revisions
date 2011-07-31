@@ -29,6 +29,6 @@
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/revisions.php" />
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/revisions.php" />
 
-	<menu nom="revisions" titre="revisions:info_historique_titre" parent="bando_publication" icone="images/revision-16.png" />
-	<menu nom="configurer_revisions" titre="revisions:titre_revisions" parent="bando_configuration" icone="images/revision-16.png" />
+	<menu nom="revisions" titre="revisions:info_historique_titre" parent="menu_publication" icone="images/revision-16.png" />
+	<menu nom="configurer_revisions" titre="revisions:titre_revisions" parent="menu_configuration" icone="images/revision-16.png" />
 </paquet>
