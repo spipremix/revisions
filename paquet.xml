@@ -1,9 +1,9 @@
 <paquet
 	prefix="revisions"
 	categorie="edition"
-	version="1.5.1"
+	version="1.6.0"
 	etat="test"
-	compatibilite="[3.0.0-dev;["
+	compatibilite="[3.0.0-alpha2;["
 	logo="prive/themes/spip/images/revision-32.png"
 	schema="1.1.2"
 >	

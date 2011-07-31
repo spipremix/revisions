@@ -100,27 +100,5 @@ function revisions_upate_meta(){
 	ecrire_meta('objets_versions',serialize($versions));
 }
 
-/**
- * Upgrader la base : table versions et table versions_fragments
- * @return void
- */
-function revisions_objet_upgrade_11() {
-	// Ajout du champs objet et modification du champs id_article en id_objet
-	// sur les 2 tables spip_versions et spip_versions_fragments
-	sql_alter("TABLE spip_versions CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL");
-	sql_alter("TABLE spip_versions ADD objet VARCHAR (25) DEFAULT '' NOT NULL AFTER id_objet");
-	// Les id_objet restent les id_articles puisque les révisions n'étaient possibles que sur les articles
-	sql_updateq("spip_versions",array('objet'=>'article'),"objet=''");
-	// Changement des clefs primaires également
-	sql_alter("TABLE spip_versions DROP PRIMARY KEY");
-	sql_alter("TABLE spip_versions ADD PRIMARY KEY (id_version, id_objet, objet)");
 
-	sql_alter("TABLE spip_versions_fragments CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL");
-	sql_alter("TABLE spip_versions_fragments ADD objet VARCHAR (25) DEFAULT '' NOT NULL AFTER id_objet");
-	// Les id_objet restent les id_articles puisque les révisions n'étaient possibles que sur les articles
-	sql_updateq("spip_versions_fragments",array('objet'=>'article'),"objet=''");
-	// Changement des clefs primaires également
-	sql_alter("TABLE spip_versions_fragments DROP PRIMARY KEY");
-	sql_alter("TABLE spip_versions_fragments ADD PRIMARY KEY (id_objet, objet, id_fragment, version_min)");
-}
 ?>
