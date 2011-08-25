@@ -31,21 +31,4 @@ function formulaires_configurer_revisions_objets_traiter_dist(){
 	return array('message_ok'=>_T('config_info_enregistree'));
 }
 
-function charger_choix_objets_revisions(){
-	$res = '';
-
-	// On recupere l'array des tables configurees
-	$tables_configurees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
-	$tables_possibles = pipeline('revisions_liste_objets',array());
-
-	foreach($tables_possibles as $table=>$titre){
-		$checked = in_array($table,$tables_configurees) ? 'checked="checked"' : '';
-		$res .= '<div class="choix">
-			<input class="checkbox" type="checkbox" name="objets_versions&#91;&#93; " value="'.$table.'" '.$checked.' id="objets_versions_'.$table.'"/>
-			<label for="objets_versions_'.$table.'">'._T($titre).'</label>
-			</div>';
-	}
-
-	return $res;
-}
 ?>

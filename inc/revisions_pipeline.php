@@ -14,11 +14,12 @@
 function revisions_boite_infos($flux){
 	$type = $flux['args']['type'];
 	if ($id = intval($flux['args']['id'])
-	AND $type == 'article'
-	AND autoriser('voirrevisions',$type,$id)
-	// regarder le numero de revision le plus eleve, et afficher le bouton
-	// si c'est interessant (id_version>1)
-	AND sql_countsel('spip_versions', 'id_objet='.intval($id).' AND objet = '.sql_quote($type)) > 1
+	  AND $tables = unserialize($GLOBALS['meta']['objets_versions'])
+		AND in_array(table_objet_sql($type),$tables)
+	  AND autoriser('voirrevisions',$type,$id)
+	  // regarder le numero de revision le plus eleve, et afficher le bouton
+	  // si c'est interessant (id_version>1)
+	  AND sql_countsel('spip_versions', 'id_objet='.intval($id).' AND objet = '.sql_quote($type)) > 1
 	) {
 		include_spip('inc/presentation');
 		$flux['data'] .= icone_horizontale(_T('revisions:info_historique_lien'), generer_url_ecrire('revision',"id_objet=$id&objet=$type"), "revision-24.png");
