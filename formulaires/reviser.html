@@ -29,7 +29,7 @@
 									<td class="version">[(#COMPTEUR_BOUCLE|<{#TOTAL_BOUCLE}|oui)<input type="radio" class="radio" name="id_version" id="id_version_#ENV{_objet}_#ENV{_id_objet}_#ID_VERSION" value="#ID_VERSION" onchange="check_diff();" [(#ENV{id_version}|=={#ID_VERSION}|oui)checked="checked"] />]</td>
 									<td class="diff">[(#COMPTEUR_BOUCLE|>{1}|oui)<input type="radio" class="radio" name="id_diff" id="id_diff_#ENV{_objet}_#ENV{_id_objet}_#ID_VERSION" value="#ID_VERSION" onchange="check_version();" [(#ENV{id_diff}|=={#ID_VERSION}|oui)checked="checked"] />]</td>
 									<td class="date">[(#DATE|date_relative)]</td>
-									<td class="auteur"><BOUCLE_aut(AUTEURS){id_auteur}{tout}>#NOM</BOUCLE_aut>#ID_AUTEUR<//B_aut></td>
+									<td class="auteur"><BOUCLE_aut(AUTEURS){id_auteur}{si #ID_AUTEUR|is_numeric}{tout}>#NOM</BOUCLE_aut>#ID_AUTEUR<//B_aut></td>
 								</tr>
 								</BOUCLE_v>
 							</tbody>
