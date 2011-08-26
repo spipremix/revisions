@@ -17,6 +17,9 @@ function label_champ($champ){
 		case 'nom_site':
 			$label = "lien_voir_en_ligne";
 			break;
+		case 'email':
+			$label = "entree_adresse_email_2";
+			break;
 		case 'chapo':
 			$champ = "chapeau";
 		default:
