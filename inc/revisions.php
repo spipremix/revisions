@@ -697,10 +697,12 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 				if (!$date_modif AND isset($originaux[$d]) AND $t=strtotime($d))
 					$date_modif = date("Y-m-d H:i:s", $t);
 			}
-			if (!$date_modif AND isset($desc['date'])) {
-				$date_modif = (isset($originaux[$desc['date']])?$originaux[$desc['date']]:sql_getfetsel($desc['date'],$table,"$id_table_objet=".intval($id_objet)));
+			if (!$date_modif
+			  AND isset($desc['date'])
+			  AND isset($originaux[$desc['date']])) {
+				$date_modif = $originaux[$desc['date']];
 			}
-			if (!$date_modif)
+			elseif (!$date_modif)
 				$date_modif = date("Y-m-d H:i:s", time()-7200);
 			
 			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('revisions:version_initiale'), $id_auteur))
@@ -734,15 +736,19 @@ function revisions_post_insertion($x){
  * @return array
  */
 function revisions_pre_edition($x) {
-	$table = $x['args']['table'];
-	// si flag leve passer son chemin, post_edition le fera (mais baisser le flag en le gardant en memoire tout de meme)
-	if (isset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']])){
-		$GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']] = 0;
-	}
-	// sinon creer une premiere revision qui date et dont on ne connait pas l'auteur
-	elseif  ($versionnes = liste_champs_versionnes($table)) {
-		$objet = isset($x['args']['type']) ? $x['args']['type'] : objet_type($table);
-		verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, -1);
+	// ne rien faire quand on passe ici en controle md5
+	if (!isset($x['args']['action'])
+	  OR $x['args']['action']!=='controler'){
+		$table = $x['args']['table'];
+		// si flag leve passer son chemin, post_edition le fera (mais baisser le flag en le gardant en memoire tout de meme)
+		if (isset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']])){
+			$GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']] = 0;
+		}
+		// sinon creer une premiere revision qui date et dont on ne connait pas l'auteur
+		elseif  ($versionnes = liste_champs_versionnes($table)) {
+			$objet = isset($x['args']['type']) ? $x['args']['type'] : objet_type($table);
+			verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, -1);
+		}
 	}
 	return $x;
 }
