@@ -35,7 +35,12 @@ function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
 }
 
 // tout le monde peut voir le bouton de suivi des revisions
-function autoriser_suivi_revisions_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_revisions_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+	// SI pas de revisions sur un objet quelconque.
+	// ET pas de version... pas de bouton, c'est inutile...
+	if (!lire_config('objets_versions/') AND !sql_countsel('spip_versions')) {
+		return false;
+	}
 	return true;
 }
 
