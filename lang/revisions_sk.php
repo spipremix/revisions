@@ -8,7 +8,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// B
-	'bouton_comparer' => 'Voir les diff&eacute;rences', # NEW
+	'bouton_comparer' => 'Zobraziť rozdiely',
 
 	// D
 	'diff_para_ajoute' => 'Pridaný odsek',
@@ -17,43 +17,43 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'diff_texte_ajoute' => 'Pridaný text',
 	'diff_texte_deplace' => 'Presunutý text',
 	'diff_texte_supprime' => 'Odstránený text',
-	'differences_versions' => 'Diff&eacute;rences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@', # NEW
+	'differences_versions' => 'Rozdiely medzi verziou N<sup>o</sup>@id_version@ a verziou N<sup>o</sup>@id_diff@',
 
 	// I
-	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@', # NEW
-	'icone_suivi_revisions' => 'Suivi des r&eacute;visions', # NEW
-	'info_1_revision' => '1 r&eacute;vision', # NEW
-	'info_aucune_revision' => 'Aucune r&eacute;vision', # NEW
+	'icone_restaurer_version' => 'Obnoviť verziu N<sup>o</sup>@version@',
+	'icone_suivi_revisions' => 'Sledovanie zmien',
+	'info_1_revision' => '1 zmena',
+	'info_aucune_revision' => 'Žiadna zmena',
 	'info_historique' => 'Opravy:',
 	'info_historique_lien' => 'Zobraziť zoznam verzií',
 	'info_historique_titre' => 'Sledovanie opráv',
-	'info_nb_revisions' => '@nb@ r&eacute;visions', # NEW
+	'info_nb_revisions' => '@nb@ zmien',
 
 	// L
-	'label_choisir_id_version' => 'S&eacute;lectionnez les versions &agrave; comparer', # NEW
-	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions&nbsp;:', # NEW
+	'label_choisir_id_version' => 'Vyberte si verzie, ktoré chcete porovnať',
+	'label_config_revisions_objets' => 'Na ktoré objekty aktivovať zmeny:',
 
 	// O
-	'objet_editorial' => 'objet', # NEW
+	'objet_editorial' => 'objekt',
 
 	// P
-	'plugin_update' => 'Mise &agrave; jour du plugin "R&eacute;visions" en version @version@.', # NEW
+	'plugin_update' => 'Aktualizovať zásuvný modul "Révisions" na verziu @version@.',
 
 	// T
-	'titre_form_revisions_objets' => 'Activer les r&eacute;visions', # NEW
-	'titre_restaurer_version' => 'Restaurer une version', # NEW
-	'titre_revisions' => 'R&eacute;visions', # NEW
+	'titre_form_revisions_objets' => 'Aktivovať zmeny',
+	'titre_restaurer_version' => 'Obnoviť verziu',
+	'titre_revisions' => 'Zmeny',
 
 	// V
 	'version_deplace_rubrique' => 'Presunuté z <b>"@from@"</b> na <b>"@to@".</b>',
 	'version_initiale' => 'Prvá verzia',
-	'voir_differences' => 'Voir les diff&eacute;rences', # NEW
-	'voir_mes_revisions' => 'Mes r&eacute;visions', # NEW
-	'voir_revisions' => 'Voir les r&eacute;visions (@objet@ @id_objet@&nbsp;: @titre@)', # NEW
-	'voir_toutes_les_revisions' => 'Toutes les r&eacute;visions', # NEW
+	'voir_differences' => 'Zobraziť rozdiely',
+	'voir_mes_revisions' => 'Viacej zmien',
+	'voir_revisions' => 'Zobraziť rozdiely (@objet@ @id_objet@: @titre@)',
+	'voir_toutes_les_revisions' => 'Všetky zmeny',
 
 	// Z
-	'z' => 'zzz' # NEW
+	'z' => 'zzz'
 );
 
 ?>
