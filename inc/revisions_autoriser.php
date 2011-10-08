@@ -38,6 +38,7 @@ function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_revisions_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
 	// SI pas de revisions sur un objet quelconque.
 	// ET pas de version... pas de bouton, c'est inutile...
+	include_spip('inc/config');
 	if (!lire_config('objets_versions/') AND !sql_countsel('spip_versions')) {
 		return false;
 	}
