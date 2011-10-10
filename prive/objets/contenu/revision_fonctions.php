@@ -1,5 +1,6 @@
 <?php
 
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 function label_champ($champ){
 	$label = "";
@@ -28,3 +29,5 @@ function label_champ($champ){
 	}
 	return $label?_T($label):"";
 }
+
+?>
