@@ -20,11 +20,12 @@
 	<langue code="el">
 		<traducteur nom="yann7" />
 	</langue>
-	<langue code="en" />
 	<langue code="eo" />
 	<langue code="es" />
 	<langue code="eu" />
-	<langue code="fa" />
+	<langue code="fa">
+		<traducteur nom="davood" />
+	</langue>
 	<langue code="fon" />
 	<langue code="fr_tu" />
 	<langue code="gl" />
