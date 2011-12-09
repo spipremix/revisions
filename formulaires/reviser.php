@@ -12,6 +12,8 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
+include_spip('base/abstract_sql');
+
 function trouver_version_inf($objet,$id_objet,$cond=""){
 	return sql_getfetsel(
 		                'id_version',
