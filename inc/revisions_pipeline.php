@@ -82,6 +82,7 @@ function revisions_formulaire_charger($flux){
 	  AND !$flux['args']['je_suis_poste']){
 		// ajouter un message convival pour indiquer qu'on a restaure la version
 		$flux['data']['message_ok'] = _T('revisions:icone_restaurer_version',array('version'=>$id_version));
+		$flux['data']['message_ok'] .= "<br />"._T('revisions:message_valider_recuperer_version');
 		// recuperer la version
 		include_spip('inc/revisions');
 		$champs = recuperer_version($id,$objet, $id_version);
