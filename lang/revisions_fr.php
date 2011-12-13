@@ -48,10 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_differences' => 'Voir les différences',
 	'voir_mes_revisions' => 'Mes révisions',
 	'voir_revisions' => 'Voir les révisions (@objet@ @id_objet@ : @titre@)',
-	'voir_toutes_les_revisions' => 'Toutes les révisions',
-
-	// Z
-	'z' => 'zzz'
+	'voir_toutes_les_revisions' => 'Toutes les révisions'
 );
 
 ?>
