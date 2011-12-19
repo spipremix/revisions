@@ -50,10 +50,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_differences' => 'Zobraziť rozdiely',
 	'voir_mes_revisions' => 'Viacej zmien',
 	'voir_revisions' => 'Zobraziť rozdiely (@objet@ @id_objet@: @titre@)',
-	'voir_toutes_les_revisions' => 'Všetky zmeny',
-
-	// Z
-	'z' => 'zzz'
+	'voir_toutes_les_revisions' => 'Všetky zmeny'
 );
 
 ?>
