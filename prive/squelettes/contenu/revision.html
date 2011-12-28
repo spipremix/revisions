@@ -5,6 +5,12 @@
 #SET{textes,#ID_OBJET|revision_comparee{#OBJET,#GET{id_version},complet,#GET{id_diff}}}
 
 [(#BOITE_OUVRIR{[
+
+	[(#ID_OBJET|oui)
+		[(#ID_OBJET|generer_url_entite{#OBJET}
+			|icone_verticale{[(#ID_OBJET|?{[(#OBJET|objet_info{texte_retour}|_T)],<:icone_retour:>})],#OBJET|objet_info{icone_objet},'',left retour[(#ENV{retourajax,''}|oui)ajax preload]})]
+	]
+	
 	[(#AUTORISER{modifier,#OBJET,#ID_OBJET})
 		[(#GET{id_version}|=={#GET{lastversion}}|oui)
 			[(#ID_OBJET|generer_url_ecrire_entite_edit{#OBJET}|icone_verticale{[(#OBJET|objet_info{texte_modifier}|_T)],#OBJET|objet_info{icone_objet},edit,right})]
@@ -15,6 +21,7 @@
 				|icone_verticale{[(#VAL{revisions:icone_restaurer_version}|_T{#ARRAY{version,#GET{id_version}}})],revision-24.png,'edit',right})]
 		]
 	]
+	
 	<h1>[(#CHEMIN_IMAGE{diff-24.png}|balise_img{'',cadre-icone})]<:revisions:info_historique:> &laquo;&nbsp;<a
 					href="[(#ID_OBJET|generer_url_entite{#OBJET})]"
 					title="[(#OBJET|objet_info{texte_objet}|_T) ]#ID_OBJET"
