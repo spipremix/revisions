@@ -48,7 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => 'منقول من <b>«@from@»</b> الى <b>«@to@»</b>.',
 	'version_initiale' => 'الاصدار الاصلي',
 	'voir_differences' => 'عرض الفوارق',
-	'voir_mes_revisions' => 'تعديلاعتي',
+	'voir_mes_revisions' => 'تعديلاتي',
 	'voir_revisions' => 'عرض التعديلات (@objet@ @id_objet@: @titre@)',
 	'voir_toutes_les_revisions' => 'كل التعديلات'
 );
