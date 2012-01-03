@@ -1,8 +1,7 @@
 <traduction module="revisions" gestionnaire="salvatore" url="http://trad.spip.org" source="svn://zone.spip.org/spip-zone/_core_/plugins/revisions/lang/" reference="fr">
 	<langue code="ar">
 		<traducteur nom="kandalaft" />
-		<traducteur nom="kandalaft" />
-		<traducteur nom=" &lt;multi&gt;[fr]George[ar]" />
+		<traducteur nom="&lt;multi&gt;[fr]George[ar]" />
 	</langue>
 	<langue code="de">
 		<traducteur nom="klaus" />
