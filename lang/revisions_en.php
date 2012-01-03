@@ -17,10 +17,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'diff_texte_ajoute' => 'Added text',
 	'diff_texte_deplace' => 'Moved text',
 	'diff_texte_supprime' => 'Deleted text',
-	'differences_versions' => 'Différences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@', # NEW
+	'differences_versions' => 'Differences between version N<sup>o</sup>@id_version@ and version N<sup>o</sup>@id_diff@',
 
 	// I
-	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@', # NEW
+	'icone_restaurer_version' => 'Restore version N<sup>o</sup>@version@',
 	'icone_suivi_revisions' => 'Tracking of the revisions',
 	'info_1_revision' => '1 revision',
 	'info_aucune_revision' => 'No revision',
@@ -31,13 +31,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'label_choisir_id_version' => 'Select the versions to compare',
-	'label_config_revisions_objets' => 'Sur quels objets activer les révisions :', # NEW
+	'label_config_revisions_objets' => 'Which objects enable revisions:',
 
 	// O
 	'objet_editorial' => 'object',
 
 	// P
-	'plugin_update' => 'Mise à jour du plugin "Révisions" en version @version@.', # NEW
+	'plugin_update' => 'Upgrade of the  "Revisions" plugin at @version@ version.',
 
 	// T
 	'titre_form_revisions_objets' => 'Enable revisions',
@@ -47,9 +47,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version_deplace_rubrique' => 'Moved from <b>« @from@ »</b> to <b>« @to@ »</b>.',
 	'version_initiale' => 'Initial version',
-	'voir_differences' => 'Voir les différences', # NEW
+	'voir_differences' => 'Show differences',
 	'voir_mes_revisions' => 'My revisions',
-	'voir_revisions' => 'Voir les révisions (@objet@ @id_objet@ : @titre@)', # NEW
+	'voir_revisions' => 'Show revisions (@objet@ @id_objet@ : @titre@)',
 	'voir_toutes_les_revisions' => 'All revisions'
 );
 
