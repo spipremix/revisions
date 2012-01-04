@@ -8,8 +8,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// R
-	'revisions_description' => 'Suivi des modifications des objets éditoriaux', # NEW
-	'revisions_slogan' => 'Suivi des modifications des objets éditoriaux' # NEW
+	'revisions_description' => 'Tracking changes of editorial objects',
+	'revisions_slogan' => 'Tracking changes of editorial objects'
 );
 
 ?>
