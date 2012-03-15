@@ -33,7 +33,7 @@
 				(#GET{diff}|safehtml)
 				</div>]
 			</td>
-			<td class='auteur'><BOUCLE_auteur(AUTEURS){id_auteur}{tout}><a href="[(#ID_AUTEUR|generer_url_entite{auteur})]">#NOM</a></BOUCLE_auteur>#ID_AUTEUR<//B_auteur></td>
+			<td class='auteur'><BOUCLE_auteur(AUTEURS){id_auteur}{si #ID_AUTEUR|is_numeric}{tout}><a href="[(#ID_AUTEUR|generer_url_entite{auteur})]">#NOM</a></BOUCLE_auteur>#ID_AUTEUR[(#ID_AUTEUR|is_numeric)]<//B_auteur></td>
 			<td class='date secondaire'>[(#DATE|date_relative)]</td>
 		</tr>
 	</BOUCLE_liste_rev>
