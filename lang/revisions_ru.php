@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://www.spip.net/trad-lang/
+// extrait automatiquement de http://trad.spip.org/tradlang_module/revisions?lang_cible=ru
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
@@ -8,52 +8,49 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// B
-	'bouton_comparer' => 'Voir les diff&eacute;rences', # NEW
+	'bouton_comparer' => 'Все изменения',
 
 	// D
-	'diff_para_ajoute' => 'Добавленный параграф',
-	'diff_para_deplace' => 'Перемещенный параграф',
-	'diff_para_supprime' => 'Удаленный параграф',
-	'diff_texte_ajoute' => 'Добавленный текст',
-	'diff_texte_deplace' => 'Перемещенный текст',
-	'diff_texte_supprime' => 'Удаленный текст',
-	'differences_versions' => 'Diff&eacute;rences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@', # NEW
+	'diff_para_ajoute' => 'Абзац добавили',
+	'diff_para_deplace' => 'Абзац переместили',
+	'diff_para_supprime' => 'Абзац удалили',
+	'diff_texte_ajoute' => 'Текст добавили',
+	'diff_texte_deplace' => 'Текст переместили',
+	'diff_texte_supprime' => 'Текст удалили',
+	'differences_versions' => 'Отличия между версией №@id_version@ и №@id_diff@',
 
 	// I
-	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@', # NEW
-	'icone_suivi_revisions' => 'Suivi des r&eacute;visions', # NEW
-	'info_1_revision' => '1 r&eacute;vision', # NEW
-	'info_aucune_revision' => 'Aucune r&eacute;vision', # NEW
-	'info_historique' => 'Исправления:',
-	'info_historique_lien' => 'Показать список версий',
+	'icone_restaurer_version' => 'Восстановить версию №@version@',
+	'icone_suivi_revisions' => 'Отслеживание изменений',
+	'info_1_revision' => '1 версия',
+	'info_aucune_revision' => 'У этого материала нет других версий',
+	'info_historique' => 'Изменения в ',
+	'info_historique_lien' => 'История изменений',
 	'info_historique_titre' => 'История изменений',
-	'info_nb_revisions' => '@nb@ r&eacute;visions', # NEW
+	'info_nb_revisions' => 'Изменения в материалах (@nb@)',
 
 	// L
-	'label_choisir_id_version' => 'S&eacute;lectionnez les versions &agrave; comparer', # NEW
-	'label_config_revisions_objets' => 'Sur quels objets activer les r&eacute;visions&nbsp;:', # NEW
+	'label_choisir_id_version' => 'Сравнить с предыдущей версией',
+	'label_config_revisions_objets' => 'Сохранять историю изменений для:',
 
 	// O
-	'objet_editorial' => 'objet', # NEW
+	'objet_editorial' => 'объект',
 
 	// P
-	'plugin_update' => 'Mise &agrave; jour du plugin "R&eacute;visions" en version @version@.', # NEW
+	'plugin_update' => 'Обновить плагин "Révisions" до версии @version@.',
 
 	// T
-	'titre_form_revisions_objets' => 'Activer les r&eacute;visions', # NEW
-	'titre_restaurer_version' => 'Restaurer une version', # NEW
-	'titre_revisions' => 'R&eacute;visions', # NEW
+	'titre_form_revisions_objets' => 'Вести историю изменений',
+	'titre_restaurer_version' => 'Вернуться к варианту',
+	'titre_revisions' => 'История изменений',
 
 	// V
-	'version_deplace_rubrique' => 'Переместить <b>« с »</b> в <b>« @to@ »</b>.',
+	'version_deplace_rubrique' => 'Переместить <b>« @from@ »</b> в <b>« @to@ »</b>.',
 	'version_initiale' => 'Начальная версия',
-	'voir_differences' => 'Voir les diff&eacute;rences', # NEW
-	'voir_mes_revisions' => 'Mes r&eacute;visions', # NEW
-	'voir_revisions' => 'Voir les r&eacute;visions (@objet@ @id_objet@&nbsp;: @titre@)', # NEW
-	'voir_toutes_les_revisions' => 'Toutes les r&eacute;visions', # NEW
-
-	// Z
-	'z' => 'zzz' # NEW
+	'voir_differences' => 'Посмотреть отличия',
+	'voir_mes_revisions' => 'Мои изменения',
+	'voir_revisions' => 'История изменений (@objet@ @id_objet@ : @titre@)',
+	'voir_toutes_les_revisions' => 'Все изменения'
 );
 
 ?>
