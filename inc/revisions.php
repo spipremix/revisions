@@ -872,21 +872,4 @@ function revisions_post_edition_lien($x) {
 
 	return $x;
 }
-
-/**
- * Insertion dans le pipeline pre_boucle
- * On évite une jointure sur spip_auteurs_liens entre spip_auteurs et spip_versions
- * Il y a peut être plus simple mais je ne sais pas faire (kent1)
- */
-function revisions_pre_boucle($boucle){
-	if(isset($boucle->from['auteurs']) && $boucle->from['L2'] == 'spip_versions'){
-		foreach($boucle->select as $id=>$select){
-			$boucle->select[$id] = str_replace('L2','L1',$select);
-		}
-		$boucle->from['L1'] = $boucle->from['L2'];
-		unset($boucle->from['L2']);
-		unset($boucle->join['L2']);
-	}
-	return $boucle;
-}
 ?>

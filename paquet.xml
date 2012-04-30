@@ -16,7 +16,6 @@
 	<traduire module="revisions" reference="fr" gestionnaire="salvatore" />
 
 	<pipeline nom="post_insertion" inclure="inc/revisions.php" />
-	<pipeline nom="pre_boucle" inclure="inc/revisions.php" />
 	<pipeline nom="pre_edition" inclure="inc/revisions.php" />
 	<pipeline nom="pre_edition_lien" inclure="inc/revisions.php" />
 	<pipeline nom="post_edition" inclure="inc/revisions.php" />
