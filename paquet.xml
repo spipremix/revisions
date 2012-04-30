@@ -1,7 +1,7 @@
 <paquet
 	prefix="revisions"
 	categorie="edition"
-	version="1.6.5"
+	version="1.6.6"
 	etat="stable"
 	compatibilite="[3.0.0-alpha2;["
 	logo="prive/themes/spip/images/revision-32.png"
@@ -16,6 +16,7 @@
 	<traduire module="revisions" reference="fr" gestionnaire="salvatore" />
 
 	<pipeline nom="post_insertion" inclure="inc/revisions.php" />
+	<pipeline nom="pre_boucle" inclure="inc/revisions.php" />
 	<pipeline nom="pre_edition" inclure="inc/revisions.php" />
 	<pipeline nom="pre_edition_lien" inclure="inc/revisions.php" />
 	<pipeline nom="post_edition" inclure="inc/revisions.php" />
