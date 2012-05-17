@@ -34,10 +34,16 @@ function revisions_boite_infos($flux){
  */
 function revisions_affiche_milieu($flux) {
 	if ($flux['args']['exec'] == 'accueil') {
-		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',array(),array('ajax'=>true));
+		$contexte = array();
+		if ($GLOBALS['visiteur_session']['statut']!=='0minirezo')
+			$contexte['id_auteur'] = $GLOBALS['visiteur_session']['id_auteur'];
+		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',$contexte,array('ajax'=>true));
 	}
 	if ($flux['args']['exec'] == 'suivi_edito') {
-		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',array(),array('ajax'=>true));
+		$contexte = array();
+		if ($GLOBALS['visiteur_session']['statut']!=='0minirezo')
+			$contexte['id_auteur'] = $GLOBALS['visiteur_session']['id_auteur'];
+		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',$contexte,array('ajax'=>true));
 	}
 	return $flux;
 }
