@@ -29,7 +29,7 @@ function lcs_opt($s) {
 
 	// Insertion des points
 	asort($s);
-	foreach ($s as $y => $c) {
+	foreach (array_slice($s,0,400) as $y => $c) {
 		for ($len = $max_len; $len > 0; $len--) {
 			if ($paths_ymin[$len] < $y) {
 				$paths_ymin[$len + 1] = $y;
