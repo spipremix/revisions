@@ -334,11 +334,11 @@ function apparier_paras($src, $dest, $flou = true) {
 			foreach($t2 as $key2 => $s2) {
 				$r = strlen(gzcompress($s1.$s2));
 				$taux = 1.0 * $r / ($l1[$key1] + $l2[$key2]);
-				if (!$gz_min1[$key1] || $gz_min1[$key1] > $taux) {
+				if (!isset($gz_min1[$key1]) || !$gz_min1[$key1] || $gz_min1[$key1] > $taux) {
 					$gz_min1[$key1] = $taux;
 					$gz_trans1[$key1] = $key2;
 				}
-				if (!$gz_min2[$key2] || $gz_min2[$key2] > $taux) {
+				if (!isset($gz_min2[$key2]) ||!$gz_min2[$key2] || $gz_min2[$key2] > $taux) {
 					$gz_min2[$key2] = $taux;
 					$gz_trans2[$key2] = $key1;
 				}
