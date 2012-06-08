@@ -497,6 +497,11 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 		list(,$trans) = apparier_paras($paras_old, $paras);
 		reset($champs);
 		$nom = '';
+
+		// eviter une notice PHP au tout debut de la boucle
+		// on ajoute ''=>0 en debut de tableau.
+		$paras_champ = array($nom=>0) + $paras_champ;
+
 		for ($i = 0; $i < $n; $i++) {
 			while ($i >= $paras_champ[$nom]) list($nom, ) = each($champs);
 			// Lier au fragment existant si possible, sinon creer un nouveau fragment
