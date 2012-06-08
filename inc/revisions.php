@@ -312,7 +312,7 @@ function apparier_paras($src, $dest, $flou = true) {
 	foreach($md1 as $key1 => $h) {
 		if (isset($md2[$h])) {
 			$key2 = reset($md2[$h]);
-			if ($t1[$key1] == $t2[$key2]) {
+			if (isset($t1[$key1]) AND isset($t2[$key2]) AND $t1[$key1] == $t2[$key2]) {
 				$src_dest[$key1] = $key2;
 				$dest_src[$key2] = $key1;
 				unset($t1[$key1]);
