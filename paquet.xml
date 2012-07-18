@@ -24,7 +24,6 @@
 	<pipeline nom="boite_infos"                 inclure="inc/revisions_pipeline.php" />
 	<pipeline nom="affiche_milieu"              inclure="inc/revisions_pipeline.php" />
 	<pipeline nom="configurer_liste_metas"      inclure="inc/revisions_pipeline.php" />
-	<pipeline nom="revisions_liste_objets"      inclure="inc/revisions_pipeline.php" />
 	<pipeline nom="formulaire_charger"          inclure="inc/revisions_pipeline.php" />
 	<pipeline nom="declarer_tables_interfaces"  inclure="base/revisions.php" />
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/revisions.php" />

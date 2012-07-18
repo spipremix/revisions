@@ -80,24 +80,6 @@ function revisions_configurer_liste_metas($metas){
 	return $metas;
 }
 
-/**
- * Définir la liste des tables révisées possibles
- *
- * @todo À supprimer ? n'est plus utilisé ?
- * 
- * @param array $array   Liste des objets et leurs titres
- * @return array         Liste des objets et leurs titres
- */
-function revisions_revisions_liste_objets($array){
-	$array['articles'] = 'revisions:articles';
-	$array['breves'] = 'revisions:breves';
-	$array['rubriques'] = 'revisions:rubriques';
-	$array['mots'] = 'revisions:mots';
-	$array['groupes_mots'] = 'revisions:groupes_mots';
-
-	return $array;
-}
-
 
 /**
  * Charge les données d'une révision donnée dans le formulaire d'édition d'un objet
