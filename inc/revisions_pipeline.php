@@ -43,22 +43,22 @@ function revisions_boite_infos($flux){
 }
 
 /**
- * Afficher les dernières révisions en bas de la page d'accueil de ecrire/
+ * Afficher les dernières révisions sur l'accueil et le suivi
+ *
+ * Liste les révisions en bas de la page d'accueil de ecrire/
+ * et sur la page de suivi de l'activité du site
  *
  * @param array $flux   Données du pipeline
  * @return array $flux  Données du pipeline
  */
 function revisions_affiche_milieu($flux) {
-	if ($flux['args']['exec'] == 'accueil') {
+	// la bonne page et des objets révisables cochées !
+	if (in_array($flux['args']['exec'], array('accueil', 'suivi_edito'))
+	  and unserialize($GLOBALS['meta']['objets_versions'])) {
 		$contexte = array();
-		if ($GLOBALS['visiteur_session']['statut']!=='0minirezo')
+		if ($GLOBALS['visiteur_session']['statut']!=='0minirezo') {
 			$contexte['id_auteur'] = $GLOBALS['visiteur_session']['id_auteur'];
-		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',$contexte,array('ajax'=>true));
-	}
-	if ($flux['args']['exec'] == 'suivi_edito') {
-		$contexte = array();
-		if ($GLOBALS['visiteur_session']['statut']!=='0minirezo')
-			$contexte['id_auteur'] = $GLOBALS['visiteur_session']['id_auteur'];
+		}
 		$flux['data'] .= recuperer_fond('prive/objets/liste/versions',$contexte,array('ajax'=>true));
 	}
 	return $flux;
