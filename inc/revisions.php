@@ -10,10 +10,17 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Fonctions utilitaires du plugin révisions
+ *
+ * @package Revisions
+**/
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 $GLOBALS['agregation_versions'] = 10;
-define('_INTERVALLE_REVISIONS', 600); // intervalle de temps separant deux revisions par un meme auteur
+
+/** Intervalle de temps (en seconde) separant deux révisions par un même auteur */
+define('_INTERVALLE_REVISIONS', 600); 
 
 // http://doc.spip.org/@separer_paras
 function separer_paras($texte, $paras = "") {
@@ -600,14 +607,12 @@ function propre_diff($texte) {
 
 
 /**
- * liste les champs versionnes d'une table objet,
- * designe par le nom complet de sa table sql
- * ex : 'spip_articles'
+ * Liste les champs versionnés d'une table objet.
  * 
- * http://doc.spip.org/@liste_champs_versionnes
- *
  * @param string $table
+ *     Nom complet de sa table sql. Exemple 'spip_articles'
  * @return array
+ *     Liste des champs versionnés
  */
 function liste_champs_versionnes($table) {
 	$liste_objets_versionnees = is_array(unserialize($GLOBALS['meta']['objets_versions'])) ? unserialize($GLOBALS['meta']['objets_versions']) : array();
@@ -624,8 +629,8 @@ function liste_champs_versionnes($table) {
 }
 
 /**
- * Lorsqu'un champ versionne est une jointure, recuperer tous les liens
- * et les mettre sous forme de liste enumeree
+ * Lorsqu'un champ versionée est une jointure, récuperer tous les liens
+ * et les mettre sous forme de liste énumérée
  * 
  * @param string $objet
  * @param string $id_objet
@@ -651,11 +656,12 @@ function recuperer_valeur_champ_jointure($objet,$id_objet,$jointure){
 }
 
 /**
- * Creer la premiere revision d'un objet si necessaire
- * notamment si on vient d'activer l'extension et qu'on fait une modif
- * sur un objet qui etait deja en base, mais non versionne
+ * Créer la première révision d'un objet si nécessaire
+ * 
+ * À faire notamment si on vient d'activer l'extension et qu'on fait une modif
+ * sur un objet qui était déjà en base, mais non versionné
  *
- * la fonction renvoie le numero de la derniere version de l'objet,
+ * La fonction renvoie le numéro de la dernière version de l'objet,
  * et 0 si pas de version pour cet objet
  * 
  * @param string $table
@@ -717,164 +723,4 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 	return $id_version;
 }
 
-
-/**
- * Sur une insertion en base, lever un flag pour ne pas creer une premiere revision vide
- * dans pre_edition mais attendre la post_edition pour cela
- * @param array $x
- * @return array $x
- */
-function revisions_post_insertion($x){
-	$table = $x['args']['table'];
-	if  ($champs = liste_champs_versionnes($table)) {
-		$GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']] = true;
-	}
-	return $x;
-}
-
-/**
- * Avant toute modification en base
- * verifier qu'une version initiale existe bien pour cet objet
- * et la creer sinon avec l'etat actuel de l'objet
- *
- * @param array $x
- * @return array
- */
-function revisions_pre_edition($x) {
-	// ne rien faire quand on passe ici en controle md5
-	if (!isset($x['args']['action'])
-	  OR $x['args']['action']!=='controler'){
-		$table = $x['args']['table'];
-		// si flag leve passer son chemin, post_edition le fera (mais baisser le flag en le gardant en memoire tout de meme)
-		if (isset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']])){
-			$GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']] = 0;
-		}
-		// sinon creer une premiere revision qui date et dont on ne connait pas l'auteur
-		elseif  ($versionnes = liste_champs_versionnes($table)) {
-			$objet = isset($x['args']['type']) ? $x['args']['type'] : objet_type($table);
-			verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, -1);
-		}
-	}
-	return $x;
-}
-
-/**
- * Avant modification en base d'un lien,
- * enregistrer une premiere revision de l'objet si necessaire
- *
- * @param  $x
- * @return
- */
-function revisions_pre_edition_lien($x) {
-	if (intval($x['args']['id_objet_source'])>0
-	    AND intval($x['args']['id_objet'])>0) {
-		$table = table_objet_sql($x['args']['objet']);
-		$id_objet = $x['data'];
-		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
-			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
-		}
-		// ex : si le champ jointure_mots est versionnable sur les articles
-		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
-			verifier_premiere_revision($table,$x['args']['objet'],$id_objet,$versionnes,-1);
-		}
-
-		$table = table_objet_sql($x['args']['objet_source']);
-		$id_objet = $x['args']['id_objet_source'];
-		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
-			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
-		}
-		// ex : si le champ jointure_articles est versionnable sur les mots
-		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
-			verifier_premiere_revision($table,$x['args']['objet_source'],$id_objet,$versionnes,-1);
-		}
-	}
-
-	return $x;
-}
-
-/**
- * Apres modification en base, versionner l'objet
- *
- * @param  $x
- * @return
- */
-function revisions_post_edition($x) {
-	if ($versionnes = liste_champs_versionnes($x['args']['table'])){
-		// Regarder si au moins une des modifs est versionnable
-		$champs = array();
-		$table = $x['args']['table'];
-		$objet = isset($x['args']['type']) ? $x['args']['type'] : objet_type($table);
-		if (isset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']])){
-			unset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']]);
-			// verifier la premiere version : sur une version initiale on attend ici pour la creer
-			// plutot que de creer une version vide+un diff
-			verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, $GLOBALS['visiteur_session']['id_auteur']);
-		}
-		else {
-			// on versionne les differences
-			foreach ($versionnes as $key)
-				if (isset($x['data'][$key]))
-					$champs[$key] = $x['data'][$key];
-
-			if (count($champs))
-				ajouter_version($x['args']['id_objet'],$objet, $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
-		}
-	}
-
-	return $x;
-}
-
-
-/**
- * Apres modification en base d'un lien, versionner l'objet si necessaire
- *
- * @param  $x
- * @return
- */
-function revisions_post_edition_lien($x) {
-	/*pipeline('post_edition_lien',
-		array(
-			'args' => array(
-				'table_lien' => $table_lien,
-				'objet_source' => $objet_source,
-				'id_objet_source' => $l[$primary],
-				'objet' => $l['objet'],
-				'id_objet' => $id_o,
-				'action'=>'delete',
-			),
-			'data' => $id_o
-		)
-	*/
-	if (intval($x['args']['id_objet_source'])>0
-	    AND intval($x['args']['id_objet'])>0) {
-
-		$table = table_objet_sql($x['args']['objet']);
-		$id_objet = $x['data'];
-		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
-			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
-		}
-		// ex : si le champ jointure_mots est versionnable sur les articles
-		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j='jointure_'.table_objet($x['args']['objet_source']),$versionnes)){
-			$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet'],$id_objet,$x['args']['objet_source']));
-			ajouter_version($id_objet,$x['args']['objet'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
-		}
-
-		$table = table_objet_sql($x['args']['objet_source']);
-		$id_objet = $x['args']['id_objet_source'];
-		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
-			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
-		}
-		// ex : si le champ jointure_articles est versionnable sur les mots
-		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j='jointure_'.table_objet($x['args']['objet']),$versionnes)){
-			$champs = array($j=>recuperer_valeur_champ_jointure($x['args']['objet_source'],$id_objet,$x['args']['objet']));
-			ajouter_version($id_objet,$x['args']['objet_source'], $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
-		}
-	}
-
-	return $x;
-}
 ?>
