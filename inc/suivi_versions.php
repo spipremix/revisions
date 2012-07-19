@@ -62,8 +62,8 @@ function revisions_diff ($id_objet,$objet, $id_version, $court=false){
  * récupérer une version qui contient ce champ. On complète alors la liste
  * des champs avec la version du champ trouvée.
  * 
- * @param int $id_objet    Identifiant de l'objet
  * @param string $objet    Objet
+ * @param int $id_objet    Identifiant de l'objet
  * @param int $id_version  Identifiant de la version
  * @param string $champ    Le nom du champ à retrouver
  * @param array $champs    Liste des champs déjà connus

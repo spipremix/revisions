@@ -412,7 +412,7 @@ function recuperer_version($id_objet,$objet, $id_version) {
  *                          La liste est de la forme "5 32 7 16 8 2"
  * @param array $fragments  Couples (id_fragment => texte)
  * @param array $res        Couples (champ => texte) déjà connus
- * @param array             Couples (champ => texte)
+ * @return array            Couples (champ => texte)
  */
 function reconstuire_version($champs, $fragments, $res=array()) {
 

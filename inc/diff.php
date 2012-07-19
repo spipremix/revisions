@@ -18,13 +18,20 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-//
-// LCS (Longest Common Subsequence) en deux versions
-// (ref: http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK5/NODE208.HTM)
 
-// Version ultra-simplifiee : chaque chaine est une permutation de l'autre 
-// et on passe en parametre un des deux tableaux de correspondances
-// http://doc.spip.org/@lcs_opt
+// LCS (Longest Common Subsequence) en deux versions
+// (ref: http://web.archive.org/web/20071206224029/http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK5/NODE208.HTM#SECTION03178000000000000000)
+
+/**
+ * Calcule un LCS (Longest Common Subsequence) simplifié 
+ *
+ * Chaque chaîne est une permutation de l'autre et on passe en paramètre
+ * un des deux tableaux de correspondances
+ *
+ * @see lcs()
+ * @param array $s
+ * @return array
+**/
 function lcs_opt($s) {
 	$n = count($s);
 	if (!$n) return array();
@@ -54,9 +61,16 @@ function lcs_opt($s) {
 	return $paths[$max_len];
 }
 
-// Version normale : les deux chaines n'ont pas ete traitees au prealable
-// par la fonction d'appariement
-// http://doc.spip.org/@lcs
+/**
+ * Calcule un LCS (Longest Common Subsequence)
+ *
+ * Les deux chaînes n'ont pas été traitées au préalable par la fonction d'appariement
+ *
+ * @see lcs_opt()
+ * @param array $s
+ * @param array $t
+ * @return array
+**/
 function lcs($s, $t) {
 	$n = count($s);
 	$p = count($t);
@@ -109,10 +123,18 @@ function lcs($s, $t) {
  * @package Revisions\Diff
 **/
 class Diff {
+	/**
+	 * Objet DiffX d'un texte ou partie de texte
+	 * 
+	 * @var Object Objet Diff* (DiffTexte, DiffPara, DiffPhrase) */
 	var $diff;
 	var $fuzzy;
 
-// http://doc.spip.org/@Diff
+	/**
+	 * Constructeur 
+	 *
+	 * @param Object $diff    Objet Diff* d'un texte ou morceau de texte
+	**/
 	function Diff($diff) {
 		$this->diff = $diff;
 		$this->fuzzy = true;
@@ -191,11 +213,17 @@ class Diff {
 	}
 }
 
-// http://doc.spip.org/@DiffTexte
+/**
+ * Génération de diff sur un Texte
+ *
+ * @package Revisions\Diff
+**/
 class DiffTexte {
 	var $r;
 
-// http://doc.spip.org/@DiffTexte
+	/**
+	 * Constructeur 
+	**/
 	function DiffTexte() {
 		$this->r = "";
 	}
@@ -249,11 +277,15 @@ class DiffTexte {
 	}
 }
 
-// http://doc.spip.org/@DiffPara
+/**
+ * Génération de diff sur un paragraphe
+ *
+ * @package Revisions\Diff
+**/
 class DiffPara {
 	var $r;
 
-// http://doc.spip.org/@DiffPara
+	/** Constructeur */
 	function DiffPara() {
 		$this->r = "";
 	}
@@ -304,11 +336,15 @@ class DiffPara {
 	}
 }
 
-// http://doc.spip.org/@DiffPhrase
+/**
+ * Génération de diff sur une phrase
+ *
+ * @package Revisions\Diff
+**/
 class DiffPhrase {
 	var $r;
 
-// http://doc.spip.org/@DiffPhrase
+	/** Constructeur */
 	function DiffPhrase() {
 		$this->r = "";
 	}
