@@ -22,8 +22,14 @@ $GLOBALS['agregation_versions'] = 10;
 /** Intervalle de temps (en seconde) separant deux révisions par un même auteur */
 define('_INTERVALLE_REVISIONS', 600); 
 
-// http://doc.spip.org/@separer_paras
-function separer_paras($texte, $paras = "") {
+/**
+ * Découper les paragraphes d'un texte en fragments 
+ *
+ * @param string $texte  Texte à fragmenter
+ * @param array $paras   Tableau de fragments déjà là
+ * @return string[]      Tableau de fragments (paragraphes)
+**/
+function separer_paras($texte, $paras = array()) {
 	if (!$paras) $paras = array();
 	while (preg_match("/(\r\n?){2,}|\n{2,}/", $texte, $regs)) {
 		$p = strpos($texte, $regs[0]) + strlen($regs[0]);
@@ -239,22 +245,31 @@ function supprimer_fragments($id_objet,$objet, $version_debut, $version_fin) {
 	envoi_delete_fragments($id_objet,$objet, $deletes);
 }
 
-//
-// Recuperer les fragments d'une version donnee
-// renvoie un tableau associatif (id_fragment => texte)
-//
-// http://doc.spip.org/@recuperer_fragments
+
+/**
+ * Récupérer les fragments d'un objet pour une version demandée
+ *
+ * @param int $id_objet    Identifiant de l'objet
+ * @param string $objet    Objet
+ * @param int $id_version  Identifiant de la version
+ * @return array           Couples id_fragment => texte
+ */
 function recuperer_fragments($id_objet,$objet, $id_version) {
 	$fragments = array();
 
 	if ($id_version == 0) return array();
 
-	$result = sql_select("id_fragment, version_min, version_max, compress, fragment", "spip_versions_fragments", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND version_min<=$id_version AND version_max>=$id_version");
+	$result = sql_select(
+		"id_fragment, version_min, version_max, compress, fragment",
+		"spip_versions_fragments",
+		"id_objet=" . intval($id_objet) ." AND objet=".sql_quote($objet)
+			." AND version_min<=$id_version AND version_max>=$id_version");
 
 	while ($row = sql_fetch($result)) {
 		$id_fragment = $row['id_fragment'];
 		$version_min = $row['version_min'];
 		$fragment = $row['fragment'];
+		// si le fragment est compressé, tenter de le décompresser, sinon écrire une erreur
 		if ($row['compress'] > 0){
 			$fragment_ = @gzuncompress($fragment);
 			if (strlen($fragment) && $fragment_===false)
@@ -262,11 +277,13 @@ function recuperer_fragments($id_objet,$objet, $id_version) {
 			else
 			 $fragment = $fragment_;
 		}
+		// tenter dedésérialiser le fragment, sinon écrire une erreur
 		$fragment_ = unserialize($fragment);
 		if (strlen($fragment) && $fragment_===false)
 			$fragment=array($row['version_max']=>"["._T('forum_titre_erreur').$id_fragment."]");
 		else
 		 $fragment = $fragment_;
+		// on retrouve le fragment le plus près de notre version
 		for ($i = $id_version; $i >= $version_min; $i--) {
 			if (isset($fragment[$i])) {
 
@@ -281,6 +298,7 @@ function recuperer_fragments($id_objet,$objet, $id_version) {
 				}
 
 				$fragments[$id_fragment] = $fragment[$i];
+				// quitter la boucle dès le premier touvé.
 				break;
 			}
 		}
@@ -366,10 +384,15 @@ function apparier_paras($src, $dest, $flou = true) {
 	return array($src_dest, $dest_src);
 }
 
-//
-// Recuperer les champs d'une version donnee
-//
-// http://doc.spip.org/@recuperer_version
+
+/**
+ * Récupérer les champs d'un objet, pour une version demandée
+ *
+ * @param int $id_objet    Identifiant de l'objet
+ * @param string $objet    Objet
+ * @param int $id_version  Identifiant de la version
+ * @return array           Couples champs => textes
+ */
 function recuperer_version($id_objet,$objet, $id_version) {
 
 	$champs = sql_getfetsel("champs", "spip_versions", "id_objet=" . intval($id_objet) . " AND objet=".sql_quote($objet)." AND id_version=" . intval($id_version));
@@ -379,7 +402,18 @@ function recuperer_version($id_objet,$objet, $id_version) {
 			 recuperer_fragments($id_objet,$objet, $id_version));
 }
 
-// http://doc.spip.org/@reconstuire_version
+/**
+ * Reconstruire une version donnée
+ *
+ * À partir de la liste des champs et de fragments,
+ * retourne le texte de chaque champ.
+ *
+ * @param array $champs     Couples (champ => liste d'id_fragment).
+ *                          La liste est de la forme "5 32 7 16 8 2"
+ * @param array $fragments  Couples (id_fragment => texte)
+ * @param array $res        Couples (champ => texte) déjà connus
+ * @param array             Couples (champ => texte)
+ */
 function reconstuire_version($champs, $fragments, $res=array()) {
 
 	static $msg;

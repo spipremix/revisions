@@ -10,6 +10,11 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Fonctions utilitaires du plugin révisions
+ *
+ * @package Revisions\Diff
+**/
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
@@ -98,11 +103,11 @@ function lcs($s, $t) {
 	return array(0 => array(), 1 => array());
 }
 
-//
-// Generation de diff a plusieurs etages
-//
-
-// http://doc.spip.org/@Diff
+/**
+ * Génération de diff a plusieurs étages
+ *
+ * @package Revisions\Diff
+**/
 class Diff {
 	var $diff;
 	var $fuzzy;
@@ -205,7 +210,13 @@ class DiffTexte {
 	function fuzzy() {
 		return true;
 	}
-// http://doc.spip.org/@segmenter
+
+	/**
+	 * Découper les paragraphes d'un texte en fragments 
+	 *
+	 * @param string $texte   Texte à fragmenter
+	 * @return string[]       Tableau de fragments (paragraphes)
+	**/
 	function segmenter($texte) {
 		return separer_paras($texte);
 	}

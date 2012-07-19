@@ -10,19 +10,27 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Fonctions de suivi de versions
+ *
+ * @package Revisions\Versions
+**/
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 include_spip('inc/revisions');
 include_spip('inc/diff');
 
 /**
- * Afficher un diff correspondant a une revision d'un objet
+ * Afficher un diff correspondant à une révision d'un objet
  * 
- * @param int $id_objet
- * @param string $objet
- * @param int $id_version
+ * @param int $id_objet    Identifiant de l'objet
+ * @param string $objet    Objet
+ * @param int $id_version  Identifiant de la version
  * @param bool $court
+ *     - false : affiche le diff complet
+ *     - true  : indique juste la taille en octets des changements
  * @return string
+ *     Texte HTML du diff.
  */
 function revisions_diff ($id_objet,$objet, $id_version, $court=false){
 	$textes = revision_comparee($id_objet,$objet, $id_version, 'diff');
@@ -47,12 +55,19 @@ function revisions_diff ($id_objet,$objet, $id_version, $court=false){
 }
 
 /**
- * Retrouver le champ d'un objet, pour une version demandee
- * @param string $objet
- * @param int $id_objet
- * @param int $id_version
- * @param string $champ
- * @param array $champs
+ * Retrouver le champ d'un objet, pour une version demandée
+ *
+ * Si le champ n'est pas déjà présent dans la liste des champs ($champs),
+ * on remonte les versions à partir du id_version donné, jusqu'à
+ * récupérer une version qui contient ce champ. On complète alors la liste
+ * des champs avec la version du champ trouvée.
+ * 
+ * @param int $id_objet    Identifiant de l'objet
+ * @param string $objet    Objet
+ * @param int $id_version  Identifiant de la version
+ * @param string $champ    Le nom du champ à retrouver
+ * @param array $champs    Liste des champs déjà connus
+ * @return void
  */
 function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$champs){
 	if (isset($champs[$champ]))
@@ -65,33 +80,40 @@ function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$cha
 	while (!isset($prev[$champ]) AND $id_ref>0) {
 		$prev = recuperer_version($id_objet,$objet, $id_ref--);
 	}
-	if (isset($prev[$champ]))
+	if (isset($prev[$champ])) {
 		$champs[$champ] = $prev[$champ];
-	else {
+	} else {
 		// le champ n'a jamais ete versionne :
 		// il etait initialement vide
-		if (strncmp($champ,'jointure_',9)==0)
-			$champs[$champ] = '';
-		else
-			$champs[$champ] = '';
+		$champs[$champ] = '';
 	}
 }
 
 /**
- * retourne un array() des champs modifies a la version id_version
- * le format =
- *    - diff => seulement les modifs (page revisions)
- *    - apercu => idem, mais en plus tres cout s'il y en a bcp
- *    - complet => tout, avec surlignage des modifications (page revision)
+ * Liste les champs modifiés par une version de révision donnée
  *
- * http://doc.spip.org/@revision_comparee
+ * Pour un couple objet/id_objet et id_version donné, calcule les champs
+ * qui ont été modifiés depuis une version précédente et la version
+ * d'id_version, et les retourne.
+ * 
+ * La version précédente est par défaut la version juste
+ * avant id_version, mais peut être définie via le paramètre id_diff.
  *
- * @param int $id_objet
- * @param string $objet
- * @param int $id_version
+ * Le retour est plus ou moins locace en fonction du paramètre format.
+ *
+ * @param int $id_objet    Identifiant de l'objet
+ * @param string $objet    Objet
+ * @param int $id_version  Identifiant de la version
  * @param string $format
+ *     Type de retour
+ *     - diff => seulement les modifs (page revisions)
+ *     - apercu => idem, mais en plus tres cout s'il y en a bcp
+ *     - complet => tout, avec surlignage des modifications (page revision)
  * @param null $id_diff
+ *     Identifiant de la version de base du diff, par défaut l'id_version
+ *     juste précédent
  * @return array
+ *     Couples (champ => texte)
  */
 function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_diff=NULL) {
 	include_spip('inc/diff');
@@ -129,7 +151,7 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 		}
 
 		// memoriser les cas les plus courant
-		$afficher_diff_champ = charger_fonction('champ','afficher_diff');
+		$afficher_diff_champ    = charger_fonction('champ','afficher_diff');
 		$afficher_diff_jointure = charger_fonction('jointure','afficher_diff');
 		foreach ($champs as $champ) {
 			// Remonter dans le temps pour trouver le champ en question
@@ -157,8 +179,9 @@ function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_d
 	}
 
 	// que donner par defaut ? (par exemple si id_version=1)
-	if (!$textes)
+	if (!$textes) {
 		$textes = recuperer_version($id_objet,$objet, $id_version);
+	}
 
 	return $textes;
 }
