@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2011                                                *
+ *  Copyright (c) 2001-2012                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -51,7 +51,7 @@ function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_frag
 	AND $GLOBALS['connexions'][0]['type'] == 'mysql') {
 		$s = gzcompress($fragment);
 		if (strlen($s) < strlen($fragment)) {
-			# spip_log("gain gz: ".intval(100 - 100 * strlen($s) / strlen($fragment)));
+			# spip_log("gain gz: ".intval(100 - 100 * strlen($s) / strlen($fragment)),'revisions');
 			$compress = 1;
 			$fragment = $s;
 		}
@@ -459,7 +459,7 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 	// distinctif (pour eviter la violation d'unicite)
 	// et un titre contenant en fait le moment de l'insertion
 	list($ms, $sec) = explode(' ', microtime());
-	$date = $sec . substr($ms,1,4); // SQL ne ramene que 4 chiffres significatifs apres la virgule pour 0.0+titre_version
+	$date = $sec . substr($ms,1,4)-20; // SQL ne ramene que 4 chiffres significatifs apres la virgule pour 0.0+titre_version
 	$datediff = ($sec - mktime(0,0,0,9,1,2007)) * 1000000 + substr($ms,2, strlen($ms)-4);
 
 	$valeurs = array('id_objet' => $id_objet,
@@ -483,7 +483,7 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 # 	  sleep(15);
 	$delai = $sec-10;
 	while (sql_countsel('spip_versions', "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version < 0 AND 0.0+titre_version < $date AND 0.0+titre_version > $delai")) {
-		spip_log("version $objet $id_objet :insertion en cours avant $date ($delai)");
+		spip_log("version $objet $id_objet :insertion en cours avant $date ($delai)",'revisions');
 		sleep(1);
 		$delai++;
 	}
@@ -516,10 +516,6 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 		}
 	} else
 		$id_version = 1;
-
-	spip_log($str_auteur, 'revisions');
-	spip_log($row, 'revisions');
-	spip_log($id_version, 'revisions');
 
 	$next = !$next ? 1 : ($next['id_fragment'] + 1);
 
@@ -568,10 +564,9 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 		sql_updateq('spip_versions', array('id_version'=>$id_version, 'date'=>date('Y-m-d H:i:s'), 'champs'=> serialize($codes), 'permanent'=>$permanent, 'titre_version'=> $titre_version), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version < 0 AND titre_version='$date'");
 	} else {
 		sql_updateq('spip_versions', array('date'=>date('Y-m-d H:i:s'), 'champs'=>serialize($codes), 'permanent'=>$permanent, 'titre_version'=> $titre_version), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version=$id_version");
-
 		sql_delete("spip_versions", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version < 0 AND titre_version ='$date'");
 	}
-	spip_log($onlylock . "memorise la version $id_version de l'objet $objet $id_objet $titre_version");
+	spip_log($onlylock . "memorise la version $id_version de l'objet $objet $id_objet $titre_version",'revisions');
 
 	return $id_version;
 }
@@ -740,7 +735,7 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 			$date_modif = "";
 			foreach(array('date_modif','maj') as $d){
 				if (!$date_modif AND isset($originaux[$d]) AND $t=strtotime($d))
-					$date_modif = date("Y-m-d H:i:s", $t);
+					$date_modif = date("Y-m-d H:i:s", $t-20);
 			}
 			if (!$date_modif
 			  AND isset($desc['date'])
@@ -748,13 +743,12 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 				$date_modif = $originaux[$desc['date']];
 			}
 			elseif (!$date_modif)
-				$date_modif = date("Y-m-d H:i:s", time()-7200);
-			
+				$date_modif = date("Y-m-d H:i:s", time()-20);
+				
 			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('revisions:version_initiale'), $id_auteur))
 				sql_updateq('spip_versions', array('date' => $date_modif), "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version=$id_version");
 		}
 	}
 	return $id_version;
 }
-
 ?>
