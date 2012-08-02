@@ -16,6 +16,9 @@
 	<langue code="it" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=it">
 		<traducteur nom="phante" lien="http://trad.spip.net/auteur/phante" />
 	</langue>
+	<langue code="lb" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=lb">
+		<traducteur nom="jwander" lien="http://trad.spip.net/auteur/jwander" />
+	</langue>
 	<langue code="ru" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=ru">
 		<traducteur nom="Serge Markitanenko" lien="http://trad.spip.net/auteur/serge-markitanenko" />
 	</langue>
