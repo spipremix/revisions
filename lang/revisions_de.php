@@ -33,6 +33,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_choisir_id_version' => 'Wählen sie die zu vergleichenden Versionen',
 	'label_config_revisions_objets' => 'Versionskontrolle für:',
 
+	// M
+	'message_valider_recuperer_version' => 'Validez le formulaire pour revenir à cette version.', # NEW
+
 	// O
 	'objet_editorial' => 'Objekt',
 

@@ -33,6 +33,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_choisir_id_version' => 'Wielt d\'Versiounen déi solle verglach ginn',
 	'label_config_revisions_objets' => 'D\'Versiounen op dësen Objekter aschalten:',
 
+	// M
+	'message_valider_recuperer_version' => 'Validez le formulaire pour revenir à cette version.', # NEW
+
 	// O
 	'objet_editorial' => 'Objet',
 

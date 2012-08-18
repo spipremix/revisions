@@ -33,6 +33,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_choisir_id_version' => 'Сравнить с предыдущей версией',
 	'label_config_revisions_objets' => 'Сохранять историю изменений для:',
 
+	// M
+	'message_valider_recuperer_version' => 'Заполните форму для того, чтобы восстановится до этой версии.',
+
 	// O
 	'objet_editorial' => 'объект',
 
