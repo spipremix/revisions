@@ -14,12 +14,15 @@
 /**
  * Autorisations du plugin révisions
  *
- * @package Revisions\Autorisations
+ * @package SPIP\Revisions\Autorisations
 **/
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-/** Chargement pour le pipeline d'autorisation */
+/**
+ * Fonction du pipeline autoriser. N'a rien à faire.
+ * @pipeline autoriser
+ */
 function revisions_autoriser(){}
 
 /**

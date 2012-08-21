@@ -13,7 +13,7 @@
 /**
  * Fonctions utilitaires du plugin révisions
  *
- * @package Revisions
+ * @package SPIP\Revisions\Fonctions
 **/
 if (!defined("_ECRIRE_INC_VERSION")) return;
 

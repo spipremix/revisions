@@ -13,7 +13,7 @@
 /**
  * Pipelines utilisés du plugin révisions
  *
- * @package Revisions\Pipelines
+ * @package SPIP\Revisions\Pipelines
 **/
 if (!defined('_ECRIRE_INC_VERSION')) return;
 

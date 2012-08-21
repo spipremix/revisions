@@ -13,7 +13,7 @@
 /**
  * Fonctions de suivi de versions
  *
- * @package Revisions\Versions
+ * @package SPIP\Revisions\Versions
 **/
 if (!defined("_ECRIRE_INC_VERSION")) return;
 

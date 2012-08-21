@@ -13,7 +13,7 @@
 /**
  * Installation du plugin révisions
  *
- * @package Revisions\Installation
+ * @package SPIP\Revisions\Installation
 **/
 
 if (!defined('_ECRIRE_INC_VERSION')) return;

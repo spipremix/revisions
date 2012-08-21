@@ -3,13 +3,14 @@
 /**
  * Enregistrer les config avec le plugin IEConfig 
  *
- * @package Revisions
+ * @package SPIP\Revisions\Pipelines
 **/
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 /**
- * Ajoute les éléments de config de ce plugin pour les sauvegardes de IEConfig
+ * Ajoute les éléments de config des révisions pour les sauvegardes de IEConfig
  *
+ * @pipeline ieconfig_metas
  * @param array $table  Description des configurations
  * @return array        Description des configurations
 **/

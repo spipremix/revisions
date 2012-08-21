@@ -13,7 +13,7 @@
 /**
  * Fonctions utilitaires du plugin révisions
  *
- * @package Revisions\Diff
+ * @package SPIP\Revisions\Diff
 **/
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
@@ -120,7 +120,7 @@ function lcs($s, $t) {
 /**
  * Génération de diff a plusieurs étages
  *
- * @package Revisions\Diff
+ * @package SPIP\Revisions\Diff
 **/
 class Diff {
 	/**
@@ -216,7 +216,7 @@ class Diff {
 /**
  * Génération de diff sur un Texte
  *
- * @package Revisions\Diff
+ * @package SPIP\Revisions\Diff
 **/
 class DiffTexte {
 	var $r;
@@ -280,7 +280,7 @@ class DiffTexte {
 /**
  * Génération de diff sur un paragraphe
  *
- * @package Revisions\Diff
+ * @package SPIP\Revisions\Diff
 **/
 class DiffPara {
 	var $r;
@@ -339,7 +339,7 @@ class DiffPara {
 /**
  * Génération de diff sur une phrase
  *
- * @package Revisions\Diff
+ * @package SPIP\Revisions\Diff
 **/
 class DiffPhrase {
 	var $r;
