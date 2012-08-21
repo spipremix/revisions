@@ -34,7 +34,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_config_revisions_objets' => 'Na ktoré objekty aktivovať zmeny:',
 
 	// M
-	'message_valider_recuperer_version' => 'Validez le formulaire pour revenir à cette version.', # NEW
+	'message_valider_recuperer_version' => 'Ak sa chcete vrátiť k tejto verzii, potvrďte formulár.',
 
 	// O
 	'objet_editorial' => 'objekt',
