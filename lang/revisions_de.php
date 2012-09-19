@@ -34,7 +34,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_config_revisions_objets' => 'Versionskontrolle für:',
 
 	// M
-	'message_valider_recuperer_version' => 'Validez le formulaire pour revenir à cette version.', # NEW
+	'message_valider_recuperer_version' => 'Bestätigen um zu dieser Version zurückzukehren.',
 
 	// O
 	'objet_editorial' => 'Objekt',
