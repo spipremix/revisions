@@ -9,6 +9,10 @@
 		<traducteur nom="Davood Hossein" lien="http://trad.spip.net/auteur/davood-hossein" />
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
+	<langue code="es" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=es">
+		<traducteur nom="dani" lien="http://trad.spip.net/auteur/dani" />
+		<traducteur nom="jotacese" lien="http://trad.spip.net/auteur/jotacese" />
+	</langue>
 	<langue code="fa" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=fa">
 		<traducteur nom="Davood Hossein" lien="http://trad.spip.net/auteur/davood-hossein" />
 	</langue>
