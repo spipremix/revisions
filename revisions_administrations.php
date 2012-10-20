@@ -69,7 +69,12 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_updateq',"spip_versions",array('objet'=>'article'),"objet=''"),
 		array('sql_updateq',"spip_versions_fragments",array('objet'=>'article'),"objet=''"),
 	);
-
+	$maj['1.1.3'] = array(
+		array('sql_alter',"TABLE spip_versions DROP KEY id_objet"),
+		array('sql_alter',"TABLE spip_versions ADD INDEX id_version (id_version)"),
+		array('sql_alter',"TABLE spip_versions ADD INDEX id_objet (id_objet)"),
+		array('sql_alter',"TABLE spip_versions ADD INDEX objet (objet)")
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

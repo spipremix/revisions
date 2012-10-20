@@ -52,7 +52,9 @@ function revisions_declarer_tables_auxiliaires($tables_auxiliaires){
 
 	$spip_versions_key = array (
 		"PRIMARY KEY"	=> "id_version, id_objet, objet",
-		"KEY id_objet" => "id_version");
+		"KEY id_version" => "id_version",
+		"KEY id_objet" => "id_objet",
+		"KEY objet" => "objet");
 
 	$spip_versions_fragments = array(
 		"id_fragment"	=> "int unsigned DEFAULT '0' NOT NULL",
