@@ -47,8 +47,9 @@ function revisions_declarer_tables_auxiliaires($tables_auxiliaires){
 		"date"	=> "datetime DEFAULT '0000-00-00 00:00:00' NOT NULL",
 		"id_auteur"	=> "VARCHAR(23) DEFAULT '' NOT NULL", # stocke aussi IP(v6)
 		"titre_version"	=> "text DEFAULT '' NOT NULL",
-		"permanent"	=> "char(3)",
-		"champs"	=> "text");
+		"permanent"	=> "char(3) DEFAULT '' NOT NULL",
+		"champs"	=> "text DEFAULT '' NOT NULL"
+	);
 
 	$spip_versions_key = array (
 		"PRIMARY KEY"	=> "id_version, id_objet, objet",

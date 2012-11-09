@@ -75,6 +75,10 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_alter',"TABLE spip_versions ADD INDEX id_objet (id_objet)"),
 		array('sql_alter',"TABLE spip_versions ADD INDEX objet (objet)")
 	);
+	$maj['1.1.4'] = array(
+		array('sql_alter',"TABLE spip_versions CHANGE permanent permanent char(3) DEFAULT '' NOT NULL"),
+		array('sql_alter',"TABLE spip_versions CHANGE champs champs text DEFAULT '' NOT NULL"),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
