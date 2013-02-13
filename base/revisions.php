@@ -22,7 +22,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Déclarer les interfaces des tables versions pour le compilateur
  *
  * @pipeline declarer_tables_interfaces
- * @param array $interfaces
+ * @param array $interface
  *     Déclarations d'interface pour le compilateur
  * @return array
  *     Déclarations d'interface pour le compilateur
