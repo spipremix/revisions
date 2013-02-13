@@ -10,8 +10,23 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Déclarations relatives à la base de données
+ * 
+ * @package SPIP\Revisions\Pipelines
+**/
+
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+/**
+ * Déclarer les interfaces des tables versions pour le compilateur
+ *
+ * @pipeline declarer_tables_interfaces
+ * @param array $interfaces
+ *     Déclarations d'interface pour le compilateur
+ * @return array
+ *     Déclarations d'interface pour le compilateur
+ */
 function revisions_declarer_tables_interfaces($interface){
 
 	$interface['table_des_tables']['versions']='versions';
@@ -20,9 +35,13 @@ function revisions_declarer_tables_interfaces($interface){
 }
 
 /**
- * Declaration des jointures generiques
- * @param  $tables
- * @return
+ * Déclaration des jointures génériques
+ * 
+ * @pipeline declarer_tables_objets_sql
+ * @param array $tables
+ *     Description des tables
+ * @return array
+ *     Description complétée des tables
  */
 function revisions_declarer_tables_objets_sql($tables){
 
@@ -32,11 +51,15 @@ function revisions_declarer_tables_objets_sql($tables){
 	return $tables;
 }
 
+
 /**
- * Table principale spip_versions
+ * Déclarer les tables versions et fragments
  *
- * @param array $tables_principales
+ * @pipeline declarer_tables_auxiliaires
+ * @param array $tables_auxiliaires
+ *     Description des tables
  * @return array
+ *     Description complétée des tables
  */
 function revisions_declarer_tables_auxiliaires($tables_auxiliaires){
 
