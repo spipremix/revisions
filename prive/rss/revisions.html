@@ -15,7 +15,7 @@ if (
 	<link>[(#URL_ECRIRE{revisions, [id_secteur=(#ENV{id_secteur})&][id_auteur=(#ENV{id_auteur})&][lang_choisie=(#ENV{lang})]}|url_absolue|texte_backend)]</link>
 	<description></description>
 	<language>[(#LANG|texte_backend)]</language>
-<BOUCLE_RSS(VERSIONS)
+<BOUCLE_RSS(VERSIONS auteurs)
 	{id_version >1}
 	{!par date}
 	{0,10}
