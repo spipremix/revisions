@@ -18,6 +18,9 @@
 	</langue>
 	<langue code="fr" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=fr" total="31" traduits="30" relire="0" modifs="0" nouveaux="1" pourcent="96.77">
 	</langue>
+	<langue code="fr_fem" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=fr_fem" total="31" traduits="30" relire="0" modifs="0" nouveaux="1" pourcent="96.77">
+		<traducteur nom="denisb" lien="http://trad.spip.net/auteur/denisb" />
+	</langue>
 	<langue code="it" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=it" total="31" traduits="30" relire="0" modifs="0" nouveaux="1" pourcent="96.77">
 		<traducteur nom="phante" lien="http://trad.spip.net/auteur/phante" />
 	</langue>
