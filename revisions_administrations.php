@@ -107,7 +107,7 @@ function revisions_upate_meta(){
 	// mettre les metas par defaut
 	$config = charger_fonction('config','inc');
 	$config();
-	if($GLOBALS['meta']['articles_versions'] == 'oui'){
+	if (isset($GLOBALS['meta']['articles_versions']) and $GLOBALS['meta']['articles_versions'] == 'oui'){
 		ecrire_meta('objets_versions',serialize(array('articles')));
 	}
 	effacer_meta('articles_versions');
