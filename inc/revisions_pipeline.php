@@ -204,7 +204,7 @@ function revisions_pre_edition_lien($x) {
  */
 function revisions_post_edition($x) {
 	include_spip('inc/revisions');
-	if ($versionnes = liste_champs_versionnes($x['args']['table'])){
+	if (isset($x['args']['table']) and $versionnes = liste_champs_versionnes($x['args']['table'])){
 		// Regarder si au moins une des modifs est versionnable
 		$champs = array();
 		$table = $x['args']['table'];
