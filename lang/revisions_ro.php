@@ -7,6 +7,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
+	// B
+	'bouton_comparer' => 'Voir les différences',
+
 	// D
 	'diff_para_ajoute' => 'Paragraf adăugat',
 	'diff_para_deplace' => 'Paragraf deplasat',
