@@ -45,8 +45,11 @@ function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_frag
 	$fragment = serialize($fragment);
 	$compress = 0;
 
+	/* On ne compresse plus les fragments car probleme de portabilite de base, corruptions de donnees
+	en backup SQLite ou meme en mysqldump */
 	// pour le portage en PG il faut l'equivalente au mysql_escape_string
 	// et deporter son appel dans les fonctions d'abstraction.
+	/*
 	if (function_exists('gzcompress')
 	AND $GLOBALS['connexions'][0]['type'] == 'mysql') {
 		$s = gzcompress($fragment);
@@ -56,6 +59,7 @@ function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_frag
 			$fragment = $s;
 		}
 	}
+	*/
 
 	// Attention a echapper $fragment, binaire potentiellement gz
 	return array(
@@ -272,15 +276,17 @@ function recuperer_fragments($id_objet,$objet, $id_version) {
 		// si le fragment est compressé, tenter de le décompresser, sinon écrire une erreur
 		if ($row['compress'] > 0){
 			$fragment_ = @gzuncompress($fragment);
-			if (strlen($fragment) && $fragment_===false)
-				$fragment=serialize(array($row['version_max']=>"["._T('forum_titre_erreur').$id_fragment."]"));
+			if (strlen($fragment) && $fragment_===false){
+				$fragment = serialize(array($row['version_max'] => "[" . _T('forum_titre_erreur') . $id_fragment . "]"));
+			}
 			else
 			 $fragment = $fragment_;
 		}
 		// tenter dedésérialiser le fragment, sinon écrire une erreur
 		$fragment_ = unserialize($fragment);
-		if (strlen($fragment) && $fragment_===false)
+		if (strlen($fragment) && $fragment_===false){
 			$fragment=array($row['version_max']=>"["._T('forum_titre_erreur').$id_fragment."]");
+		}
 		else
 		 $fragment = $fragment_;
 		// on retrouve le fragment le plus près de notre version

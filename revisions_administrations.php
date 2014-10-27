@@ -79,11 +79,120 @@ function revisions_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_alter',"TABLE spip_versions CHANGE permanent permanent char(3) DEFAULT '' NOT NULL"),
 		array('sql_alter',"TABLE spip_versions CHANGE champs champs text DEFAULT '' NOT NULL"),
 	);
+	$maj['1.2.0'] = array(
+		array('revisions_uncompress_fragments'),
+		array('revisions_repair_unserialized_fragments'),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 
 }
+
+function revisions_uncompress_fragments(){
+
+	$res = sql_select("*","spip_versions_fragments","compress=".intval(1));
+	while($row = sql_fetch($res)){
+		$fragment = @gzuncompress($row['fragment']);
+
+		// si la decompression echoue, on met en base le flag 'corrompu-gz'
+		// et au dump le framgment compresse dans un fichier
+		if (strlen($row['fragment']) AND $fragment===false){
+			$dir_tmp = sous_repertoire(_DIR_TMP,"versions_fragments_corrompus");
+			$f = $row['id_fragment']."-".$row['objet']."-".$row['id_objet'];
+			spip_log("Fragment gz corrompu $f","maj"._LOG_ERREUR);
+			$f = $f."-gz.txt";
+			ecrire_fichier($dir_tmp . $f,$row['fragment']);
+			$fragment = "corrompu-gz";
+		}
+
+		$set = array(
+			'compress' => 0,
+			'fragment' => $fragment,
+		);
+
+		sql_updateq("spip_versions_fragments",$set,"id_fragment=".intval($row['id_fragment'])." AND id_objet=".intval($row['id_objet'])." AND objet=".sql_quote($row['objet'])." AND version_min=".intval($row['version_min']));
+		if (time()>_TIME_OUT) return;
+	}
+
+	sql_updateq("spip_versions_fragments",array('compress'=>-1));
+
+}
+
+function revisions_repair_unserialized_fragments(){
+	$res = sql_select("*","spip_versions_fragments","compress=".intval(-1));
+	while($row = sql_fetch($res)){
+		$fragment = $row['fragment'];
+		$set = array(
+			'compress' => 0,
+		);
+
+		// verifier que le fragment est bien serializable
+		if(unserialize($fragment)===false AND strncmp($fragment,"corrompu",8)!==0){
+			$dir_tmp = sous_repertoire(_DIR_TMP,"versions_fragments_corrompus");
+			$set['fragment'] = revisions_repair_serialise($fragment);
+			if (strncmp($set['fragment'],"corrompu",8)==0){
+				$f = $row['id_fragment'] . "-" . $row['objet'] . "-" . $row['id_objet'];
+				spip_log("Fragment serialize corrompu $f", "maj" . _LOG_ERREUR);
+				$f = $f . "-serialize.txt";
+				ecrire_fichier($dir_tmp . $f, $fragment);
+			}
+		}
+		sql_updateq("spip_versions_fragments",$set,"id_fragment=".intval($row['id_fragment'])." AND id_objet=".intval($row['id_objet'])." AND objet=".sql_quote($row['objet'])." AND version_min=".intval($row['version_min']));
+
+		if (time()>_TIME_OUT) return;
+	}
+}
+
+function revisions_repair_serialise($serialize){
+	if (unserialize($serialize))
+		return $serialize;
+
+	// verifier les strings
+	preg_match_all(",s:(\d+):\"(.*)\";(?=}|\w:\d+),Uims",$serialize,$matches,PREG_SET_ORDER);
+	$serialize_repair = $serialize;
+	foreach($matches as $match){
+		$s = $match[2];
+		$l = $match[1];
+		if (strlen($s)!==$l){
+			if (strlen($s)<$l){
+				$s = str_replace("\r\n","\n",$s);
+				$s = str_replace("\r","\n",$s);
+				$s = str_replace("\n","\r\n",$s);
+			}
+			if (strlen($s)>$l){
+				$s = str_replace("\r\n","\n",$s);
+				$s = str_replace("\r","\n",$s);
+			}
+			if (strlen($s)<$l){
+				$s .= str_pad("",$l-strlen($s)," ");
+			}
+			if (strlen($s)==$l){
+				$s = str_replace($match[2],$s,$match[0]);
+				$serialize_repair = str_replace($match[0],$s,$serialize_repair);
+			}
+		}
+	}
+	if (unserialize($serialize_repair))
+		return $serialize_repair;
+
+	// on essaye brutalement
+	$serialize_repair = $serialize;
+	$serialize_repair = str_replace("\r\n","\n",$serialize_repair);
+	$serialize_repair = str_replace("\r","\n",$serialize_repair);
+	if (unserialize($serialize_repair))
+		return $serialize_repair;
+	$serialize_repair = str_replace("\n","\r\n",$serialize_repair);
+	if (unserialize($serialize_repair))
+		return $serialize_repair;
+
+	#echo "Impossible de reparer la chaine :";
+	#var_dump($serialize);
+	#var_dump($matches);
+	#die("corrompu-serialize");
+	return  "corrompu-serialize";
+}
+
 
 /**
  * Desinstallation/suppression des tables revisions
