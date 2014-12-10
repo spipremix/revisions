@@ -491,7 +491,7 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 	// 4. enregistrer une autre modif dans les 15 secondes
 # 	  sleep(15);
 	$delai = $sec-10;
-	while (sql_countsel('spip_versions', "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version < 0 AND 0.0+titre_version < $date AND 0.0+titre_version > $delai")) {
+	while (sql_countsel('spip_versions', "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version < 0 AND 0.0+titre_version < $date AND titre_version<>".sql_quote($date,'','text')." AND 0.0+titre_version > $delai")) {
 		spip_log("version $objet $id_objet :insertion en cours avant $date ($delai)",'revisions');
 		sleep(1);
 		$delai++;
