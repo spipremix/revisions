@@ -729,8 +729,9 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 			else if(strncmp($v,'jointure_',9)==0) {
 				$champs_originaux[$v] = recuperer_valeur_champ_jointure($objet,$id_objet,substr($v,9));
 			}
-			if (isset($champs_originaux[$v]) AND strlen($originaux[$v]))
+			if (isset($champs_originaux[$v]) AND isset($originaux[$v]) AND strlen($originaux[$v])) {
 				$premiere = true;
+			}
 		}
 
 		// Si un champ est non vide,
