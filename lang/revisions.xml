@@ -89,6 +89,9 @@
 	</langue>
 	<langue code="oc_ni_la" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=oc_ni_la" total="30" traduits="10" relire="0" modifs="0" nouveaux="20" pourcent="33.33">
 	</langue>
+	<langue code="oc_ni_mis" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=oc_ni_mis" total="30" traduits="30" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="sylvain" lien="http://trad.spip.net/auteur/sylvain" />
+	</langue>
 	<langue code="oc_prv" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=oc_prv" total="30" traduits="10" relire="0" modifs="0" nouveaux="20" pourcent="33.33">
 	</langue>
 	<langue code="oc_va" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=oc_va" total="30" traduits="10" relire="0" modifs="0" nouveaux="20" pourcent="33.33">
