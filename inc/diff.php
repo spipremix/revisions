@@ -140,7 +140,7 @@ class Diff {
 		$this->fuzzy = true;
 	}
 
-// http://doc.spip.org/@comparer
+// http://code.spip.net/@comparer
 	function comparer($new, $old) {
 		$paras = $this->diff->segmenter($new);
 		$paras_old = $this->diff->segmenter($old);
@@ -228,13 +228,13 @@ class DiffTexte {
 		$this->r = "";
 	}
 
-// http://doc.spip.org/@_diff
+// http://code.spip.net/@_diff
 	function _diff($p, $p_old) {
 		$diff = new Diff(new DiffPara);
 		return $diff->comparer($p, $p_old);
 	}
 
-// http://doc.spip.org/@fuzzy
+// http://code.spip.net/@fuzzy
 	function fuzzy() {
 		return true;
 	}
@@ -250,28 +250,28 @@ class DiffTexte {
 	}
 
 	// NB :  rem=\"diff-\" est un signal pour la fonction "afficher_para_modifies"
-// http://doc.spip.org/@ajouter
+// http://code.spip.net/@ajouter
 	function ajouter($p) {
 		$p = trim($p);
 		$this->r .= "\n\n\n<span class=\"diff-para-ajoute\" title=\""._T('revisions:diff_para_ajoute')."\">".$p."</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@supprimer
+// http://code.spip.net/@supprimer
 	function supprimer($p_old) {
 		$p_old = trim($p_old);
 		$this->r .= "\n\n\n<span class=\"diff-para-supprime\" title=\""._T('revisions:diff_para_supprime')."\">".$p_old."</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@deplacer
+// http://code.spip.net/@deplacer
 	function deplacer($p, $p_old) {
 		$this->r .= "\n\n\n<span class=\"diff-para-deplace\" title=\""._T('revisions:diff_para_deplace')."\">";
 		$this->r .= trim($this->_diff($p, $p_old));
 		$this->r .= "</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@comparer
+// http://code.spip.net/@comparer
 	function comparer($p, $p_old) {
 		$this->r .= "\n\n\n".$this->_diff($p, $p_old);
 	}
 	
-// http://doc.spip.org/@resultat
+// http://code.spip.net/@resultat
 	function resultat() {
 		return $this->r;
 	}
@@ -290,17 +290,17 @@ class DiffPara {
 		$this->r = "";
 	}
 
-// http://doc.spip.org/@_diff
+// http://code.spip.net/@_diff
 	function _diff($p, $p_old) {
 		$diff = new Diff(new DiffPhrase);
 		return $diff->comparer($p, $p_old);
 	}
 
-// http://doc.spip.org/@fuzzy
+// http://code.spip.net/@fuzzy
 	function fuzzy() {
 		return true;
 	}
-// http://doc.spip.org/@segmenter
+// http://code.spip.net/@segmenter
 	function segmenter($texte) {
 		$paras = array();
 		$texte = trim($texte);
@@ -313,24 +313,24 @@ class DiffPara {
 		return $paras;
 	}
 
-// http://doc.spip.org/@ajouter
+// http://code.spip.net/@ajouter
 	function ajouter($p) {
 		$this->r .= "<span class=\"diff-ajoute\" title=\""._T('revisions:diff_texte_ajoute')."\">".$p."</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@supprimer
+// http://code.spip.net/@supprimer
 	function supprimer($p_old) {
 		$this->r .= "<span class=\"diff-supprime\" title=\""._T('revisions:diff_texte_supprime')."\">".$p_old."</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@deplacer
+// http://code.spip.net/@deplacer
 	function deplacer($p, $p_old) {
 		$this->r .= "<span class=\"diff-deplace\" title=\""._T('revisions:diff_texte_deplace')."\">".$this->_diff($p, $p_old)."</span rem=\"diff-\">";
 	}
-// http://doc.spip.org/@comparer
+// http://code.spip.net/@comparer
 	function comparer($p, $p_old) {
 		$this->r .= $this->_diff($p, $p_old);
 	}
 	
-// http://doc.spip.org/@resultat
+// http://code.spip.net/@resultat
 	function resultat() {
 		return $this->r;
 	}
@@ -349,11 +349,11 @@ class DiffPhrase {
 		$this->r = "";
 	}
 
-// http://doc.spip.org/@fuzzy
+// http://code.spip.net/@fuzzy
 	function fuzzy() {
 		return false;
 	}
-// http://doc.spip.org/@segmenter
+// http://code.spip.net/@segmenter
 	function segmenter($texte) {
 		$paras = array();
 		if (test_pcre_unicode()) {
@@ -411,27 +411,27 @@ class DiffPhrase {
 		return $paras;
 	}
 
-// http://doc.spip.org/@ajouter
+// http://code.spip.net/@ajouter
 	function ajouter($p) {
 		$this->r .= "<span class=\"diff-ajoute\" title=\""._T('revisions:diff_texte_ajoute')."\">".$p."</span rem=\"diff-\"> ";
 	}
-// http://doc.spip.org/@supprimer
+// http://code.spip.net/@supprimer
 	function supprimer($p_old) {
 		$this->r .= "<span class=\"diff-supprime\" title=\""._T('revisions:diff_texte_supprime')."\">".$p_old."</span rem=\"diff-\"> ";
 	}
-// http://doc.spip.org/@comparer
+// http://code.spip.net/@comparer
 	function comparer($p, $p_old) {
 		$this->r .= $p;
 	}
 
-// http://doc.spip.org/@resultat
+// http://code.spip.net/@resultat
 	function resultat() {
 		return $this->r;
 	}
 }
 
 
-// http://doc.spip.org/@preparer_diff
+// http://code.spip.net/@preparer_diff
 function preparer_diff($texte) {
 	include_spip('inc/charsets');
 
@@ -441,7 +441,7 @@ function preparer_diff($texte) {
 	return unicode_to_utf_8(html2unicode(charset2unicode($texte, $charset, true)));
 }
 
-// http://doc.spip.org/@afficher_diff
+// http://code.spip.net/@afficher_diff
 function afficher_diff($texte) {
 	$charset = $GLOBALS['meta']['charset'];
 	if ($charset == 'utf-8') return $texte;

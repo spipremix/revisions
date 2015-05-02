@@ -40,7 +40,7 @@ function separer_paras($texte, $paras = array()) {
 	return $paras;
 }
 
-// http://doc.spip.org/@replace_fragment
+// http://code.spip.net/@replace_fragment
 function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_fragment, $fragment) {
 	$fragment = serialize($fragment);
 	$compress = 0;
@@ -72,7 +72,7 @@ function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_frag
 		     'fragment' => $fragment);
 }
 
-// http://doc.spip.org/@envoi_replace_fragments
+// http://code.spip.net/@envoi_replace_fragments
 function envoi_replace_fragments($replaces) {
 	$desc = $GLOBALS['tables_auxiliaires']['spip_versions_fragments'];
 	foreach($replaces as $r)
@@ -80,7 +80,7 @@ function envoi_replace_fragments($replaces) {
 }
 
 
-// http://doc.spip.org/@envoi_delete_fragments
+// http://code.spip.net/@envoi_delete_fragments
 function envoi_delete_fragments($id_objet,$objet, $deletes) {
 	if (count($deletes)) {
 		sql_delete("spip_versions_fragments", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND ((".	join(") OR (", $deletes)."))");
@@ -91,7 +91,7 @@ function envoi_delete_fragments($id_objet,$objet, $deletes) {
 //
 // Ajouter les fragments de la derniere version (tableau associatif id_fragment => texte)
 //
-// http://doc.spip.org/@ajouter_fragments
+// http://code.spip.net/@ajouter_fragments
 function ajouter_fragments($id_objet,$objet, $id_version, $fragments) {
 	global $agregation_versions;
 
@@ -140,7 +140,7 @@ function ajouter_fragments($id_objet,$objet, $id_version, $fragments) {
 // Supprimer tous les fragments d'un objet lies a un intervalle de versions
 // (essaie d'eviter une trop grande fragmentation)
 //
-// http://doc.spip.org/@supprimer_fragments
+// http://code.spip.net/@supprimer_fragments
 function supprimer_fragments($id_objet,$objet, $version_debut, $version_fin) {
 	global $agregation_versions;
 
@@ -317,7 +317,7 @@ function recuperer_fragments($id_objet,$objet, $id_version) {
 // Apparier des paragraphes deux a deux entre une version originale
 // et une version modifiee
 //
-// http://doc.spip.org/@apparier_paras
+// http://code.spip.net/@apparier_paras
 function apparier_paras($src, $dest, $flou = true) {
 	$src_dest = array();
 	$dest_src = array();
@@ -439,7 +439,7 @@ function reconstuire_version($champs, $fragments, $res=array()) {
 	return $res;
 }
 
-// http://doc.spip.org/@supprimer_versions
+// http://code.spip.net/@supprimer_versions
 function supprimer_versions($id_objet,$objet, $version_min, $version_max) {
 	sql_delete("spip_versions", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version>=$version_min AND id_version<=$version_max");
 
@@ -449,7 +449,7 @@ function supprimer_versions($id_objet,$objet, $version_min, $version_max) {
 //
 // Ajouter une version a un objet
 //
-// http://doc.spip.org/@ajouter_version
+// http://code.spip.net/@ajouter_version
 function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_auteur) {
 	$paras = $paras_old = $paras_champ = $fragments = array();
 
@@ -582,7 +582,7 @@ function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_aut
 
 // les textes "diff" ne peuvent pas passer dans propre directement,
 // car ils contiennent des <span> et <div> parfois mal places
-// http://doc.spip.org/@propre_diff
+// http://code.spip.net/@propre_diff
 function propre_diff($texte) {
 
 	$span_diff = array();
