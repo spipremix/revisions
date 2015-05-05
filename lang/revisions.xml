@@ -119,7 +119,8 @@
 	</langue>
 	<langue code="tr" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=tr" total="30" traduits="11" relire="0" modifs="0" nouveaux="19" pourcent="36.67">
 	</langue>
-	<langue code="uk" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=uk" total="30" traduits="6" relire="0" modifs="0" nouveaux="24" pourcent="20.00">
+	<langue code="uk" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=uk" total="30" traduits="30" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="olly" lien="http://trad.spip.net/auteur/olly" />
 		<traducteur nom="Retenodus" lien="http://trad.spip.net/auteur/retenodus" />
 	</langue>
 	<langue code="vi" url="http://trad.spip.net/tradlang_module/revisions?lang_cible=vi" total="30" traduits="10" relire="0" modifs="0" nouveaux="20" pourcent="33.33">
