@@ -170,7 +170,7 @@ function revisions_pre_edition_lien($x) {
 	if (intval($x['args']['id_objet_source'])>0
 	    AND intval($x['args']['id_objet'])>0) {
 		$table = table_objet_sql($x['args']['objet']);
-		$id_objet = $x['data'];
+		$id_objet = intval($x['args']['id_objet']);
 		include_spip('inc/revisions');
 		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
 			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
@@ -247,14 +247,14 @@ function revisions_post_edition_lien($x) {
 				'id_objet' => $id_o,
 				'action'=>'delete',
 			),
-			'data' => $id_o
+			'data' => $couples
 		)
 	*/
 	if (intval($x['args']['id_objet_source'])>0
 	    AND intval($x['args']['id_objet'])>0) {
 
 		$table = table_objet_sql($x['args']['objet']);
-		$id_objet = $x['data'];
+		$id_objet = $x['args']['id_objet'];
 		include_spip('inc/revisions');
 		if (isset($GLOBALS['premiere_revision']["$table:".$id_objet])){
 			$GLOBALS['premiere_revision']["$table:".$id_objet] = 0;
