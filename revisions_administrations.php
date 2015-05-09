@@ -121,6 +121,8 @@ function revisions_uncompress_fragments(){
 
 function revisions_repair_unserialized_fragments(){
 	$res = sql_select("*","spip_versions_fragments","compress=".intval(-1));
+	$n = sql_count($res);
+	spip_log("$n fragments a verifier","maj");
 	while($row = sql_fetch($res)){
 		$fragment = $row['fragment'];
 		$set = array(
@@ -138,7 +140,8 @@ function revisions_repair_unserialized_fragments(){
 				ecrire_fichier($dir_tmp . $f, $fragment);
 			}
 		}
-		sql_updateq("spip_versions_fragments",$set,"id_fragment=".intval($row['id_fragment'])." AND id_objet=".intval($row['id_objet'])." AND objet=".sql_quote($row['objet'])." AND version_min=".intval($row['version_min']));
+		sql_updateq("spip_versions_fragments",$set,$w = "id_fragment=".intval($row['id_fragment'])." AND id_objet=".intval($row['id_objet'])." AND objet=".sql_quote($row['objet'])." AND version_min=".intval($row['version_min']));
+		#spip_log($w,"maj");
 
 		if (time()>_TIME_OUT) return;
 	}
