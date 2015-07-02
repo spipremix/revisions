@@ -8,7 +8,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// R
-	'revisions_description' => 'Історія змін',
+	'revisions_description' => 'Відстеження змін об’єктів, що редагуються',
 	'revisions_slogan' => 'Історія змін'
 );
 
