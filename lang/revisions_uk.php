@@ -27,7 +27,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_historique' => 'Зміни в:',
 	'info_historique_lien' => 'Історія змін',
 	'info_historique_titre' => 'Історія змін',
-	'info_nb_revisions' => 'зміни в матеріалах (@nb@)',
+	'info_nb_revisions' => '@nb@ змін',
 
 	// L
 	'label_choisir_id_version' => 'Порівняти з попереднєю версією',
@@ -40,7 +40,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'objet_editorial' => 'об´єкт',
 
 	// P
-	'plugin_update' => 'Поновити плагін "Révisions" до версії @version@.',
+	'plugin_update' => 'Поновити плагін „Révisions” до версії @version@.',
 
 	// T
 	'titre_form_revisions_objets' => 'Вести історію змін',
@@ -48,11 +48,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_revisions' => 'Історія змін',
 
 	// V
-	'version_deplace_rubrique' => 'Перемістити <b>“@from@”</b> в <b>“@to@”</b>.',
+	'version_deplace_rubrique' => 'Перемістити з <b>„@from@”</b> в <b>„@to@”</b>.',
 	'version_initiale' => 'Початкова версія',
 	'voir_differences' => 'Продивитися відмінності',
 	'voir_mes_revisions' => 'Мої зміни',
-	'voir_revisions' => 'Історія змін (@objet@ @id_objet@ : @titre@)',
+	'voir_revisions' => 'Історія змін (@objet@ @id_objet@: @titre@)',
 	'voir_toutes_les_revisions' => 'Усі зміни'
 );
 
