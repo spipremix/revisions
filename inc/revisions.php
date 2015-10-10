@@ -640,6 +640,9 @@ function propre_diff($texte) {
 	$reg = end($regs);
 	if (!$reg[1] AND $reg[2]) $texte.="</$reg[2]>";
 
+	// et interdire_scripts !
+	$texte = interdire_scripts($texte);
+
 	return $texte;
 }
 
