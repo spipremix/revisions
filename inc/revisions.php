@@ -725,11 +725,13 @@ function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_au
 		// pour l'objet
 		$originaux = sql_fetsel("*", $table, "$id_table_objet=".intval($id_objet));
 		$premiere = false;
+		$champs_originaux = array();
+
 		foreach($champs as $v){
 			if (isset($originaux[$v])){
 				$champs_originaux[$v] = $originaux[$v];
 			}
-			else if(strncmp($v,'jointure_',9)==0) {
+			elseif (strncmp($v, 'jointure_', 9) == 0) {
 				$champs_originaux[$v] = recuperer_valeur_champ_jointure($objet,$id_objet,substr($v,9));
 			}
 			if (isset($champs_originaux[$v]) AND isset($originaux[$v]) AND strlen($originaux[$v])) {
