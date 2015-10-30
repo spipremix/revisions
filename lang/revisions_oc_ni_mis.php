@@ -40,7 +40,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'objet_editorial' => 'ouget',
 
 	// P
-	'plugin_update' => 'Metuda a jou dóu plugin "Revisioun" en versioun @version@.',
+	'plugin_update' => 'Messa a jou dóu plugin "Revisioun" en versioun @version@.',
 
 	// T
 	'titre_form_revisions_objets' => 'Ativà li revisioun',
