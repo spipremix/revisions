@@ -446,23 +446,39 @@ function supprimer_versions($id_objet,$objet, $version_min, $version_max) {
 	supprimer_fragments($id_objet,$objet, $version_min, $version_max);
 }
 
-//
-// Ajouter une version a un objet
-//
-// http://code.spip.net/@ajouter_version
-function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_auteur) {
+
+/**
+ * Ajouter une version à un objet éditorial
+ *
+ * @param int $id_objet
+ * @param string $objet
+ * @param array $champs
+ * @param string $titre_version
+ *     Titre donné aux modifications apportées
+ * @param int|null $id_auteur
+ *     Auteur apportant les modifications. En absence (session anonyme), utilisera l'IP pour garder une trace.
+ * @return int
+ *     id_version : identifiant de la version 
+**/
+function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_auteur = null) {
 	$paras = $paras_old = $paras_champ = $fragments = array();
 
 	// Attention a une edition anonyme (type wiki): id_auteur n'est pas
 	// definie, on enregistre alors le numero IP
 	$str_auteur = intval($id_auteur) ? intval($id_auteur) : $GLOBALS['ip'];
+
 	// si pas de titre dans cette version, la marquer 'non' permanente,
 	// et elle pourra etre fusionnee avec une revision ulterieure dans un delai < _INTERVALLE_REVISIONS
 	// permet de fusionner plusieurs editions consecutives champs par champs avec les crayons
 	$permanent = empty($titre_version) ? 'non' : '';
 
 	// Detruire les tentatives d'archivages non abouties en 1 heure
-	sql_delete('spip_versions', "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version <= 0 AND date < DATE_SUB(".sql_quote(date('Y-m-d H:i:s')).", INTERVAL "._INTERVALLE_REVISIONS." SECOND)");
+	sql_delete('spip_versions', array(
+		"id_objet=" . intval($id_objet),
+		"objet=" . sql_quote($objet),
+		"id_version <= 0",
+		"date < DATE_SUB(" . sql_quote(date('Y-m-d H:i:s')) . ", INTERVAL " . _INTERVALLE_REVISIONS . " SECOND)")
+	);
 
 	// Signaler qu'on opere en mettant un numero de version negatif
 	// distinctif (pour eviter la violation d'unicite)
