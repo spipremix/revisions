@@ -209,20 +209,25 @@ function revisions_post_edition($x) {
 		$champs = array();
 		$table = $x['args']['table'];
 		$objet = isset($x['args']['type']) ? $x['args']['type'] : objet_type($table);
+		include_spip('inc/session');
+
 		if (isset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']])){
 			unset($GLOBALS['premiere_revision']["$table:".$x['args']['id_objet']]);
 			// verifier la premiere version : sur une version initiale on attend ici pour la creer
 			// plutot que de creer une version vide+un diff
-			verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, $GLOBALS['visiteur_session']['id_auteur']);
+			verifier_premiere_revision($table, $objet, $x['args']['id_objet'], $versionnes, session_get('id_auteur'));
 		}
 		else {
 			// on versionne les differences
-			foreach ($versionnes as $key)
-				if (isset($x['data'][$key]))
+			foreach ($versionnes as $key) {
+				if (isset($x['data'][$key])) {
 					$champs[$key] = $x['data'][$key];
+				}
+			}
 
-			if (count($champs))
-				ajouter_version($x['args']['id_objet'],$objet, $champs, '', $GLOBALS['visiteur_session']['id_auteur']);
+			if (count($champs)) {
+				ajouter_version($x['args']['id_objet'],$objet, $champs, '', session_get('id_auteur'));
+			}
 		}
 	}
 
