@@ -48,7 +48,7 @@ function optimiser_base_revisions(){
 	 * Pour chaque objet, on va contruire un tableau des identifiants disparus
 	 * On supprimera ensuite les occurences dans spip_versions et spip_versions_fragments
 	 */
-	while($objet = sql_fetch($objets_revises)){
+	while ($objet = sql_fetch($objets_revises)){
 		$in = array();
 		$table = table_objet_sql($objet['objet']);
 		$id_table_objet = id_table_objet($objet['objet']);
@@ -58,9 +58,12 @@ function optimiser_base_revisions(){
 							"R.$id_table_objet IS NULL AND A.objet=".sql_quote($objet['objet'])." AND A.id_objet > 0",
 							"A.id_objet",
 							"A.id_objet");
-		while ($row = sql_fetch($res)) $in[$row['id_objet']]=true;
-		sql_free($sel);
-		
+
+		while ($row = sql_fetch($res)) {
+			$in[$row['id_objet']] = true;
+		}
+		sql_free($res);
+
 		/**
 		 * Si on a un array
 		 * On supprime toute occurence des objets disparus dans : 
