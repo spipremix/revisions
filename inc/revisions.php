@@ -41,7 +41,7 @@ function separer_paras($texte, $paras = array()) {
 }
 
 // http://code.spip.net/@replace_fragment
-function replace_fragment($id_objet,$objet, $version_min, $version_max, $id_fragment, $fragment) {
+function replace_fragment($id_objet, $objet, $version_min, $version_max, $id_fragment, $fragment) {
 	$fragment = serialize($fragment);
 	$compress = 0;
 
@@ -81,7 +81,7 @@ function envoi_replace_fragments($replaces) {
 
 
 // http://code.spip.net/@envoi_delete_fragments
-function envoi_delete_fragments($id_objet,$objet, $deletes) {
+function envoi_delete_fragments($id_objet, $objet, $deletes) {
 	if (count($deletes)) {
 		sql_delete("spip_versions_fragments", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND ((".	join(") OR (", $deletes)."))");
 	}
@@ -92,7 +92,7 @@ function envoi_delete_fragments($id_objet,$objet, $deletes) {
 // Ajouter les fragments de la derniere version (tableau associatif id_fragment => texte)
 //
 // http://code.spip.net/@ajouter_fragments
-function ajouter_fragments($id_objet,$objet, $id_version, $fragments) {
+function ajouter_fragments($id_objet, $objet, $id_version, $fragments) {
 	global $agregation_versions;
 
 	$replaces = array();
@@ -141,7 +141,7 @@ function ajouter_fragments($id_objet,$objet, $id_version, $fragments) {
 // (essaie d'eviter une trop grande fragmentation)
 //
 // http://code.spip.net/@supprimer_fragments
-function supprimer_fragments($id_objet,$objet, $version_debut, $version_fin) {
+function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 	global $agregation_versions;
 
 	$replaces = array();
@@ -258,7 +258,7 @@ function supprimer_fragments($id_objet,$objet, $version_debut, $version_fin) {
  * @param int $id_version  Identifiant de la version
  * @return array           Couples id_fragment => texte
  */
-function recuperer_fragments($id_objet,$objet, $id_version) {
+function recuperer_fragments($id_objet, $objet, $id_version) {
 	$fragments = array();
 
 	if ($id_version == 0) return array();
@@ -399,7 +399,7 @@ function apparier_paras($src, $dest, $flou = true) {
  * @param int $id_version  Identifiant de la version
  * @return array           Couples champs => textes
  */
-function recuperer_version($id_objet,$objet, $id_version) {
+function recuperer_version($id_objet, $objet, $id_version) {
 
 	$champs = sql_getfetsel("champs", "spip_versions", "id_objet=" . intval($id_objet) . " AND objet=".sql_quote($objet)." AND id_version=" . intval($id_version));
 	if (!$champs OR !is_array($champs = unserialize($champs)))
@@ -420,7 +420,7 @@ function recuperer_version($id_objet,$objet, $id_version) {
  * @param array $res        Couples (champ => texte) déjà connus
  * @return array            Couples (champ => texte)
  */
-function reconstuire_version($champs, $fragments, $res=array()) {
+function reconstuire_version($champs, $fragments, $res = array()) {
 
 	static $msg;
 	if (!$msg) $msg = _T('forum_titre_erreur');
@@ -440,7 +440,7 @@ function reconstuire_version($champs, $fragments, $res=array()) {
 }
 
 // http://code.spip.net/@supprimer_versions
-function supprimer_versions($id_objet,$objet, $version_min, $version_max) {
+function supprimer_versions($id_objet, $objet, $version_min, $version_max) {
 	sql_delete("spip_versions", "id_objet=".intval($id_objet)." AND objet=".sql_quote($objet)." AND id_version>=$version_min AND id_version<=$version_max");
 
 	supprimer_fragments($id_objet,$objet, $version_min, $version_max);
@@ -460,7 +460,7 @@ function supprimer_versions($id_objet,$objet, $version_min, $version_max) {
  * @return int
  *     id_version : identifiant de la version 
 **/
-function ajouter_version($id_objet,$objet, $champs, $titre_version = "", $id_auteur = null) {
+function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_auteur = null) {
 	$paras = $paras_old = $paras_champ = $fragments = array();
 
 	// Attention a une edition anonyme (type wiki): id_auteur n'est pas
@@ -694,7 +694,7 @@ function liste_champs_versionnes($table) {
  * @param string $jointure
  * @return string
  */
-function recuperer_valeur_champ_jointure($objet,$id_objet,$jointure){
+function recuperer_valeur_champ_jointure($objet, $id_objet, $jointure){
 	$objet_joint = objet_type($jointure);
 	include_spip('action/editer_liens');
 	$v = array();
@@ -728,7 +728,7 @@ function recuperer_valeur_champ_jointure($objet,$id_objet,$jointure){
  * @param int $id_auteur
  * @return int
  */
-function verifier_premiere_revision($table,$objet,$id_objet,$champs=null, $id_auteur=0){
+function verifier_premiere_revision($table, $objet, $id_objet, $champs = null, $id_auteur = 0){
 
 	$id_table_objet = id_table_objet($objet);
 	if (!$champs)

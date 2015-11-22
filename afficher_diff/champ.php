@@ -23,7 +23,7 @@ include_spip('inc/diff');
  *   apercu, diff ou complet
  * @return string
  */
-function afficher_diff_champ_dist($champ,$old,$new,$format='diff'){
+function afficher_diff_champ_dist($champ, $old, $new, $format = 'diff'){
 	// ne pas se compliquer la vie !
 	if ($old==$new)
 		$out = ($format!='complet'?'':$new);

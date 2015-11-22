@@ -16,7 +16,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string $label
  * 		Le label du champ
  */
-function label_champ($champ,$objet=false){
+function label_champ($champ, $objet = false){
 	$label = "";
 	// si jointure: renvoyer le nom des objets joints
 	if (strncmp($champ,'jointure_',9)==0)

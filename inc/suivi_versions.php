@@ -32,7 +32,7 @@ include_spip('inc/diff');
  * @return string
  *     Texte HTML du diff.
  */
-function revisions_diff ($id_objet,$objet, $id_version, $court=false){
+function revisions_diff ($id_objet, $objet, $id_version, $court = false){
 	$textes = revision_comparee($id_objet,$objet, $id_version, 'diff');
 	if (!is_array($textes)) return $textes;
 	$rev = '';
@@ -69,7 +69,7 @@ function revisions_diff ($id_objet,$objet, $id_version, $court=false){
  * @param array $champs    Liste des champs déjà connus
  * @return void
  */
-function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$champs){
+function retrouver_champ_version_objet($objet, $id_objet, $id_version, $champ, &$champs){
 	if (isset($champs[$champ]))
 		return;
 
@@ -115,7 +115,7 @@ function retrouver_champ_version_objet($objet,$id_objet,$id_version,$champ,&$cha
  * @return array
  *     Couples (champ => texte)
  */
-function revision_comparee($id_objet, $objet, $id_version, $format='diff', $id_diff=NULL) {
+function revision_comparee($id_objet, $objet, $id_version, $format = 'diff', $id_diff = NULL) {
 	include_spip('inc/diff');
 
 	// chercher le numero de la version precedente

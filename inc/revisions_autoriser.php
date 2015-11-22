@@ -68,7 +68,7 @@ function autoriser_voirrevisions_dist($faire, $type, $id, $qui, $opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  */
-function autoriser_revisions_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_revisions_menu_dist($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL){
 	// SI pas de revisions sur un objet quelconque.
 	// ET pas de version... pas de bouton, c'est inutile...
 	include_spip('inc/config');

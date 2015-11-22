@@ -25,7 +25,7 @@ include_spip('inc/diff');
  * @param string $format
  * @return string
  */
-function afficher_diff_id_rubrique_dist($champ,$old,$new,$format='diff'){
+function afficher_diff_id_rubrique_dist($champ, $old, $new, $format = 'diff'){
 	// ne pas se compliquer la vie !
 	if ($old==$new)
 		$out = _T('info_dans_rubrique')

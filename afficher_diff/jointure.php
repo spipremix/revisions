@@ -23,7 +23,7 @@ include_spip('inc/diff');
  *   apercu, diff ou complet
  * @return string
  */
-function afficher_diff_jointure_dist($champ,$old,$new,$format='diff'){
+function afficher_diff_jointure_dist($champ, $old, $new, $format = 'diff'){
 	$join = substr($champ,9);
 	$objet = objet_type($join);
 
