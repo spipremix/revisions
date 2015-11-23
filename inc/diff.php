@@ -135,7 +135,7 @@ class Diff {
 	 *
 	 * @param Object $diff    Objet Diff* d'un texte ou morceau de texte
 	**/
-	function Diff($diff) {
+	function __construct($diff) {
 		$this->diff = $diff;
 		$this->fuzzy = true;
 	}
@@ -224,7 +224,7 @@ class DiffTexte {
 	/**
 	 * Constructeur 
 	**/
-	function DiffTexte() {
+	function __construct() {
 		$this->r = "";
 	}
 
@@ -286,7 +286,7 @@ class DiffPara {
 	var $r;
 
 	/** Constructeur */
-	function DiffPara() {
+	function __construct() {
 		$this->r = "";
 	}
 
@@ -345,7 +345,7 @@ class DiffPhrase {
 	var $r;
 
 	/** Constructeur */
-	function DiffPhrase() {
+	function __construct() {
 		$this->r = "";
 	}
 
