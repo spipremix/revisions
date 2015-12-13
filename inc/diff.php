@@ -52,9 +52,9 @@ function lcs_opt($s) {
 		}  # eviter l'explosion memoire des tres gros diff
 		for ($len = $max_len; $len > 0; $len--) {
 			if ($paths_ymin[$len] < $y) {
-				$paths_ymin[$len+1] = $y;
-				$paths[$len+1] = $paths[$len];
-				$paths[$len+1][$y] = $c;
+				$paths_ymin[$len + 1] = $y;
+				$paths[$len + 1] = $paths[$len];
+				$paths[$len + 1][$y] = $c;
 				break;
 			}
 		}
@@ -62,8 +62,8 @@ function lcs_opt($s) {
 			$paths_ymin[1] = $y;
 			$paths[1] = array($y => $c);
 		}
-		if ($len+1 > $max_len) {
-			$max_len = $len+1;
+		if ($len + 1 > $max_len) {
+			$max_len = $len + 1;
 		}
 	}
 
@@ -105,15 +105,15 @@ function lcs($s, $t) {
 		foreach ($t_pos[$c] as $y) {
 			for ($len = $max_len; $len > 0; $len--) {
 				if ($paths_ymin[$len] < $y) {
-					$paths_ymin[$len+1] = $y;
+					$paths_ymin[$len + 1] = $y;
 					// On construit le resultat sous forme de chaine d'abord,
 					// car les tableaux de PHP sont dispendieux en taille memoire
-					$paths[$len+1] = $paths[$len] . " $x,$y";
+					$paths[$len + 1] = $paths[$len] . " $x,$y";
 					break;
 				}
 			}
-			if ($len+1 > $max_len) {
-				$max_len = $len+1;
+			if ($len + 1 > $max_len) {
+				$max_len = $len + 1;
 			}
 			if ($len == 0) {
 				$paths_ymin[1] = $y;
@@ -121,7 +121,7 @@ function lcs($s, $t) {
 			}
 		}
 	}
-	if (isset($paths[$max_len]) AND $paths[$max_len]) {
+	if (isset($paths[$max_len]) and $paths[$max_len]) {
 		$path = explode(" ", $paths[$max_len]);
 		$u = $v = array();
 		foreach ($path as $p) {
@@ -147,21 +147,21 @@ class Diff {
 	 *
 	 * @var Object Objet Diff* (DiffTexte, DiffPara, DiffPhrase)
 	 */
-	var $diff;
-	var $fuzzy;
+	public $diff;
+	public $fuzzy;
 
 	/**
 	 * Constructeur
 	 *
 	 * @param Object $diff Objet Diff* d'un texte ou morceau de texte
 	 **/
-	function __construct($diff) {
+	public function __construct($diff) {
 		$this->diff = $diff;
 		$this->fuzzy = true;
 	}
 
 // http://code.spip.net/@comparer
-	function comparer($new, $old) {
+	public function comparer($new, $old) {
 		$paras = $this->diff->segmenter($new);
 		$paras_old = $this->diff->segmenter($old);
 		if ($this->diff->fuzzy()) {
@@ -247,24 +247,24 @@ class Diff {
  * @package SPIP\Revisions\Diff
  **/
 class DiffTexte {
-	var $r;
+	public $r;
 
 	/**
 	 * Constructeur
 	 **/
-	function __construct() {
+	public function __construct() {
 		$this->r = "";
 	}
 
 // http://code.spip.net/@_diff
-	function _diff($p, $p_old) {
+	public function _diff($p, $p_old) {
 		$diff = new Diff(new DiffPara);
 
 		return $diff->comparer($p, $p_old);
 	}
 
 // http://code.spip.net/@fuzzy
-	function fuzzy() {
+	public function fuzzy() {
 		return true;
 	}
 
@@ -274,37 +274,37 @@ class DiffTexte {
 	 * @param string $texte Texte à fragmenter
 	 * @return string[]       Tableau de fragments (paragraphes)
 	 **/
-	function segmenter($texte) {
+	public function segmenter($texte) {
 		return separer_paras($texte);
 	}
 
 	// NB :  rem=\"diff-\" est un signal pour la fonction "afficher_para_modifies"
 // http://code.spip.net/@ajouter
-	function ajouter($p) {
+	public function ajouter($p) {
 		$p = trim($p);
 		$this->r .= "\n\n\n<span class=\"diff-para-ajoute\" title=\"" . _T('revisions:diff_para_ajoute') . "\">" . $p . "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@supprimer
-	function supprimer($p_old) {
+	public function supprimer($p_old) {
 		$p_old = trim($p_old);
 		$this->r .= "\n\n\n<span class=\"diff-para-supprime\" title=\"" . _T('revisions:diff_para_supprime') . "\">" . $p_old . "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@deplacer
-	function deplacer($p, $p_old) {
+	public function deplacer($p, $p_old) {
 		$this->r .= "\n\n\n<span class=\"diff-para-deplace\" title=\"" . _T('revisions:diff_para_deplace') . "\">";
 		$this->r .= trim($this->_diff($p, $p_old));
 		$this->r .= "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@comparer
-	function comparer($p, $p_old) {
+	public function comparer($p, $p_old) {
 		$this->r .= "\n\n\n" . $this->_diff($p, $p_old);
 	}
 
 // http://code.spip.net/@resultat
-	function resultat() {
+	public function resultat() {
 		return $this->r;
 	}
 }
@@ -315,31 +315,31 @@ class DiffTexte {
  * @package SPIP\Revisions\Diff
  **/
 class DiffPara {
-	var $r;
+	public $r;
 
 	/** Constructeur */
-	function __construct() {
+	public function __construct() {
 		$this->r = "";
 	}
 
 // http://code.spip.net/@_diff
-	function _diff($p, $p_old) {
+	public function _diff($p, $p_old) {
 		$diff = new Diff(new DiffPhrase);
 
 		return $diff->comparer($p, $p_old);
 	}
 
 // http://code.spip.net/@fuzzy
-	function fuzzy() {
+	public function fuzzy() {
 		return true;
 	}
 
 // http://code.spip.net/@segmenter
-	function segmenter($texte) {
+	public function segmenter($texte) {
 		$paras = array();
 		$texte = trim($texte);
 		while (preg_match('/[\.!\?\]]+\s*/u', $texte, $regs)) {
-			$p = strpos($texte, $regs[0])+strlen($regs[0]);
+			$p = strpos($texte, $regs[0]) + strlen($regs[0]);
 			$paras[] = substr($texte, 0, $p);
 			$texte = substr($texte, $p);
 		}
@@ -351,28 +351,28 @@ class DiffPara {
 	}
 
 // http://code.spip.net/@ajouter
-	function ajouter($p) {
+	public function ajouter($p) {
 		$this->r .= "<span class=\"diff-ajoute\" title=\"" . _T('revisions:diff_texte_ajoute') . "\">" . $p . "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@supprimer
-	function supprimer($p_old) {
+	public function supprimer($p_old) {
 		$this->r .= "<span class=\"diff-supprime\" title=\"" . _T('revisions:diff_texte_supprime') . "\">" . $p_old . "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@deplacer
-	function deplacer($p, $p_old) {
+	public function deplacer($p, $p_old) {
 		$this->r .= "<span class=\"diff-deplace\" title=\"" . _T('revisions:diff_texte_deplace') . "\">" . $this->_diff($p,
 				$p_old) . "</span rem=\"diff-\">";
 	}
 
 // http://code.spip.net/@comparer
-	function comparer($p, $p_old) {
+	public function comparer($p, $p_old) {
 		$this->r .= $this->_diff($p, $p_old);
 	}
 
 // http://code.spip.net/@resultat
-	function resultat() {
+	public function resultat() {
 		return $this->r;
 	}
 }
@@ -383,20 +383,20 @@ class DiffPara {
  * @package SPIP\Revisions\Diff
  **/
 class DiffPhrase {
-	var $r;
+	public $r;
 
 	/** Constructeur */
-	function __construct() {
+	public function __construct() {
 		$this->r = "";
 	}
 
 // http://code.spip.net/@fuzzy
-	function fuzzy() {
+	public function fuzzy() {
 		return false;
 	}
 
 // http://code.spip.net/@segmenter
-	function segmenter($texte) {
+	public function segmenter($texte) {
 		$paras = array();
 		if (test_pcre_unicode()) {
 			$punct = '([[:punct:]]|' . plage_punct_unicode() . ')';
@@ -416,33 +416,33 @@ class DiffPhrase {
 				// notes
 				if ($punct == '[[') {
 					$avant = substr($texte, 0, $p) . $regs[5] . $punct;
-					$texte = $regs[4] . substr($texte, $p+$l);
+					$texte = $regs[4] . substr($texte, $p + $l);
 				} else {
 					if ($punct == ']]') {
 						$avant = substr($texte, 0, $p) . $regs[5] . $punct;
-						$texte = substr($texte, $p+$l);
+						$texte = substr($texte, $p + $l);
 					} // Attacher les raccourcis fermants au mot precedent
 					else {
 						if (preg_match(',^[\]}]+$,', $punct)) {
 							$avant = substr($texte, 0, $p) . (isset($regs[5]) ? $regs[5] : '') . $punct;
-							$texte = $regs[4] . substr($texte, $p+$l);
+							$texte = $regs[4] . substr($texte, $p + $l);
 						} // Attacher les raccourcis ouvrants au mot suivant
 						else {
 							if (isset($regs[5]) && $regs[5] && preg_match(',^[\[{]+$,', $punct)) {
 								$avant = substr($texte, 0, $p) . $regs[5];
-								$texte = $punct . substr($texte, $p+$l);
+								$texte = $punct . substr($texte, $p + $l);
 							} // Les autres signes de ponctuation sont des mots a part entiere
 							else {
 								$avant = substr($texte, 0, $p);
 								$milieu = $regs[0];
-								$texte = substr($texte, $p+$l);
+								$texte = substr($texte, $p + $l);
 							}
 						}
 					}
 				}
 			} else {
-				$avant = substr($texte, 0, $p+$l);
-				$texte = substr($texte, $p+$l);
+				$avant = substr($texte, 0, $p + $l);
+				$texte = substr($texte, $p + $l);
 			}
 			if ($avant) {
 				$paras[] = $avant;
@@ -459,22 +459,22 @@ class DiffPhrase {
 	}
 
 // http://code.spip.net/@ajouter
-	function ajouter($p) {
+	public function ajouter($p) {
 		$this->r .= "<span class=\"diff-ajoute\" title=\"" . _T('revisions:diff_texte_ajoute') . "\">" . $p . "</span rem=\"diff-\"> ";
 	}
 
 // http://code.spip.net/@supprimer
-	function supprimer($p_old) {
+	public function supprimer($p_old) {
 		$this->r .= "<span class=\"diff-supprime\" title=\"" . _T('revisions:diff_texte_supprime') . "\">" . $p_old . "</span rem=\"diff-\"> ";
 	}
 
 // http://code.spip.net/@comparer
-	function comparer($p, $p_old) {
+	public function comparer($p, $p_old) {
 		$this->r .= $p;
 	}
 
 // http://code.spip.net/@resultat
-	function resultat() {
+	public function resultat() {
 		return $this->r;
 	}
 }
@@ -501,6 +501,3 @@ function afficher_diff($texte) {
 
 	return charset2unicode($texte, 'utf-8');
 }
-
-
-?>

@@ -93,5 +93,3 @@ function optimiser_tables_revision() {
 		}
 	}
 }
-
-?>

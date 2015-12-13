@@ -36,8 +36,8 @@ function formulaires_configurer_revisions_objets_traiter_dist() {
 
 function test_objet_versionable($desc) {
 	if (!$desc['editable']
-		OR !isset($desc['champs_versionnes'])
-		OR !count($desc['champs_versionnes'])
+		or !isset($desc['champs_versionnes'])
+		or !count($desc['champs_versionnes'])
 	) {
 		return '';
 	}
@@ -52,5 +52,3 @@ function test_objet_versionable($desc) {
 
 	return '';
 }
-
-?>

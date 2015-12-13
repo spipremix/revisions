@@ -35,8 +35,7 @@ function afficher_diff_id_rubrique_dist($champ, $old, $new, $format = 'diff') {
 	} else {
 		$out = _T('revisions:version_deplace_rubrique',
 			array(
-				'from' => generer_info_entite($old, 'rubrique', 'titre')
-			,
+				'from' => generer_info_entite($old, 'rubrique', 'titre'),
 				'to' => generer_info_entite($new, 'rubrique', 'titre')
 			)
 		);

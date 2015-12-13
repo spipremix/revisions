@@ -36,7 +36,7 @@ function separer_paras($texte, $paras = array()) {
 		$paras = array();
 	}
 	while (preg_match("/(\r\n?){2,}|\n{2,}/", $texte, $regs)) {
-		$p = strpos($texte, $regs[0])+strlen($regs[0]);
+		$p = strpos($texte, $regs[0]) + strlen($regs[0]);
 		$paras[] = substr($texte, 0, $p);
 		$texte = substr($texte, $p);
 	}
@@ -134,7 +134,7 @@ function ajouter_fragments($id_objet, $objet, $id_version, $fragments) {
 		} else {
 			// Ne pas dupliquer les fragments non modifies
 			$modif = true;
-			for ($i = $id_version-1; $i >= $version_min; $i--) {
+			for ($i = $id_version - 1; $i >= $version_min; $i--) {
 				if (isset($fragment[$i])) {
 					$modif = ($fragment[$i] != $texte);
 					break;
@@ -181,8 +181,8 @@ function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 		for ($i = $version_fin; $i >= $version_debut; $i--) {
 			if (isset($fragment[$i])) {
 				// Recopier le dernier fragment si implicite
-				if (!isset($fragment[$version_fin+1])) {
-					$fragment[$version_fin+1] = $fragment[$i];
+				if (!isset($fragment[$version_fin + 1])) {
+					$fragment[$version_fin + 1] = $fragment[$i];
 				}
 				unset($fragment[$i]);
 			}
@@ -216,7 +216,7 @@ function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 		$deb_fragment[$id_fragment] = $fragment;
 		// Ajuster l'intervalle des versions
 		$deb_version_min[$id_fragment] = $version_min;
-		$deb_version_max[$id_fragment] = $version_debut-1;
+		$deb_version_max[$id_fragment] = $version_debut - 1;
 	}
 
 	// Fragments chevauchant la fin de l'intervalle, s'ils existent
@@ -235,8 +235,8 @@ function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 		for ($i = $version_fin; $i >= $version_min; $i--) {
 			if (isset($fragment[$i])) {
 				// Recopier le dernier fragment si implicite
-				if (!isset($fragment[$version_fin+1])) {
-					$fragment[$version_fin+1] = $fragment[$i];
+				if (!isset($fragment[$version_fin + 1])) {
+					$fragment[$version_fin + 1] = $fragment[$i];
 				}
 				unset($fragment[$i]);
 			}
@@ -247,9 +247,9 @@ function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 		// Essayer l'agregation
 		$agreger = false;
 		if (isset($deb_fragment[$id_fragment])) {
-			$agreger = (count($deb_fragment[$id_fragment])+count($fragment) <= $agregation_versions);
+			$agreger = (count($deb_fragment[$id_fragment]) + count($fragment) <= $agregation_versions);
 			if ($agreger) {
-				$fragment = $deb_fragment[$id_fragment]+$fragment;
+				$fragment = $deb_fragment[$id_fragment] + $fragment;
 				$version_min = $deb_version_min[$id_fragment];
 			} else {
 				$replaces[] = replace_fragment($id_objet, $objet,
@@ -260,7 +260,7 @@ function supprimer_fragments($id_objet, $objet, $version_debut, $version_fin) {
 		}
 		if (!$agreger) {
 			// Ajuster l'intervalle des versions
-			$version_min = $version_fin+1;
+			$version_min = $version_fin + 1;
 		}
 		$replaces[] = replace_fragment($id_objet, $objet, $version_min, $version_max, $id_fragment, $fragment);
 	}
@@ -329,8 +329,8 @@ function recuperer_fragments($id_objet, $objet, $id_version) {
 				## mais ce code va les nettoyer ; pour les autres charsets
 				## la situation n'est pas meilleure ni pire qu'avant)
 				if ($GLOBALS['meta']['charset'] == 'utf-8'
-					AND include_spip('inc/charsets')
-					AND !is_utf8($fragment[$i])
+					and include_spip('inc/charsets')
+					and !is_utf8($fragment[$i])
 				) {
 					$fragment[$i] = importer_charset($fragment[$i], 'iso-8859-1');
 				}
@@ -380,7 +380,7 @@ function apparier_paras($src, $dest, $flou = true) {
 	foreach ($md1 as $key1 => $h) {
 		if (isset($md2[$h])) {
 			$key2 = reset($md2[$h]);
-			if (isset($t1[$key1]) AND isset($t2[$key2]) AND $t1[$key1] == $t2[$key2]) {
+			if (isset($t1[$key1]) and isset($t2[$key2]) and $t1[$key1] == $t2[$key2]) {
 				$src_dest[$key1] = $key2;
 				$dest_src[$key2] = $key1;
 				unset($t1[$key1]);
@@ -401,7 +401,7 @@ function apparier_paras($src, $dest, $flou = true) {
 		foreach ($t1 as $key1 => $s1) {
 			foreach ($t2 as $key2 => $s2) {
 				$r = strlen(gzcompress($s1 . $s2));
-				$taux = 1.0*$r/($l1[$key1]+$l2[$key2]);
+				$taux = 1.0 * $r / ($l1[$key1] + $l2[$key2]);
 				if (!isset($gz_min1[$key1]) || !$gz_min1[$key1] || $gz_min1[$key1] > $taux) {
 					$gz_min1[$key1] = $taux;
 					$gz_trans1[$key1] = $key2;
@@ -440,7 +440,7 @@ function recuperer_version($id_objet, $objet, $id_version) {
 
 	$champs = sql_getfetsel("champs", "spip_versions",
 		"id_objet=" . intval($id_objet) . " AND objet=" . sql_quote($objet) . " AND id_version=" . intval($id_version));
-	if (!$champs OR !is_array($champs = unserialize($champs))) {
+	if (!$champs or !is_array($champs = unserialize($champs))) {
 		return array();
 	} else {
 		return reconstuire_version($champs,
@@ -530,13 +530,13 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 	// et un titre contenant en fait le moment de l'insertion
 	list($ms, $sec) = explode(' ', microtime());
 	$date = $sec . substr($ms, 1,
-			4)-20; // SQL ne ramene que 4 chiffres significatifs apres la virgule pour 0.0+titre_version
-	$datediff = ($sec-mktime(0, 0, 0, 9, 1, 2007))*1000000+substr($ms, 2, strlen($ms)-4);
+			4) - 20; // SQL ne ramene que 4 chiffres significatifs apres la virgule pour 0.0+titre_version
+	$datediff = ($sec - mktime(0, 0, 0, 9, 1, 2007)) * 1000000 + substr($ms, 2, strlen($ms) - 4);
 
 	$valeurs = array(
 		'id_objet' => $id_objet,
 		'objet' => $objet,
-		'id_version' => (0-$datediff),
+		'id_version' => (0 - $datediff),
 		'date' => date('Y-m-d H:i:s'),
 		'id_auteur' => $str_auteur, //  varchar ici!
 		'titre_version' => $date
@@ -554,7 +554,7 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 	// 3. recommenter le premier sleep(15), decommenter le second.
 	// 4. enregistrer une autre modif dans les 15 secondes
 # 	  sleep(15);
-	$delai = $sec-10;
+	$delai = $sec - 10;
 	while (sql_countsel('spip_versions',
 		"id_objet=" . intval($id_objet) . " AND objet=" . sql_quote($objet) . " AND id_version < 0 AND 0.0+titre_version < $date AND titre_version<>" . sql_quote($date,
 			'', 'text') . " AND 0.0+titre_version > $delai")) {
@@ -579,8 +579,8 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 		$paras_old = recuperer_fragments($id_objet, $objet, $id_version);
 		$champs_old = $row['champs'];
 		if ($row['id_auteur'] != $str_auteur
-			OR $row['permanent'] != 'non'
-			OR strtotime($row['date']) < (time()-_INTERVALLE_REVISIONS)
+			or $row['permanent'] != 'non'
+			or strtotime($row['date']) < (time() - _INTERVALLE_REVISIONS)
 		) {
 			spip_log(strtotime($row['date']), 'revisions');
 			spip_log(time(), 'revisions');
@@ -597,7 +597,7 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 		$id_version = 1;
 	}
 
-	$next = !$next ? 1 : ($next['id_fragment']+1);
+	$next = !$next ? 1 : ($next['id_fragment'] + 1);
 
 	// Generer les nouveaux fragments
 	$codes = array();
@@ -617,11 +617,11 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 
 		// eviter une notice PHP au tout debut de la boucle
 		// on ajoute ''=>0 en debut de tableau.
-		$paras_champ = array($nom => 0)+$paras_champ;
+		$paras_champ = array($nom => 0) + $paras_champ;
 
 		for ($i = 0; $i < $n; $i++) {
 			while ($i >= $paras_champ[$nom]) {
-				list($nom,) = each($champs);
+				list($nom, ) = each($champs);
 			}
 			// Lier au fragment existant si possible, sinon creer un nouveau fragment
 			$id_fragment = isset($trans[$i]) ? $trans[$i] : $next++;
@@ -726,7 +726,7 @@ function propre_diff($texte) {
 
 	// quand le dernier tag est ouvrant le refermer ...
 	$reg = end($regs);
-	if (!$reg[1] AND $reg[2]) {
+	if (!$reg[1] and $reg[2]) {
 		$texte .= "</$reg[2]>";
 	}
 
@@ -754,7 +754,7 @@ function liste_champs_versionnes($table) {
 
 	include_spip('base/objets');
 	if ($infos = lister_tables_objets_sql($table)
-		AND isset($infos['champs_versionnes'])
+		and isset($infos['champs_versionnes'])
 	) {
 		return $infos['champs_versionnes'];
 	}
@@ -832,7 +832,7 @@ function verifier_premiere_revision($table, $objet, $id_objet, $champs = null, $
 			} elseif (strncmp($v, 'jointure_', 9) == 0) {
 				$champs_originaux[$v] = recuperer_valeur_champ_jointure($objet, $id_objet, substr($v, 9));
 			}
-			if (isset($champs_originaux[$v]) AND isset($originaux[$v]) AND strlen($originaux[$v])) {
+			if (isset($champs_originaux[$v]) and isset($originaux[$v]) and strlen($originaux[$v])) {
 				$premiere = true;
 			}
 		}
@@ -847,17 +847,17 @@ function verifier_premiere_revision($table, $objet, $id_objet, $champs = null, $
 
 			$date_modif = "";
 			foreach (array('date_modif', 'maj') as $d) {
-				if (!$date_modif AND isset($originaux[$d]) AND $t = strtotime($d)) {
-					$date_modif = date("Y-m-d H:i:s", $t-20);
+				if (!$date_modif and isset($originaux[$d]) and $t = strtotime($d)) {
+					$date_modif = date("Y-m-d H:i:s", $t - 20);
 				}
 			}
 			if (!$date_modif
-				AND isset($desc['date'])
-				AND isset($originaux[$desc['date']])
+				and isset($desc['date'])
+				and isset($originaux[$desc['date']])
 			) {
 				$date_modif = $originaux[$desc['date']];
 			} elseif (!$date_modif) {
-				$date_modif = date("Y-m-d H:i:s", time()-20);
+				$date_modif = date("Y-m-d H:i:s", time() - 20);
 			}
 
 			if ($id_version = ajouter_version($id_objet, $objet, $champs_originaux, _T('revisions:version_initiale'),
@@ -871,5 +871,3 @@ function verifier_premiere_revision($table, $objet, $id_objet, $champs = null, $
 
 	return $id_version;
 }
-
-?>

@@ -53,7 +53,7 @@ function check_version_diff($objet, $id_objet, $id_version, $id_diff, $last_vers
 	}
 
 	// minorer id_diff en fonction de id_version
-	$id_diff = min($id_diff, $id_version-1);
+	$id_diff = min($id_diff, $id_version - 1);
 	// verifier id_diff
 	$id_diff = trouver_version_inf($objet, $id_objet, "id_version<=" . intval($id_diff));
 
@@ -63,7 +63,7 @@ function check_version_diff($objet, $id_objet, $id_version, $id_diff, $last_vers
 
 	// echec, on renvoi ce qu'on peut
 	if (!$id_diff) {
-		$id_diff = $id_version-1;
+		$id_diff = $id_version - 1;
 	}
 
 	return array($id_version, $id_diff);

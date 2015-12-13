@@ -48,5 +48,3 @@ function label_champ($champ, $objet = false) {
 
 	return $label ? _T($label) : "";
 }
-
-?>

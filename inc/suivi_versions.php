@@ -81,9 +81,9 @@ function retrouver_champ_version_objet($objet, $id_objet, $id_version, $champ, &
 
 	// Remonter dans le temps pour trouver le champ en question
 	// pour la version demandee
-	$id_ref = $id_version-1;
+	$id_ref = $id_version - 1;
 	$prev = array();
-	while (!isset($prev[$champ]) AND $id_ref > 0) {
+	while (!isset($prev[$champ]) and $id_ref > 0) {
 		$prev = recuperer_version($id_objet, $objet, $id_ref--);
 	}
 	if (isset($prev[$champ])) {
@@ -179,9 +179,9 @@ function revision_comparee($id_objet, $objet, $id_version, $format = 'diff', $id
 			}
 
 			// si on a les deux, le diff nous interesse, plus ou moins court
-			if (isset($new[$champ]) AND isset($old[$champ])) {
+			if (isset($new[$champ]) and isset($old[$champ])) {
 				if (!$afficher_diff = charger_fonction($objet . "_" . $champ, 'afficher_diff', true)
-					AND !$afficher_diff = charger_fonction($champ, 'afficher_diff', true)
+					and !$afficher_diff = charger_fonction($champ, 'afficher_diff', true)
 				) {
 					$afficher_diff = (strncmp($champ, 'jointure_', 9) == 0 ? $afficher_diff_jointure : $afficher_diff_champ);
 				}
@@ -198,5 +198,3 @@ function revision_comparee($id_objet, $objet, $id_version, $format = 'diff', $id
 
 	return $textes;
 }
-
-?>

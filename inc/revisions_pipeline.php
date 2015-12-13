@@ -30,12 +30,12 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function revisions_boite_infos($flux) {
 	$type = $flux['args']['type'];
 	if ($id = intval($flux['args']['id'])
-		AND $tables = unserialize($GLOBALS['meta']['objets_versions'])
-		AND in_array(table_objet_sql($type), $tables)
-		AND autoriser('voirrevisions', $type, $id)
+		and $tables = unserialize($GLOBALS['meta']['objets_versions'])
+		and in_array(table_objet_sql($type), $tables)
+		and autoriser('voirrevisions', $type, $id)
 		// regarder le numero de revision le plus eleve, et afficher le bouton
 		// si c'est interessant (id_version>1)
-		AND sql_countsel('spip_versions', 'id_objet=' . intval($id) . ' AND objet = ' . sql_quote($type)) > 1
+		and sql_countsel('spip_versions', 'id_objet=' . intval($id) . ' AND objet = ' . sql_quote($type)) > 1
 	) {
 		include_spip('inc/presentation');
 		$flux['data'] .= icone_horizontale(_T('revisions:info_historique_lien'),
@@ -94,12 +94,12 @@ function revisions_configurer_liste_metas($metas) {
  */
 function revisions_formulaire_charger($flux) {
 	if (strncmp($flux['args']['form'], 'editer_', 7) == 0
-		AND $id_version = _request('id_version')
-		AND $objet = substr($flux['args']['form'], 7)
-		AND $id_table_objet = id_table_objet($objet)
-		AND isset($flux['data'][$id_table_objet])
-		AND $id = intval($flux['data'][$id_table_objet])
-		AND !$flux['args']['je_suis_poste']
+		and $id_version = _request('id_version')
+		and $objet = substr($flux['args']['form'], 7)
+		and $id_table_objet = id_table_objet($objet)
+		and isset($flux['data'][$id_table_objet])
+		and $id = intval($flux['data'][$id_table_objet])
+		and !$flux['args']['je_suis_poste']
 	) {
 		// ajouter un message convival pour indiquer qu'on a restaure la version
 		$flux['data']['message_ok'] = _T('revisions:icone_restaurer_version', array('version' => $id_version));
@@ -150,7 +150,7 @@ function revisions_post_insertion($x) {
 function revisions_pre_edition($x) {
 	// ne rien faire quand on passe ici en controle md5
 	if (!isset($x['args']['action'])
-		OR $x['args']['action'] !== 'controler'
+		or $x['args']['action'] !== 'controler'
 	) {
 		$table = $x['args']['table'];
 		include_spip('inc/revisions');
@@ -176,7 +176,7 @@ function revisions_pre_edition($x) {
  */
 function revisions_pre_edition_lien($x) {
 	if (intval($x['args']['id_objet_source']) > 0
-		AND intval($x['args']['id_objet']) > 0
+		and intval($x['args']['id_objet']) > 0
 	) {
 		$table = table_objet_sql($x['args']['objet']);
 		$id_objet = intval($x['args']['id_objet']);
@@ -185,7 +185,7 @@ function revisions_pre_edition_lien($x) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_mots est versionnable sur les articles
 		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j = 'jointure_' . table_objet($x['args']['objet_source']), $versionnes)
+			and in_array($j = 'jointure_' . table_objet($x['args']['objet_source']), $versionnes)
 		) {
 			verifier_premiere_revision($table, $x['args']['objet'], $id_objet, $versionnes, -1);
 		}
@@ -196,7 +196,7 @@ function revisions_pre_edition_lien($x) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_articles est versionnable sur les mots
 		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j = 'jointure_' . table_objet($x['args']['objet']), $versionnes)
+			and in_array($j = 'jointure_' . table_objet($x['args']['objet']), $versionnes)
 		) {
 			verifier_premiere_revision($table, $x['args']['objet_source'], $id_objet, $versionnes, -1);
 		}
@@ -264,7 +264,7 @@ function revisions_post_edition_lien($x) {
 		)
 	*/
 	if (intval($x['args']['id_objet_source']) > 0
-		AND intval($x['args']['id_objet']) > 0
+		and intval($x['args']['id_objet']) > 0
 	) {
 
 		$table = table_objet_sql($x['args']['objet']);
@@ -274,7 +274,7 @@ function revisions_post_edition_lien($x) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_mots est versionnable sur les articles
 		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j = 'jointure_' . table_objet($x['args']['objet_source']), $versionnes)
+			and in_array($j = 'jointure_' . table_objet($x['args']['objet_source']), $versionnes)
 		) {
 			$champs = array(
 				$j => recuperer_valeur_champ_jointure($x['args']['objet'], $id_objet, $x['args']['objet_source'])
@@ -288,7 +288,7 @@ function revisions_post_edition_lien($x) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_articles est versionnable sur les mots
 		elseif ($versionnes = liste_champs_versionnes($table)
-			AND in_array($j = 'jointure_' . table_objet($x['args']['objet']), $versionnes)
+			and in_array($j = 'jointure_' . table_objet($x['args']['objet']), $versionnes)
 		) {
 			$champs = array(
 				$j => recuperer_valeur_champ_jointure($x['args']['objet_source'], $id_objet, $x['args']['objet'])
@@ -315,5 +315,3 @@ function revisions_taches_generales_cron($taches_generales) {
 
 	return $taches_generales;
 }
-
-?>

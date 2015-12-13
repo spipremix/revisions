@@ -40,7 +40,7 @@ function afficher_diff_champ_dist($champ, $old, $new, $format = 'diff') {
 		$o = preparer_diff($old);
 
 		$out = afficher_diff($diff->comparer($n, $o));
-		if ($format == 'diff' OR $format == 'apercu') {
+		if ($format == 'diff' or $format == 'apercu') {
 			$out = afficher_para_modifies($out, ($format == 'apercu'));
 		}
 	}
@@ -66,7 +66,7 @@ function afficher_para_modifies($texte, $court = false) {
 
 	$texte_ret = "";
 	$paras = explode("\n", $texte);
-	for ($i = 0; $i < count($paras) AND strlen($texte_ret) < $max; $i++) {
+	for ($i = 0; $i < count($paras) and strlen($texte_ret) < $max; $i++) {
 		if (strpos($paras[$i], '"diff-')) {
 			$texte_ret .= $paras[$i] . "\n\n";
 		}

@@ -34,8 +34,8 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 	if (!isset($GLOBALS['meta'][$nom_meta_base_version])) {
 		$trouver_table = charger_fonction('trouver_table', 'base');
 		if ($desc = $trouver_table('spip_versions')
-			AND isset($desc['exist']) AND $desc['exist']
-			AND isset($desc['field']['id_article'])
+			and isset($desc['exist']) and $desc['exist']
+			and isset($desc['field']['id_article'])
 		) {
 			ecrire_meta($nom_meta_base_version, '1.0.0');
 		}
@@ -101,7 +101,7 @@ function revisions_uncompress_fragments() {
 
 		// si la decompression echoue, on met en base le flag 'corrompu-gz'
 		// et au dump le framgment compresse dans un fichier
-		if (strlen($row['fragment']) AND $fragment === false) {
+		if (strlen($row['fragment']) and $fragment === false) {
 			$dir_tmp = sous_repertoire(_DIR_TMP, "versions_fragments_corrompus");
 			$f = $row['id_fragment'] . "-" . $row['objet'] . "-" . $row['id_objet'];
 			spip_log("Fragment gz corrompu $f", "maj" . _LOG_ERREUR);
@@ -137,7 +137,7 @@ function revisions_repair_unserialized_fragments() {
 		);
 
 		// verifier que le fragment est bien serializable
-		if (unserialize($fragment) === false AND strncmp($fragment, "corrompu", 8) !== 0) {
+		if (unserialize($fragment) === false and strncmp($fragment, "corrompu", 8) !== 0) {
 			$dir_tmp = sous_repertoire(_DIR_TMP, "versions_fragments_corrompus");
 			$set['fragment'] = revisions_repair_serialise($fragment);
 			if (strncmp($set['fragment'], "corrompu", 8) == 0) {
@@ -179,7 +179,7 @@ function revisions_repair_serialise($serialize) {
 				$s = str_replace("\r", "\n", $s);
 			}
 			if (strlen($s) < $l) {
-				$s .= str_pad("", $l-strlen($s), " ");
+				$s .= str_pad("", $l - strlen($s), " ");
 			}
 			if (strlen($s) == $l) {
 				$s = str_replace($match[2], $s, $match[0]);
@@ -244,6 +244,3 @@ function revisions_upate_meta() {
 	$versions = array_map('table_objet_sql', $versions);
 	ecrire_meta('objets_versions', serialize($versions));
 }
-
-
-?>

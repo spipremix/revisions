@@ -23,5 +23,3 @@ function revisions_ieconfig_metas($table) {
 
 	return $table;
 }
-
-?>
