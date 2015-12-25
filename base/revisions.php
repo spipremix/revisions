@@ -82,6 +82,12 @@ function revisions_declarer_tables_auxiliaires($tables_auxiliaires) {
 		"KEY id_objet" => "id_objet",
 		"KEY objet" => "objet"
 	);
+	$spip_versions_join = array(
+		"id_version" => "id_version",
+		"id_objet" => "id_objet",
+		"objet" => "objet",
+		"id_auteur" => "id_auteur",
+	);
 
 	$spip_versions_fragments = array(
 		"id_fragment" => "int unsigned DEFAULT '0' NOT NULL",
@@ -100,7 +106,8 @@ function revisions_declarer_tables_auxiliaires($tables_auxiliaires) {
 
 	$tables_auxiliaires['spip_versions'] = array(
 		'field' => &$spip_versions,
-		'key' => &$spip_versions_key
+		'key' => &$spip_versions_key,
+		'join' => &$spip_versions_join
 	);
 
 	$tables_auxiliaires['spip_versions_fragments'] = array(
