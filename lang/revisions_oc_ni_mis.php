@@ -32,7 +32,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_revisions' => '@nb@ revisioun',
 
 	// L
-	'label_choisir_id_version' => 'Seleciounàs li versioun da coumparà',
+	'label_choisir_id_version' => 'Seleciounas li versioun da coumparà',
 	'label_config_revisions_objets' => 'Soubre de que ouget ativà li revisioun :',
 
 	// M
