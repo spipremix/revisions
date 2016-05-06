@@ -57,4 +57,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_revisions' => 'Історія змін (@objet@ @id_objet@: @titre@)',
 	'voir_toutes_les_revisions' => 'Усі зміни'
 );
-

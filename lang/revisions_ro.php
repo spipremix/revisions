@@ -29,4 +29,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => 'Deplasat de la <b>« @from@ »</b> către <b>« @to@ »</b>.',
 	'version_initiale' => 'Versiunea iniţială'
 );
-

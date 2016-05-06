@@ -26,4 +26,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => 'Dilec’hiet adalek <b>« @from@ »</b> betek <b>« @to@ »</b>.',
 	'version_initiale' => 'Stumm orin'
 );
-

@@ -22,4 +22,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_historique_lien' => 'Amtañanak mayjt’awinakat uñachayaña',
 	'info_historique_titre' => 'Uñakipawinakat uñch’ukiwi'
 );
-

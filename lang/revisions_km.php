@@ -26,4 +26,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => 'បានប្តូរទីតាំង ពី <b>« @from@ »</b> ទៅ <b>« @to@ »</b>។',
 	'version_initiale' => 'កំណែដើម'
 );
-

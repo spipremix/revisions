@@ -26,4 +26,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => 'Desplaçament de <b>« @from@ »</b> cap a <b>« @to@ »</b>.',
 	'version_initiale' => 'Versió inicial'
 );
-

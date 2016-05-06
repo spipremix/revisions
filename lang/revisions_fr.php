@@ -55,4 +55,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_revisions' => 'Voir les révisions (@objet@ @id_objet@ : @titre@)',
 	'voir_toutes_les_revisions' => 'Toutes les révisions'
 );
-
