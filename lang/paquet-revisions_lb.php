@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'revisions_description' => 'Verwaltung vun de Versiounen vun den Objekter',
 	'revisions_slogan' => 'Verwaltung vun de Versiounen vun den Objekter'
 );
-

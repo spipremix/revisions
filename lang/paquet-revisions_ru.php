@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'revisions_description' => 'История изменений',
 	'revisions_slogan' => 'История изменений'
 );
-

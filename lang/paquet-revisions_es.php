@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'revisions_description' => 'Seguimiento de las modificaciones de los objetos editoriales',
 	'revisions_slogan' => 'Seguimiento de las modificaciones de los objetos editoriales'
 );
-
