@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'revisions_slogan' => 'Revisies laat je toe de  veranderingen van de editorialen objecten zien en volgen.'
 );
 
-?>

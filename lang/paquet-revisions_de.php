@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'revisions_slogan' => 'Änderungen von redaktionellen Inhalten nachvollziehen'
 );
 
-?>
