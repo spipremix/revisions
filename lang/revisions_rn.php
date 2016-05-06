@@ -18,4 +18,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'diff_texte_supprime' => 'Texte supprimé'
 );
 
-?>

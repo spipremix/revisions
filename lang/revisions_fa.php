@@ -55,4 +55,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_toutes_les_revisions' => 'تمام بازنگري‌ها'
 );
 
-?>

@@ -27,4 +27,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_initiale' => 'Versión d’entamu'
 );
 
-?>

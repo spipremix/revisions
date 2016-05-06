@@ -30,4 +30,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_initiale' => 'Versiunea iniţială'
 );
 
-?>
