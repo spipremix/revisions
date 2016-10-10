@@ -431,6 +431,8 @@ function apparier_paras($src, $dest, $flou = true) {
  * Retrouve les champs d'un objet et leurs contenus à une version donnée
  *
  * @uses recuperer_version()
+ * @uses liste_champs_versionnes()
+ * @uses retrouver_champ_version_objet()
  * 
  * @param int $id_objet Identifiant de l'objet
  * @param string $objet Objet
