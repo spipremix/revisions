@@ -427,6 +427,36 @@ function apparier_paras($src, $dest, $flou = true) {
 	return array($src_dest, $dest_src);
 }
 
+/**
+ * Retrouve les champs d'un objet et leurs contenus à une version donnée
+ *
+ * @uses recuperer_version()
+ * 
+ * @param int $id_objet Identifiant de l'objet
+ * @param string $objet Objet
+ * @param int $id_version Identifiant de la version
+ * @return array           Couples champs => textes 
+**/
+function recuperer_version_complete($id_objet, $objet, $id_version) {
+	if (!$id_version or !$id_objet or !$objet) {
+		return array();
+	}
+
+	include_spip('inc/suivi_versions');
+
+	// champs modifiés à la version voulue
+	$textes = recuperer_version($id_objet, $objet, $id_version);
+
+	// tous les champs possibles versionnés pour l'objet
+	$champs = liste_champs_versionnes(table_objet_sql($objet));
+
+	foreach ($champs as $champ) {
+		// Remonter dans le temps pour trouver le champ en question pour chaque version
+		retrouver_champ_version_objet($objet, $id_objet, $id_version, $champ, $textes);
+	}
+
+	return $textes;
+}
 
 /**
  * Récupérer les champs d'un objet, pour une version demandée
@@ -443,7 +473,7 @@ function recuperer_version($id_objet, $objet, $id_version) {
 	if (!$champs or !is_array($champs = unserialize($champs))) {
 		return array();
 	} else {
-		return reconstuire_version($champs,
+		return reconstuire_version($champs, 
 			recuperer_fragments($id_objet, $objet, $id_version));
 	}
 }

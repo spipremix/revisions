@@ -106,6 +106,7 @@ function revisions_formulaire_charger($flux) {
 		$flux['data']['message_ok'] .= "<br />" . _T('revisions:message_valider_recuperer_version');
 		// recuperer la version
 		include_spip('inc/revisions');
+		#$champs = recuperer_version_complete($id, $objet, $id_version);
 		$champs = recuperer_version($id, $objet, $id_version);
 		foreach ($champs as $champ => $valeur) {
 			if (!strncmp($champ, 'jointure_', 9) == 0) {
