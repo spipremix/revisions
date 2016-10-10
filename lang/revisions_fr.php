@@ -17,10 +17,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'diff_texte_ajoute' => 'Texte ajouté',
 	'diff_texte_deplace' => 'Texte déplacé',
 	'diff_texte_supprime' => 'Texte supprimé',
-	'differences_versions' => 'Différences entre version N°@id_version@ et version N°@id_diff@',
+	'differences_versions' => 'Différences entre version N<sup>o</sup>@id_version@ et version N<sup>o</sup>@id_diff@',
 
 	// I
-	'icone_restaurer_version' => 'Restaurer la version N°@version@',
+	'icone_restaurer_version' => 'Restaurer la version N<sup>o</sup>@version@',
 	'icone_suivi_revisions' => 'Suivi des révisions',
 	'info_1_revision' => '1 révision',
 	'info_aucune_revision' => 'Aucune révision',
