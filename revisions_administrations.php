@@ -51,33 +51,33 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['1.1.0'] = array(
 		// Ajout du champs objet et modification du champs id_article en id_objet
 		// sur les 2 tables spip_versions et spip_versions_fragments
-		array('sql_alter', "TABLE spip_versions CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL"),
+		array('sql_alter', 'TABLE spip_versions CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL'),
 		array('sql_alter', "TABLE spip_versions ADD objet VARCHAR (25) DEFAULT '' NOT NULL AFTER id_objet"),
 		// Les id_objet restent les id_articles puisque les révisions n'étaient possibles que sur les articles
-		array('sql_updateq', "spip_versions", array('objet' => 'article'), "objet=''"),
+		array('sql_updateq', 'spip_versions', array('objet' => 'article'), "objet=''"),
 		// Changement des clefs primaires également
-		array('sql_alter', "TABLE spip_versions DROP PRIMARY KEY"),
-		array('sql_alter', "TABLE spip_versions ADD PRIMARY KEY (id_version, id_objet, objet)"),
+		array('sql_alter', 'TABLE spip_versions DROP PRIMARY KEY'),
+		array('sql_alter', 'TABLE spip_versions ADD PRIMARY KEY (id_version, id_objet, objet)'),
 
-		array('sql_alter', "TABLE spip_versions_fragments CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL"),
+		array('sql_alter', 'TABLE spip_versions_fragments CHANGE id_article id_objet bigint(21) DEFAULT 0 NOT NULL'),
 		array('sql_alter', "TABLE spip_versions_fragments ADD objet VARCHAR (25) DEFAULT '' NOT NULL AFTER id_objet"),
 		// Les id_objet restent les id_articles puisque les révisions n'étaient possibles que sur les articles
-		array('sql_updateq', "spip_versions_fragments", array('objet' => 'article'), "objet=''"),
+		array('sql_updateq', 'spip_versions_fragments', array('objet' => 'article'), "objet=''"),
 		// Changement des clefs primaires également
-		array('sql_alter', "TABLE spip_versions_fragments DROP PRIMARY KEY"),
-		array('sql_alter', "TABLE spip_versions_fragments ADD PRIMARY KEY (id_objet, objet, id_fragment, version_min)"),
-		array('revisions_upate_meta'),
+		array('sql_alter', 'TABLE spip_versions_fragments DROP PRIMARY KEY'),
+		array('sql_alter', 'TABLE spip_versions_fragments ADD PRIMARY KEY (id_objet, objet, id_fragment, version_min)'),
+		array('revisions_upate_meta')
 	);
 	$maj['1.1.2'] = array(
 		array('revisions_upate_meta'),
-		array('sql_updateq', "spip_versions", array('objet' => 'article'), "objet=''"),
-		array('sql_updateq', "spip_versions_fragments", array('objet' => 'article'), "objet=''"),
+		array('sql_updateq', 'spip_versions', array('objet' => 'article'), "objet=''"),
+		array('sql_updateq', 'spip_versions_fragments', array('objet' => 'article'), "objet=''"),
 	);
 	$maj['1.1.3'] = array(
-		array('sql_alter', "TABLE spip_versions DROP KEY id_objet"),
-		array('sql_alter', "TABLE spip_versions ADD INDEX id_version (id_version)"),
-		array('sql_alter', "TABLE spip_versions ADD INDEX id_objet (id_objet)"),
-		array('sql_alter', "TABLE spip_versions ADD INDEX objet (objet)")
+		array('sql_alter', 'TABLE spip_versions DROP KEY id_objet'),
+		array('sql_alter', 'TABLE spip_versions ADD INDEX id_version (id_version)'),
+		array('sql_alter', 'TABLE spip_versions ADD INDEX id_objet (id_objet)'),
+		array('sql_alter', 'TABLE spip_versions ADD INDEX objet (objet)')
 	);
 	$maj['1.1.4'] = array(
 		array('sql_alter', "TABLE spip_versions CHANGE permanent permanent char(3) DEFAULT '' NOT NULL"),
@@ -90,7 +90,6 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
-
 }
 
 function revisions_uncompress_fragments() {
@@ -185,7 +184,10 @@ function revisions_repair_unserialized_fragments() {
 		sql_updateq(
 			'spip_versions_fragments',
 			$set,
-			'id_fragment=' . intval($row['id_fragment']) . ' AND id_objet=' . intval($row['id_objet']) . ' AND objet=' . sql_quote($row['objet']) . ' AND version_min=' . intval($row['version_min'])
+			'id_fragment=' . intval($row['id_fragment']) . '
+				AND id_objet=' . intval($row['id_objet']) . '
+				AND objet=' . sql_quote($row['objet']) . '
+				AND version_min=' . intval($row['version_min'])
 		);
 
 		if (time() > _TIME_OUT) {
@@ -203,7 +205,7 @@ function revisions_repair_serialise($serialize) {
 	}
 
 	// verifier les strings
-	preg_match_all(",s:(\d+):\"(.*)\";(?=}|\w:\d+),Uims", $serialize, $matches, PREG_SET_ORDER);
+	preg_match_all(',s:(\d+):\"(.*)\";(?=}|\w:\d+),Uims', $serialize, $matches, PREG_SET_ORDER);
 	$serialize_repair = $serialize;
 	foreach ($matches as $match) {
 		$s = $match[2];
@@ -219,7 +221,7 @@ function revisions_repair_serialise($serialize) {
 				$s = str_replace("\r", "\n", $s);
 			}
 			if (strlen($s) < $l) {
-				$s .= str_pad("", $l - strlen($s), " ");
+				$s .= str_pad('', $l - strlen($s), ' ');
 			}
 			if (strlen($s) == $l) {
 				$s = str_replace($match[2], $s, $match[0]);
@@ -247,7 +249,7 @@ function revisions_repair_serialise($serialize) {
 	#var_dump($serialize);
 	#var_dump($matches);
 	#die("corrompu-serialize");
-	return "corrompu-serialize";
+	return 'corrompu-serialize';
 }
 
 
@@ -257,8 +259,8 @@ function revisions_repair_serialise($serialize) {
  * @param string $nom_meta_base_version
  */
 function revisions_vider_tables($nom_meta_base_version) {
-	sql_drop_table("spip_versions");
-	sql_drop_table("spip_versions_fragments");
+	sql_drop_table('spip_versions');
+	sql_drop_table('spip_versions_fragments');
 
 	effacer_meta($nom_meta_base_version);
 }
