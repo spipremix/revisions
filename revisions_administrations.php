@@ -94,20 +94,34 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 }
 
 function revisions_uncompress_fragments() {
+	$count = sql_countsel('spip_versions_fragments', 'compress=' . intval(1));
 
-	$res = sql_select("*", "spip_versions_fragments", "compress=" . intval(1));
-	while ($row = sql_fetch($res)) {
+	if ($count > 20000) {
+		$limit = '0,20000';
+	} else {
+		$limit = "0,$count";
+	}
+
+	$res = sql_allfetsel(
+		'*',
+		'spip_versions_fragments',
+		'compress=' . intval(1),
+		'',
+		'',
+		$limit
+	);
+
+	foreach ($res as $row) {
 		$fragment = @gzuncompress($row['fragment']);
 
 		// si la decompression echoue, on met en base le flag 'corrompu-gz'
 		// et au dump le framgment compresse dans un fichier
 		if (strlen($row['fragment']) and $fragment === false) {
-			$dir_tmp = sous_repertoire(_DIR_TMP, "versions_fragments_corrompus");
-			$f = $row['id_fragment'] . "-" . $row['objet'] . "-" . $row['id_objet'];
-			spip_log("Fragment gz corrompu $f", "maj" . _LOG_ERREUR);
-			$f = $f . "-gz.txt";
+			$dir_tmp = sous_repertoire(_DIR_TMP, 'versions_fragments_corrompus');
+			$f = $row['id_fragment'] . '-' . $row['objet'] . '-' . $row['id_objet'];
+			$f = $f . '-gz.txt';
 			ecrire_fichier($dir_tmp . $f, $row['fragment']);
-			$fragment = "corrompu-gz";
+			$fragment = 'corrompu-gz';
 		}
 
 		$set = array(
@@ -115,45 +129,71 @@ function revisions_uncompress_fragments() {
 			'fragment' => $fragment,
 		);
 
-		sql_updateq("spip_versions_fragments", $set,
-			"id_fragment=" . intval($row['id_fragment']) . " AND id_objet=" . intval($row['id_objet']) . " AND objet=" . sql_quote($row['objet']) . " AND version_min=" . intval($row['version_min']));
+		sql_updateq(
+			'spip_versions_fragments',
+			$set,
+			'id_fragment=' . intval($row['id_fragment']) . '
+				AND id_objet=' . intval($row['id_objet']) . '
+				AND objet=' . sql_quote($row['objet']) . '
+				AND version_min=' . intval($row['version_min'])
+		);
 		if (time() > _TIME_OUT) {
 			return;
 		}
 	}
-
-	sql_updateq("spip_versions_fragments", array('compress' => -1));
-
+	if (sql_countsel('spip_versions_fragments', 'compress=' . intval(1)) > 0) {
+		revisions_uncompress_fragments();
+	}
+	sql_updateq('spip_versions_fragments', array('compress' => -1));
 }
 
 function revisions_repair_unserialized_fragments() {
-	$res = sql_select("*", "spip_versions_fragments", "compress=" . intval(-1));
-	$n = sql_count($res);
-	spip_log("$n fragments a verifier", "maj");
-	while ($row = sql_fetch($res)) {
+	$n = sql_countsel('spip_versions_fragments', 'compress=' . intval(-1));
+	spip_log("$n fragments a verifier", 'maj.'._LOG_ERREUR);
+	if ($n > 20000) {
+		$limit = '0,20000';
+	} else {
+		$limit = "0,$n";
+	}
+
+	$res = sql_allfetsel(
+		'*',
+		'spip_versions_fragments',
+		'compress=' . intval(-1),
+		'',
+		'',
+		$limit
+	);
+
+	foreach ($res as $row) {
 		$fragment = $row['fragment'];
 		$set = array(
 			'compress' => 0,
 		);
 
 		// verifier que le fragment est bien serializable
-		if (unserialize($fragment) === false and strncmp($fragment, "corrompu", 8) !== 0) {
-			$dir_tmp = sous_repertoire(_DIR_TMP, "versions_fragments_corrompus");
+		if (unserialize($fragment) === false and strncmp($fragment, 'corrompu', 8) !== 0) {
+			$dir_tmp = sous_repertoire(_DIR_TMP, 'versions_fragments_corrompus');
 			$set['fragment'] = revisions_repair_serialise($fragment);
-			if (strncmp($set['fragment'], "corrompu", 8) == 0) {
-				$f = $row['id_fragment'] . "-" . $row['objet'] . "-" . $row['id_objet'];
-				spip_log("Fragment serialize corrompu $f", "maj" . _LOG_ERREUR);
-				$f = $f . "-serialize.txt";
+			if (strncmp($set['fragment'], 'corrompu', 8) == 0) {
+				$f = $row['id_fragment'] . '-' . $row['objet'] . '-' . $row['id_objet'];
+				spip_log("Fragment serialize corrompu $f", 'maj');
+				$f = $f . '-serialize.txt';
 				ecrire_fichier($dir_tmp . $f, $fragment);
 			}
 		}
-		sql_updateq("spip_versions_fragments", $set,
-			$w = "id_fragment=" . intval($row['id_fragment']) . " AND id_objet=" . intval($row['id_objet']) . " AND objet=" . sql_quote($row['objet']) . " AND version_min=" . intval($row['version_min']));
-		#spip_log($w,"maj");
+		sql_updateq(
+			'spip_versions_fragments',
+			$set,
+			'id_fragment=' . intval($row['id_fragment']) . ' AND id_objet=' . intval($row['id_objet']) . ' AND objet=' . sql_quote($row['objet']) . ' AND version_min=' . intval($row['version_min'])
+		);
 
 		if (time() > _TIME_OUT) {
 			return;
 		}
+	}
+	if (sql_countsel('spip_versions_fragments', 'compress=' . intval(-1)) > 0) {
+		revisions_repair_unserialized_fragments();
 	}
 }
 
