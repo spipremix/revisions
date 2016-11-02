@@ -66,41 +66,41 @@ function revisions_declarer_tables_objets_sql($tables) {
 function revisions_declarer_tables_auxiliaires($tables_auxiliaires) {
 
 	$spip_versions = array(
-		"id_version" => "bigint(21) DEFAULT 0 NOT NULL",
-		"id_objet" => "bigint(21) DEFAULT 0 NOT NULL",
-		"objet" => "VARCHAR (25) DEFAULT '' NOT NULL",
-		"date" => "datetime DEFAULT '0000-00-00 00:00:00' NOT NULL",
-		"id_auteur" => "VARCHAR(23) DEFAULT '' NOT NULL", # stocke aussi IP(v6)
-		"titre_version" => "text DEFAULT '' NOT NULL",
-		"permanent" => "char(3) DEFAULT '' NOT NULL",
-		"champs" => "text DEFAULT '' NOT NULL"
+		'id_version' => 'bigint(21) DEFAULT 0 NOT NULL',
+		'id_objet' => 'bigint(21) DEFAULT 0 NOT NULL',
+		'objet' => "VARCHAR (25) DEFAULT '' NOT NULL",
+		'date' => "datetime DEFAULT '0000-00-00 00:00:00' NOT NULL",
+		'id_auteur' => "VARCHAR(23) DEFAULT '' NOT NULL", # stocke aussi IP(v6)
+		'titre_version' => "text DEFAULT '' NOT NULL",
+		'permanent' => "char(3) DEFAULT '' NOT NULL",
+		'champs' => "text DEFAULT '' NOT NULL"
 	);
 
 	$spip_versions_key = array(
-		"PRIMARY KEY" => "id_version, id_objet, objet",
-		"KEY id_version" => "id_version",
-		"KEY id_objet" => "id_objet",
-		"KEY objet" => "objet"
+		'PRIMARY KEY' => 'id_version, id_objet, objet',
+		'KEY id_version' => 'id_version',
+		'KEY id_objet' => 'id_objet',
+		'KEY objet' => 'objet'
 	);
 	$spip_versions_join = array(
-		"id_version" => "id_version",
-		"id_objet" => "id_objet",
-		"objet" => "objet",
-		"id_auteur" => "id_auteur",
+		'id_version' => 'id_version',
+		'id_objet' => 'id_objet',
+		'objet' => 'objet',
+		'id_auteur' => 'id_auteur',
 	);
 
 	$spip_versions_fragments = array(
-		"id_fragment" => "int unsigned DEFAULT '0' NOT NULL",
-		"version_min" => "int unsigned DEFAULT '0' NOT NULL",
-		"version_max" => "int unsigned DEFAULT '0' NOT NULL",
-		"id_objet" => "bigint(21) NOT NULL",
-		"objet" => "VARCHAR (25) DEFAULT '' NOT NULL",
-		"compress" => "tinyint NOT NULL",
-		"fragment" => "longblob"  # ici c'est VRAIMENT un blob (on y stocke du gzip)
+		'id_fragment' => "int unsigned DEFAULT '0' NOT NULL",
+		'version_min' => "int unsigned DEFAULT '0' NOT NULL",
+		'version_max' => "int unsigned DEFAULT '0' NOT NULL",
+		'id_objet' => 'bigint(21) NOT NULL',
+		'objet' => "VARCHAR (25) DEFAULT '' NOT NULL",
+		'compress' => 'tinyint NOT NULL',
+		'fragment' => 'longblob'  # ici c'est VRAIMENT un blob (on y stocke du gzip)
 	);
 
 	$spip_versions_fragments_key = array(
-		"PRIMARY KEY" => "id_objet, objet, id_fragment, version_min"
+		'PRIMARY KEY' => 'id_objet, objet, id_fragment, version_min'
 	);
 
 

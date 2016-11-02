@@ -10,7 +10,7 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -31,9 +31,10 @@ function afficher_diff_id_rubrique_dist($champ, $old, $new, $format = 'diff') {
 	// ne pas se compliquer la vie !
 	if ($old == $new) {
 		$out = _T('info_dans_rubrique')
-			. " <b>&#171;&nbsp;" . generer_info_entite($new, 'rubrique', 'titre') . "&nbsp;&#187;</b>";
+			. ' <b>&#171;&nbsp;' . generer_info_entite($new, 'rubrique', 'titre') . '&nbsp;&#187;</b>';
 	} else {
-		$out = _T('revisions:version_deplace_rubrique',
+		$out = _T(
+			'revisions:version_deplace_rubrique',
 			array(
 				'from' => generer_info_entite($old, 'rubrique', 'titre'),
 				'to' => generer_info_entite($new, 'rubrique', 'titre')

@@ -10,7 +10,7 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -64,7 +64,7 @@ function afficher_para_modifies($texte, $court = false) {
 		$max = 2000;
 	}
 
-	$texte_ret = "";
+	$texte_ret = '';
 	$paras = explode("\n", $texte);
 	for ($i = 0; $i < count($paras) and strlen($texte_ret) < $max; $i++) {
 		if (strpos($paras[$i], '"diff-')) {

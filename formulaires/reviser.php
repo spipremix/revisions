@@ -10,17 +10,17 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
 include_spip('base/abstract_sql');
 
-function trouver_version_inf($objet, $id_objet, $cond = "") {
+function trouver_version_inf($objet, $id_objet, $cond = '') {
 	return sql_getfetsel(
 		'id_version',
 		'spip_versions',
-		($cond ? "$cond AND " : "") . "objet=" . sql_quote($objet) . " AND id_objet=" . intval($id_objet),
+		($cond ? "$cond AND " : '') . 'objet=' . sql_quote($objet) . ' AND id_objet=' . intval($id_objet),
 		'',
 		'id_version DESC',
 		'0,1'
@@ -45,7 +45,7 @@ function check_version_diff($objet, $id_objet, $id_version, $id_diff, $last_vers
 	$id_version = min($id_version, $last_version);
 
 	// verifier id_version
-	$id_version = trouver_version_inf($objet, $id_objet, "id_version<=" . intval($id_version));
+	$id_version = trouver_version_inf($objet, $id_objet, 'id_version <= ' . intval($id_version));
 
 	// si rien trouve on prend la derniere
 	if (!$id_version) {
@@ -55,10 +55,10 @@ function check_version_diff($objet, $id_objet, $id_version, $id_diff, $last_vers
 	// minorer id_diff en fonction de id_version
 	$id_diff = min($id_diff, $id_version - 1);
 	// verifier id_diff
-	$id_diff = trouver_version_inf($objet, $id_objet, "id_version<=" . intval($id_diff));
+	$id_diff = trouver_version_inf($objet, $id_objet, 'id_version <= ' . intval($id_diff));
 
 	if (!$id_diff) {
-		$id_diff = trouver_version_inf($objet, $id_objet, "id_version<" . intval($id_version));
+		$id_diff = trouver_version_inf($objet, $id_objet, 'id_version < ' . intval($id_version));
 	}
 
 	// echec, on renvoi ce qu'on peut

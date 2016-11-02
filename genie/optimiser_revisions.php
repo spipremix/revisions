@@ -54,12 +54,14 @@ function optimiser_base_revisions() {
 		$in = array();
 		$table = table_objet_sql($objet['objet']);
 		$id_table_objet = id_table_objet($objet['objet']);
-		$res = sql_select("A.id_objet AS id_objet, A.objet AS objet",
+		$res = sql_select(
+			'A.id_objet AS id_objet, A.objet AS objet',
 			"spip_versions AS A LEFT JOIN $table AS R
-							ON R.$id_table_objet=A.id_objet AND A.objet=" . sql_quote($objet['objet']),
-			"R.$id_table_objet IS NULL AND A.objet=" . sql_quote($objet['objet']) . " AND A.id_objet > 0",
-			"A.id_objet",
-			"A.id_objet");
+				ON R.$id_table_objet=A.id_objet AND A.objet=" . sql_quote($objet['objet']),
+			"R.$id_table_objet IS NULL AND A.objet=" . sql_quote($objet['objet']) . ' AND A.id_objet > 0',
+			'A.id_objet',
+			'A.id_objet'
+		);
 
 		while ($row = sql_fetch($res)) {
 			$in[$row['id_objet']] = true;
@@ -74,7 +76,7 @@ function optimiser_base_revisions() {
 		 */
 		if ($in) {
 			foreach (array('spip_versions', 'spip_versions_fragments') as $table) {
-				sql_delete($table, sql_in('id_objet', array_keys($in)) . " AND objet=" . sql_quote($objet['objet']));
+				sql_delete($table, sql_in('id_objet', array_keys($in)) . ' AND objet=' . sql_quote($objet['objet']));
 			}
 		}
 	}
