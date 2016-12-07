@@ -847,7 +847,7 @@ function verifier_premiere_revision($table, $objet, $id_objet, $champs = null, $
 
 			$date_modif = "";
 			foreach (array('date_modif', 'maj') as $d) {
-				if (!$date_modif and isset($originaux[$d]) and $t = strtotime($d)) {
+				if (!$date_modif and isset($originaux[$d]) and $t = strtotime($originaux[$d])) {
 					$date_modif = date("Y-m-d H:i:s", $t - 20);
 				}
 			}
