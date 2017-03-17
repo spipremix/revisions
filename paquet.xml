@@ -1,14 +1,14 @@
 <paquet
 	prefix="revisions"
 	categorie="edition"
-	version="1.8.8"
+	version="1.9.0"
 	etat="stable"
-	compatibilite="[3.1.0;3.1.*]"
+	compatibilite="[3.2.0-dev;3.2.*]"
 	logo="prive/themes/spip/images/revision-32.png"
 	schema="1.2.0"
 >	
 
-	<nom>R&#233;visions</nom>
+	<nom>Révisions</nom>
 	<!-- Suivi des modifications des objets éditoriaux -->
 
 	<auteur>Collectif SPIP</auteur>
