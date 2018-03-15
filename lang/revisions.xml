@@ -32,7 +32,8 @@
 		<traducteur nom="Davood Hossein" lien="https://trad.spip.net/auteur/davood-hossein" />
 		<traducteur nom="kent1" lien="https://trad.spip.net/auteur/kent1" />
 	</langue>
-	<langue code="eo" url="https://trad.spip.net/tradlang_module/revisions?lang_cible=eo" total="30" traduits="11" relire="0" modifs="0" nouveaux="19" pourcent="36.67">
+	<langue code="eo" url="https://trad.spip.net/tradlang_module/revisions?lang_cible=eo" total="30" traduits="30" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="gpl" lien="https://trad.spip.net/auteur/gpl" />
 	</langue>
 	<langue code="es" url="https://trad.spip.net/tradlang_module/revisions?lang_cible=es" total="30" traduits="30" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="dani" lien="https://trad.spip.net/auteur/dani" />
