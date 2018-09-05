@@ -194,7 +194,8 @@ class Diff {
 			if (!$fin_old) {
 				// Paragraphes supprimes jusqu'au paragraphe courant
 				if (!isset($i_old)) {
-					list($i_old, $p_old) = each($paras_old);
+					list($i_old, $p_old) = current($paras_old);
+					next($paras_old);
 					if (!$p_old) {
 						$fin_old = true;
 					}
@@ -204,7 +205,8 @@ class Diff {
 						$this->diff->supprimer($p_old);
 					}
 					unset($i_old);
-					list($i_old, $p_old) = each($paras_old);
+					list($i_old, $p_old) = current($paras_old);
+					next($paras_old);
 					if (!$p_old) {
 						$fin_old = true;
 					}
@@ -216,7 +218,8 @@ class Diff {
 		// Paragraphes supprimes a la fin du texte
 		if (!$fin_old) {
 			if (!isset($i_old)) {
-				list($i_old, $p_old) = each($paras_old);
+				list($i_old, $p_old) = current($paras_old);
+				next($paras_old);
 				if (!strlen($p_old)) {
 					$fin_old = true;
 				}
@@ -225,7 +228,8 @@ class Diff {
 				if (!isset($trans_rev[$i_old])) {
 					$this->diff->supprimer($p_old);
 				}
-				list($i_old, $p_old) = each($paras_old);
+				list($i_old, $p_old) = current($paras_old);
+				next($paras_old);
 				if (!$p_old) {
 					$fin_old = true;
 				}
