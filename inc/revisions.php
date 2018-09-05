@@ -653,7 +653,8 @@ function ajouter_version($id_objet, $objet, $champs, $titre_version = "", $id_au
 
 		for ($i = 0; $i < $n; $i++) {
 			while ($i >= $paras_champ[$nom]) {
-				list($nom, ) = each($champs);
+				list($nom, ) = current($champs);
+				next($champs);
 			}
 			// Lier au fragment existant si possible, sinon creer un nouveau fragment
 			$id_fragment = isset($trans[$i]) ? $trans[$i] : $next++;
