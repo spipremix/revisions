@@ -122,6 +122,24 @@ function revisions_formulaire_charger($flux) {
 	return $flux;
 }
 
+/**
+ * Sur une insertion en base, lever un flag pour ne pas creer une premiere révision vide
+ *
+ * @param array $x Données du pipeline
+ * @return array $x  Données du pipeline
+ */
+function revisions_pre_insertion($x) {
+	$table = $x['args']['table'];
+	include_spip('inc/revisions');
+	if ($champs = liste_champs_versionnes($table)) {
+		// on ne connait pas encore l'ID, mais on leve un flag pour ne pas creer de premiere revision pour ce type d'objet
+		// sur une simple jointure (auteur)
+		$GLOBALS['premiere_revision']["$table:0"] = true;
+	}
+
+	return $x;
+}
+
 
 /**
  * Sur une insertion en base, lever un flag pour ne pas creer une premiere révision vide
@@ -134,6 +152,9 @@ function revisions_post_insertion($x) {
 	$table = $x['args']['table'];
 	include_spip('inc/revisions');
 	if ($champs = liste_champs_versionnes($table)) {
+		if (isset($GLOBALS['premiere_revision']["$table:0"])) {
+			unset($GLOBALS['premiere_revision']["$table:0"]);
+		}
 		$GLOBALS['premiere_revision']["$table:" . $x['args']['id_objet']] = true;
 	}
 
@@ -182,6 +203,11 @@ function revisions_pre_edition_lien($x) {
 		$table = table_objet_sql($x['args']['objet']);
 		$id_objet = intval($x['args']['id_objet']);
 		include_spip('inc/revisions');
+		// si c'est une creation de lien qui arrive aussitot apres l'insertion on ne cree pas de revision
+		if (isset($GLOBALS['premiere_revision']["$table:0"])) {
+			unset($GLOBALS['premiere_revision']["$table:0"]);
+			$GLOBALS['premiere_revision']["$table:" . $id_objet] = true;
+		}
 		if (isset($GLOBALS['premiere_revision']["$table:" . $id_objet])) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_mots est versionnable sur les articles
@@ -193,6 +219,11 @@ function revisions_pre_edition_lien($x) {
 
 		$table = table_objet_sql($x['args']['objet_source']);
 		$id_objet = $x['args']['id_objet_source'];
+		// si c'est une creation de lien qui arrive aussitot apres l'insertion on ne cree pas de revision
+		if (isset($GLOBALS['premiere_revision']["$table:0"])) {
+			unset($GLOBALS['premiere_revision']["$table:0"]);
+			$GLOBALS['premiere_revision']["$table:" . $id_objet] = true;
+		}
 		if (isset($GLOBALS['premiere_revision']["$table:" . $id_objet])) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_articles est versionnable sur les mots
@@ -271,6 +302,12 @@ function revisions_post_edition_lien($x) {
 		$table = table_objet_sql($x['args']['objet']);
 		$id_objet = $x['args']['id_objet'];
 		include_spip('inc/revisions');
+		// si c'est une creation de lien qui arrive aussitot apres l'insertion on ne cree pas de revision
+		// (au cas ou pre_edition_lien n'aurait pas ete appele ?)
+		if (isset($GLOBALS['premiere_revision']["$table:0"])) {
+			unset($GLOBALS['premiere_revision']["$table:0"]);
+			$GLOBALS['premiere_revision']["$table:" . $id_objet] = true;
+		}
 		if (isset($GLOBALS['premiere_revision']["$table:" . $id_objet])) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_mots est versionnable sur les articles
@@ -285,6 +322,12 @@ function revisions_post_edition_lien($x) {
 
 		$table = table_objet_sql($x['args']['objet_source']);
 		$id_objet = $x['args']['id_objet_source'];
+		// si c'est une creation de lien qui arrive aussitot apres l'insertion on ne cree pas de revision
+		// (au cas ou pre_edition_lien n'aurait pas ete appele ?)
+		if (isset($GLOBALS['premiere_revision']["$table:0"])) {
+			unset($GLOBALS['premiere_revision']["$table:0"]);
+			$GLOBALS['premiere_revision']["$table:" . $id_objet] = true;
+		}
 		if (isset($GLOBALS['premiere_revision']["$table:" . $id_objet])) {
 			$GLOBALS['premiere_revision']["$table:" . $id_objet] = 0;
 		} // ex : si le champ jointure_articles est versionnable sur les mots
