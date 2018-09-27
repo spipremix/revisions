@@ -17,9 +17,9 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * @return array        Description des configurations
  **/
 function revisions_ieconfig_metas($table) {
-	$table['revisions']['titre'] = _T('revisions:titre_revisions');
-	$table['revisions']['icone'] = 'revision-16.png';
-	$table['revisions']['metas_serialize'] = 'objets_versions';
+	$table['revisions_meta']['titre'] = _T('revisions:titre_revisions');
+	$table['revisions_meta']['icone'] = 'revision-16.png';
+	$table['revisions_meta']['metas_serialize'] = 'objets_versions';
 
 	return $table;
 }
