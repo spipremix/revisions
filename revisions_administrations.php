@@ -45,7 +45,7 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
 	$maj['create'] = array(
 		array('maj_tables', array('spip_versions', 'spip_versions_fragments')),
-		array('revisions_upate_meta'),
+		array('revisions_update_meta'),
 	);
 
 	$maj['1.1.0'] = array(
@@ -66,10 +66,10 @@ function revisions_upgrade($nom_meta_base_version, $version_cible) {
 		// Changement des clefs primaires également
 		array('sql_alter', 'TABLE spip_versions_fragments DROP PRIMARY KEY'),
 		array('sql_alter', 'TABLE spip_versions_fragments ADD PRIMARY KEY (id_objet, objet, id_fragment, version_min)'),
-		array('revisions_upate_meta')
+		array('revisions_update_meta')
 	);
 	$maj['1.1.2'] = array(
-		array('revisions_upate_meta'),
+		array('revisions_update_meta'),
 		array('sql_updateq', 'spip_versions', array('objet' => 'article'), "objet=''"),
 		array('sql_updateq', 'spip_versions_fragments', array('objet' => 'article'), "objet=''"),
 	);
@@ -270,7 +270,7 @@ function revisions_vider_tables($nom_meta_base_version) {
  *
  * @return void
  */
-function revisions_upate_meta() {
+function revisions_update_meta() {
 	// Si dans une installation antérieure ou un upgrade, les articles étaient versionnés
 	// On crée la meta correspondante
 	// mettre les metas par defaut
