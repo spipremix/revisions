@@ -1,0 +1,11 @@
+{
+    "name": "spip/revisions",
+    "type": "spip-plugin",
+    "description": "Suivi des modifications des objets éditoriaux",
+    "license": "GPL-3.0-or-later",
+    "authors": [{
+        "name": "Collectif SPIP",
+        "email": "spip-dev@rezo.net"
+    }],
+    "require": {}
+}
